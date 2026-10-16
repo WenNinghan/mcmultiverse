@@ -56,3 +56,13 @@
 | 早八现场与独立存档 | assets/morning-ui.js / morning.css | 原生DOM；独立浏览器收藏，保留旧三殿与短局 |
 | 引擎验收 | test/morning.test.cjs | 实际生产quoteOrder；20项通过，3312组合、8结局可达；UI/线上验收另见归档 |
 | 进行中恢复 | assets/morning-engine.js: restore / morning-ui.js: lastGameStage | 校验版本/快照/白名单，档案视图不覆盖游戏阶段 |
+
+## 凌晨与饭搭子因果局（2026-10-16）
+| 能力 | 实际入口 | 复用边界与验收 |
+|---|---|---|
+| 冻结快照、单份替换与严格分享 | assets/session-core.js: createTools | 复用生产quoteOrder；只替换一份，锁定其它输入；#ep=1与旧链接隔离，保持点餐顺序 |
+| 精力、错误与提交窗口 | assets/midnight-engine.js: McMidnight.createEngine | 低精力改变真实工时和留错；证据修错、恢复方式、评审截止共同作用；19项、3000组合、6结局可达 |
+| 实际分餐、口味与相处 | assets/friends-engine.js: McFriends.createEngine | 份量守恒，个人饱腹分别累计；需求证据解锁优先挑选，口味与信任决定深谈；16项、3762组合、8结局可达 |
+| 两种现场与通用交互 | assets/sessions-ui.js / sessions.css | 午夜编辑器、双人餐桌；阶段资源、禁用理由、改单断点、小票、独立存档与档案返回 |
+| 新情景入口 | index.html: startJourney / startDeepSession | 首页与旧命运单进入深度局；早八与原短局API、存储、链接保留 |
+| 完整回归 | test/*.test.cjs | 七组499项通过；390/768/1440宽度检查、实际PNG下载和两局浏览器通关，证据见任务归档 |
