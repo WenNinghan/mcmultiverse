@@ -66,3 +66,14 @@
 | 两种现场与通用交互 | assets/sessions-ui.js / sessions.css | 午夜编辑器、双人餐桌；阶段资源、禁用理由、改单断点、小票、独立存档与档案返回 |
 | 新情景入口 | index.html: startJourney / startDeepSession | 首页与旧命运单进入深度局；早八与原短局API、存储、链接保留 |
 | 完整回归 | test/*.test.cjs | 七组499项通过；390/768/1440宽度检查、实际PNG下载和两局浏览器通关，证据见任务归档 |
+
+## 首次体验与再玩（2026-10-16）
+| 能力 | 实际入口 | 复用边界与验收 |
+|---|---|---|
+| 真实改单候选排序 | assets/replay-guide.js: McReplayGuide.analyze / describe | 调用原compare，不改计价/数值/后续意图；可完成且结局变化优先，无候选明确说明；13项生产引擎测试 |
+| 结局首屏与因果展开 | assets/morning-ui.js: resultView / assets/sessions-ui.js: resultView | 先得失与实验问题，详细因果native details；手机主CTA实测全部在首屏 |
+| 精简过程与精确预测 | 两UI: rules / shareView / chooseCards | 成本风险默认可见；预测展开不误推进；早八优惠签路线短判词直达分餐 |
+| 角色回应 | morning-ui.js: 课后消息 / sessions-ui.js: friendsAfterword、midnightAfterword | 按实际资源/策略生成后话；不新增游戏时间，不改存档schema或分享选择 |
+| 进行中入口与跨章清理 | morning-ui.js: hasMorningProgress / 两UI: clearReplayHash | 仅有效未完成局显示续局；显式新章清除旧am/ep/mc重玩hash，刷新不回旧章 |
+| 聚焦首页与旧入口 | index.html: hall / hall-free | 手机首屏三局，原三殿/完整人生/情景目录native details保留 |
+| 完整验证 | test/*.test.cjs / 任务归档 | 八组512通过；四条实际通关路线、三局默认改单与手动断点、档案/续局/PNG验证 |

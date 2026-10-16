@@ -21,3 +21,78 @@
 @media(max-width:700px){#morning .am-choice strong{font-size:18px}#morning .am-choice{padding:18px 15px}#morning .am-choice p{line-height:1.85}#morning .am-choice-footer{font-size:11px}#morning .am-food h3{font-size:14px}#morning .am-food-tag{font-size:9px}#morning .am-clock-caption{font-size:10px}#morning .am-bubble{font-size:13px}#morning .am-chat-label{font-size:10px}#morning .am-result-heading h2{font-size:31px}#morning .am-compare-column>h3{font-size:19px}#morning .am-compare-column{padding:21px 18px}#morning .am-replace-form{grid-template-columns:1fr}#morning .am-replace-arrow{padding:0;font-size:22px;line-height:1;transform:rotate(90deg)}#morning .am-replace-form label{font-size:12px}#morning .am-replace-form select{font-size:14px}#morning .am-mini-delta{font-size:11px}#morning .am-collection{grid-template-columns:1fr}#morning .am-collection-card{padding:20px}#morning .am-collection-card h3{font-size:20px}#morning .am-share-row button{flex-basis:100%}#morning .am-resource>span{font-size:9px}}
 @media(max-width:700px){#morning .am-top{margin-bottom:13px}#morning .am-edition{display:none}#morning .am-top-actions{width:100%;justify-content:space-between;gap:15px}#morning .am-top-actions button{white-space:nowrap;font-size:12px}#morning .am-title-row .am-kicker{display:none}}
 .am-archive-main{max-width:950px;margin:35px auto 0}.am-archive-main .am-collection-card{padding:24px}.am-archive-main .am-stage-head{max-width:650px;margin-bottom:27px}
+/* A result offers the next experiment before the full account of the morning. */
+#morning .am-fold{margin:14px 0;border-top:1px dashed #b4c0a7;border-bottom:1px dashed #b4c0a7}
+#morning .am-fold>summary{cursor:pointer;min-height:46px;padding:12px 3px;font-size:13px;color:var(--am-ink)}
+#morning .am-fold>summary:focus-visible{outline:3px solid #3173a3;outline-offset:3px}
+#morning .am-fold[open]>summary{font-weight:700}
+#morning .am-fold-content{padding:5px 3px 17px}
+#morning .am-fold-content .am-rule-note{margin:0;font-size:13px;line-height:1.9}
+#morning .am-ending-full{font-size:14px;margin:3px 0 23px;line-height:1.9}
+#morning .am-prediction-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;background:#ecefdf;padding:17px;border-radius:5px}
+#morning .am-prediction-grid strong{font-size:14px}
+#morning .am-prediction-grid p{font-size:13px;margin-top:7px;line-height:1.9}
+#morning .am-compact-verdict{padding:14px 17px;border-left:3px solid var(--am-red);background:#f1ecda;margin:16px 0 20px;border-radius:0 5px 5px 0}
+#morning .am-compact-verdict>span{font-size:11px;letter-spacing:1px;color:var(--am-muted)}
+#morning .am-compact-verdict>p{font-size:14px;margin:6px 0 0}
+#morning .am-food-difference{font-size:14px;color:#536c4f;line-height:1.9;padding:15px;background:#eaf0df;border-radius:6px;margin:15px 0}
+#morning .am-swap-foods{display:grid;grid-template-columns:minmax(0,1fr) 68px minmax(0,1fr);align-items:center;border:1px solid #ccd3be;background:#fffdf4;border-radius:7px;padding:13px;gap:10px}
+#morning .am-swap-foods>div{text-align:center;display:grid;justify-items:center}
+#morning .am-swap-foods img{height:85px;width:120px;object-fit:contain}
+#morning .am-swap-foods strong{font-size:14px;margin:4px 0 3px}
+#morning .am-swap-foods small{font-size:11px;color:var(--am-muted);line-height:1.8}
+#morning .am-swap-symbol{font-size:12px;text-align:center;color:var(--am-red)}
+#morning .am-afterword{background:#e9efdd;border-radius:7px;padding:18px}
+#morning .am-afterword>span{font-size:11px;letter-spacing:1px;color:var(--am-muted)}
+#morning .am-afterword>p{font-size:15px;margin:9px 0 12px;line-height:1.9}
+#morning .am-afterword>small{display:block;font-size:12px;color:var(--am-muted);margin-bottom:15px;line-height:1.8}
+#morning .am-experiment{margin:14px 0 18px;padding:22px 24px}
+#morning .am-experiment>.am-kicker{font-size:10px;margin-bottom:10px;color:#647248}
+#morning .am-experiment-question{display:block;font-size:21px;line-height:1.65;font-family:'Songti SC','SimSun',serif}
+#morning .am-experiment>.am-action{margin-top:16px;min-height:49px;width:100%;font-size:14px}
+#morning .am-experiment>p{font-size:12px;margin:11px 0 0;color:#596647}
+#morning.am-result-mode .am-title-row,#morning.am-result-mode .am-progress{display:none}
+#morning.am-result-mode .am-top{margin-bottom:10px}
+#morning.am-result-mode .am-hud{margin-bottom:20px}
+#morning.am-result-mode .am-resource{padding:12px 18px}
+#morning.am-result-mode .am-resource strong{font-size:25px;margin:3px 0 0}
+#morning.am-result-mode .am-resource>span,#morning.am-result-mode .am-resource-meter{display:none}
+#morning.am-result-mode .am-result-heading{padding:0 0 2px}
+#morning.am-result-mode .am-result-heading h2{font-size:35px;margin:7px 0 10px}
+#morning.am-result-mode .am-result-heading>.am-kicker{margin-bottom:7px}
+#morning.am-result-mode .am-result-text{margin:12px 0 0;font-size:15px;line-height:1.8}
+#morning.am-result-mode .am-outcome{margin:10px 0;gap:7px}
+#morning.am-result-mode .am-outcome span{font-size:12px;padding:4px 8px}
+#morning.am-result-mode .am-cause-fold{margin-top:19px}
+#morning .am-result-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start}
+#morning .am-result-layout>.am-main{grid-row:auto;grid-column:auto;order:0}
+#morning .am-result-layout>.am-scene{grid-row:auto;grid-column:auto;order:1}
+@media(min-width:1350px){#morning .am-result-layout{grid-template-columns:minmax(0,1fr) 330px;gap:38px}}
+@media(max-width:900px){#morning .am-result-layout{grid-template-columns:minmax(0,1fr) 250px;gap:20px}}
+@media(max-width:700px){
+  #morning.am-result-mode{padding-top:9px}
+  #morning.am-result-mode .am-top{margin-bottom:6px}
+  #morning.am-result-mode .am-hud{margin-bottom:17px}
+  #morning.am-result-mode .am-resource{padding:9px 10px}
+  #morning.am-result-mode .am-resource strong{font-size:18px;letter-spacing:-1.2px}
+  #morning.am-result-mode .am-result-heading h2{font-size:30px;line-height:1.35;margin:6px 0 9px}
+  #morning.am-result-mode .am-result-text{font-size:14px;margin-top:10px;line-height:1.8}
+  #morning.am-result-mode .am-outcome{gap:5px;margin:9px 0}
+  #morning.am-result-mode .am-outcome span{font-size:11px;padding:4px 7px}
+  #morning.am-result-mode .am-layout{gap:19px}
+  #morning .am-result-layout{display:flex;flex-direction:column;gap:19px}
+  #morning.am-result-mode .am-main{order:1}
+  #morning.am-result-mode .am-scene{order:2}
+  #morning .am-experiment{margin:14px 0 16px;padding:18px}
+  #morning .am-experiment-question{font-size:19px;line-height:1.65}
+  #morning .am-experiment>.am-action{margin-top:13px;font-size:14px}
+  #morning .am-experiment>p{margin-top:10px;font-size:12px}
+  #morning .am-fold>summary{font-size:13px;line-height:1.8}
+  #morning .am-prediction-grid{gap:12px;padding:14px}
+  #morning .am-prediction-grid p{font-size:12px}
+  #morning .am-swap-foods{grid-template-columns:minmax(0,1fr) 48px minmax(0,1fr);gap:6px;padding:12px 8px}
+  #morning .am-swap-foods img{height:70px;width:100px}
+  #morning .am-swap-foods strong{font-size:12px}
+  #morning .am-swap-foods small{font-size:10px}
+  #morning .am-swap-symbol{font-size:11px;line-height:1.8}
+}

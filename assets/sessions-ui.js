@@ -28,7 +28,8 @@
     }
   }
   function clearReplayHash() {
-    if (new URLSearchParams(location.hash.slice(1)).has('ep')) history.replaceState(null, '', location.pathname + location.search);
+    const params = new URLSearchParams(location.hash.slice(1));
+    if (['ep', 'am', 'mc'].some(key => params.has(key))) history.replaceState(null, '', location.pathname + location.search);
   }
   async function ready() { if (window.MC_DATA_READY) await window.MC_DATA_READY; if (!initialized) init(); }
   function openSection() {
@@ -41,7 +42,7 @@
     activeId = id; const s = current();
     try {
       s.run = s.engine.makeRun(window.McJourney.captureData(), makeSeed());
-      s.stage = s.actualStage = 'oracle'; s.comparison = null; s.notice = ''; s.sharedLink = ''; s.from = ''; s.to = '';
+      s.stage = s.actualStage = 'oracle'; s.comparison = null; s.notice = ''; s.sharedLink = ''; s.from = ''; s.to = ''; s.afterword = false; s.guideKey = '';
       clearReplayHash(); openSection(); persist(s); render(true);
     } catch (error) { openSection(); renderError(error.message); }
   }
@@ -70,7 +71,8 @@
   }
   function resourceStrip(s, resources, small) {
     const meta = s.engine.meta;
-    return '<div class="ds-resource-strip' + (small ? ' ds-resource-small' : '') + '">' + (meta.resources || []).map(resource => '<div><span>' + esc(resource.label) + '</span><b>' + esc(resourceText(meta, resource, resources?.[resource.key])) + '</b></div>').join('') + '</div>';
+    const fields = (meta.resources || []).filter(resource => s.stage !== 'result' || small || resource.key !== 'elapsed');
+    return '<div class="ds-resource-strip' + (small ? ' ds-resource-small' : '') + '">' + fields.map(resource => '<div><span>' + esc(resource.label) + '</span><b>' + esc(resourceText(meta, resource, resources?.[resource.key])) + '</b></div>').join('') + '</div>';
   }
   function resourcesAt(s, p) {
     const initial = p.initialResources || s.engine.meta.initialResources || {};
@@ -91,11 +93,37 @@
     return '<nav class="ds-progress" aria-label="本局进度">' + names.map((name, i) => '<span class="' + (i === index ? 'ds-current' : i < index ? 'ds-done' : '') + '"' + (i === index ? ' aria-current="step"' : '') + '><i>' + (i + 1) + '</i>' + name + '</span>').join('') + '</nav>';
   }
   function chooseCards(s, entries, action) {
-    return '<div class="ds-choices">' + entries.map((entry, index) => '<button class="ds-choice" data-ds-action="' + action + '" data-ds-value="' + esc(entry.id) + '"' + (entry.available === false ? ' disabled' : '') + '><span class="ds-choice-number">0' + (index + 1) + '</span><h3>' + esc(entry.title || entry.name || entry.id) + '</h3><p>' + esc(entry.text || '') + '</p>' + (entry.effect ? '<div class="ds-choice-effect">' + esc(entry.effect) + '</div>' : '') + (entry.resources ? resourceStrip(s, entry.resources, true) : '') + (entry.minutes != null ? '<span class="ds-choice-minutes">本次行动 ' + number(entry.minutes) + ' 分钟</span>' : '') + (entry.available === false ? '<strong class="ds-unavailable">' + esc(entry.reason || '当前条件不足') + '</strong>' : (entry.reason ? '<p class="ds-choice-reason">' + esc(entry.reason) + '</p>' : '') + '<span class="ds-choice-go">就这样做 <b aria-hidden="true">↗</b></span>') + '</button>').join('') + '</div>';
+    const p = preview(s), base = resourcesAt(s, p);
+    return '<div class="ds-choices">' + entries.map((entry, index) => {
+      const title = entry.title || entry.name || entry.id;
+      const cost = entry.minutes ?? (entry.resources ? Math.max(0, Number(entry.resources.elapsed) - Number(base.elapsed)) : null);
+      const cues = [];
+      if (cost != null) cues.push('用时 ' + number(cost) + ' 分钟');
+      if (entry.costCents) cues.push('另付 ' + money(entry.costCents));
+      let risk = '';
+      if (entry.available === false) risk = entry.reason || '当前条件不足';
+      else if (action === 'oracle') risk = entry.effect || '';
+      else if (s.id === 'midnight') {
+        if (action === 'argument') risk = entry.id === 'evidence' ? '用一次核验，修复一处已知错误。' : '直接继续，错误仍要自己处理。';
+        else if (action === 'choice') risk = entry.id === 'break' ? '恢复状态，但评审窗口不会暂停。' : '省下休息时间，仓促会损失质量。';
+        else risk = (entry.resources.elapsed > s.engine.meta.deadlineMinutes ? '会迟交；' : '可准时；') + (entry.resources.errors > 0 ? '仍会留下错误。' : '已知错误可清掉。');
+      } else {
+        if (action === 'argument') risk = entry.id === 'evidence' ? '让TA先挑，需要先把需求举证。' : '只认可总价，不替你保证两人吃好。';
+        else if (action === 'choice') {
+          const spicy = entry.trays?.friend?.some(item => item.name === '麦辣鸡腿堡' && item.servings > 0);
+          risk = spicy ? 'TA会分到今天不想吃的辣堡。' : entry.resources.friendSatiety < 50 ? 'TA分到的还不够一顿。' : entry.resources.ownSatiety < 50 ? 'TA能吃够，你自己还饿着。' : '两人都能吃够，再看口味与相处。';
+        } else risk = entry.id === 'drop' ? '付打包费，保留座位；这次不深谈。' : (entry.resources.elapsed > 20 ? '会错过占位；' : '赶得上占位；') + (p.dialogueReady ? '可以把话聊开。' : '当前还不足以聊开。');
+      }
+      return '<article class="ds-choice' + (entry.available === false ? ' ds-choice-unavailable' : '') + '"><span class="ds-choice-number">0' + (index + 1) + '</span><h3>' + esc(title) + '</h3>' +
+        (action === 'oracle' ? '<p>' + esc(entry.text || '') + '</p>' : '') +
+        '<div class="ds-choice-cues">' + cues.map(cue => '<span>' + esc(cue) + '</span>').join('') + '</div><p class="ds-choice-risk">' + esc(risk) + '</p>' +
+        button(esc(title) + ' <b aria-hidden="true">↗</b>', action, entry.id, 'ds-choice-select', entry.available === false) +
+        '<details class="ds-prediction"><summary>查看精确预估与条件</summary><p>' + esc(entry.text || '') + '</p><p>' + esc(entry.effect || '') + '</p>' + (entry.reason ? '<p>' + esc(entry.reason) + '</p>' : '') + (entry.resources ? resourceStrip(s, entry.resources, true) : '') + '</details></article>';
+    }).join('') + '</div>';
   }
   function oracleView(s) {
     const meta = s.engine.meta;
-    return heading('01 / 神谕阁 · 一种帮助，一种代价', meta.hook, meta.intro) +
+    return heading('01 / 神谕阁 · 一种帮助，一种代价', meta.hook, s.id === 'midnight' ? '你们小组的网页演示要在02:00提交。首页打不开、按钮没反应、手机布局溢出：三项检查还没过。你只有28元，剩下36分钟。' : meta.intro) +
       '<div class="ds-opening-note">' + (s.id === 'midnight' ? '你能让它更完整，也得决定什么叫“交得出去”。' : '一张订单，两个人。便宜、吃饱和被理解，不是同一本账。') + '</div>' +
       chooseCards(s, meta.oracles || [], 'oracle') + rules(s);
   }
@@ -122,7 +150,7 @@
       chooseCards(s, s.engine.arguments(s.run), 'argument') + rules(s) + '<div class="ds-action-line">' + button('← 回取餐台改订单', 'back', 'order', 'ds-outline') + '</div>';
   }
   function choiceView(s) {
-    return heading('04 / 轮回司 · 先决定怎么对待眼前的人', s.engine.meta.choiceTitle, s.id === 'midnight' ? '精力、烦躁与版本状态都已进入现场。现在的准备方式，会改变下一步真正需要的工作时间。' : '每一种分配都有确定规则。餐盘会按规则实际分开，谁吃饱、谁吃到喜欢的，都进入后面的回应。') + chooseCards(s, s.engine.choices(s.run), 'choice') + rules(s) + '<div class="ds-action-line">' + button('← 回审判庭', 'back', 'court', 'ds-outline') + '</div>';
+    return heading(s.id === 'midnight' ? '04 / 轮回司 · 先决定怎样开工' : '04 / 轮回司 · 先决定怎么对待眼前的人', s.engine.meta.choiceTitle, s.id === 'midnight' ? '精力、烦躁与版本状态都已进入现场。现在的准备方式，会改变下一步真正需要的工作时间。' : '每一种分配都有确定规则。餐盘会按规则实际分开，谁吃饱、谁吃到喜欢的，都进入后面的回应。') + chooseCards(s, s.engine.choices(s.run), 'choice') + rules(s) + '<div class="ds-action-line">' + button('← 回审判庭', 'back', 'court', 'ds-outline') + '</div>';
   }
   function actionView(s) {
     return heading('05 / 轮回司 · 把意图做成行动', s.engine.meta.actionTitle, s.id === 'midnight' ? '这里显示的是本单与前序选择共同决定的实际耗时。窗口失效的策略不能选，改单时也不会自动替你另选。' : '分餐已经落实。坐下还是打包，是最后一次取舍；钱、时间、实际份量和口味一起决定这一晚。') + chooseCards(s, s.engine.actions(s.run), 'action') + rules(s) + '<div class="ds-action-line">' + button(s.id === 'midnight' ? '← 再想想怎样开工' : '← 再想想怎样分餐', 'back', 'choice', 'ds-outline') + '</div>';
@@ -132,18 +160,63 @@
     return '<ol class="ds-timeline' + (small ? ' ds-timeline-small' : '') + '">' + events.map(event => '<li class="' + (event.id === divergence || event.blocked || event.id === 'blocked' ? 'ds-divergence' : '') + '"><span class="ds-event-time">' + clock(s.engine.meta, event.resources?.elapsed) + '</span><strong>' + esc(event.title) + '</strong>' + (event.stage === 'result' ? '' : '<p>' + esc(event.text) + '</p>') + '<div class="ds-event-state">' + (s.engine.meta.resources || []).map(resource => esc(resource.label) + ' ' + esc(resourceText(s.engine.meta, resource, event.resources?.[resource.key]))).join(' · ') + '</div></li>').join('') + '</ol>';
   }
   function linkField(s) { return s.sharedLink ? '<label class="ds-link-field">公开重玩链接 · 可选中后手动复制<input id="dsReplayLink" type="text" readonly value="' + esc(s.sharedLink) + '"></label>' : ''; }
+  function replayGuide(s) {
+    const key = (window.McReplayGuide ? 'guide:' : 'manual:') + JSON.stringify(s.run);
+    if (s.guideKey !== key || !s.guide) {
+      s.guide = window.McReplayGuide ? window.McReplayGuide.analyze(s.engine, s.run) : {best: null, candidates: [], blocked: [], total: 0, headline: '可以手动换一份，查看原计划怎样变化。', detail: '保持所有后续选择，比较由原引擎重新结算。'};
+      s.guideKey = key;
+    }
+    return s.guide;
+  }
+  function outcomeChips(s, result) {
+    const r = result.resources;
+    const chips = s.id === 'midnight' ? [
+      {text: r.elapsed <= s.engine.meta.deadlineMinutes ? '准时提交' : '迟交 ' + number(r.elapsed - s.engine.meta.deadlineMinutes) + ' 分钟', good: r.elapsed <= s.engine.meta.deadlineMinutes},
+      {text: r.errors ? '遗留 ' + r.errors + ' 处错误' : '已知错误清零', good: !r.errors},
+      {text: r.quality >= 75 ? '质量达到打磨门槛' : '细节还欠打磨', good: r.quality >= 75}
+    ] : [
+      {text: r.ownSatiety >= 50 && r.friendSatiety >= 50 ? '两个人都吃够' : r.friendSatiety < 50 ? 'TA还没吃够' : '你还饿着', good: r.ownSatiety >= 50 && r.friendSatiety >= 50},
+      {text: result.scene.conversation ? '把话聊开了' : '这次没有深谈', good: !!result.scene.conversation},
+      {text: result.scene.reservedSeat ? '保住双人位' : '错过双人位', good: !!result.scene.reservedSeat}
+    ];
+    return '<div class="ds-outcomes">' + chips.map(chip => '<span class="' + (chip.good ? 'ds-gain' : 'ds-loss') + '">' + esc(chip.text) + '</span>').join('') + '</div>';
+  }
+  function friendAfterword(s, result) {
+    const r = result.resources, spicy = result.scene.trays?.friend?.some(item => item.name === '麦辣鸡腿堡' && item.servings > 0);
+    let prompt, reply;
+    if (spicy) { prompt = '接一句：刚才没听仔细。'; reply = 'TA把辣堡旁边的餐纸叠了一下：“下次先问我吧。便宜和我想吃什么，可以一起算。”'; }
+    else if (r.friendSatiety < 50) { prompt = '接一句：这一份确实留少了。'; reply = 'TA笑了笑：“我知道你想省一点。下次先看看，我们是不是都能吃够。”'; }
+    else if (r.ownSatiety < 50) { prompt = '接一句：下次换你来点。'; reply = 'TA看看你的餐盘：“成交。下次也给你留够一份，别总拿自己的那半顿去凑。”'; }
+    else if (result.scene.conversation) { prompt = '接一句：我在，你慢慢说。'; reply = result.scene.reservedSeat ? 'TA终于把肩膀放松下来：“也不是要你马上帮我解决，就是想有人听完。”' : 'TA看看已经被占的座位，又看向你：“地方再找一个吧。刚才那句话，我还想说完。”'; }
+    else if (s.run.response === 'drop') { prompt = '接一句：那句话，下次再聊。'; reply = 'TA把餐盒放在书旁：“好。下次我们早点吃，不用一边看钟，一边想怎么开口。”'; }
+    else { prompt = '接一句：你刚才还想说什么？'; reply = 'TA停了一下：“今天先吃饭吧。”有些话，不能靠一顿合格的晚饭立刻换来。'; }
+    return '<div class="ds-afterword"><span>餐桌后话 · 时间停在 ' + clock(s.engine.meta, r.elapsed) + '</span><p class="ds-afterword-prompt">' + esc(result.scene.message) + '</p>' + button(s.afterword ? '收起餐桌后话' : prompt, 'afterword', null, 'ds-outline') + (s.afterword ? '<p class="ds-afterword-reply" role="status">' + esc(reply) + '</p>' : '') + '</div>';
+  }
+  function midnightAfterword(s, result) {
+    const r = result.resources, onTime = r.elapsed <= s.engine.meta.deadlineMinutes;
+    const received = onTime ? '昨晚的提交准时收到了。' : '我看到你在' + clock(s.engine.meta, r.elapsed) + '补交了版本。迟交记录还在，不能用质量抵掉；我们得一起把说明补上。';
+    const version = r.errors > 0 ? '演示里还留着' + number(r.errors) + '处已知错误，今天先列给组里，别让上台的人临时踩坑。不是让你一个人继续熬，我们一起查。' : r.quality >= 75 ? '首页、交互和手机布局都核验过了，说明也达到了完整版本的要求。早上打开时能看见你留下的打磨，谢谢你把这份演示认真收好了。' : '核心路径能演示，已知错误也清掉了。表达和边界还欠一点，今天就按可运行版的范围讲；余下的细节，我们一起补。';
+    const strategy = s.run.work === 'peer' ? '昨晚评审那一轮的记录还在，接下来不用从头猜。' : s.run.work === 'polish' ? '你选了深度打磨，时间的代价和留下的成果都写在这版里。' : '先交可运行版，是一次明确的取舍；今天把它能做到什么讲清楚就好。';
+    const evidence = s.run.argument === 'evidence' ? '复现步骤也留下了，我能顺着记录接手。' : '下一轮我们先整理复现步骤，让核验早点进入进度。';
+    return '<details class="ds-afterword ds-midnight-afterword"><summary>翌日，小林看到了提交</summary><span>次日上午的消息 · 本局停在 ' + clock(s.engine.meta, r.elapsed) + '</span><p class="ds-afterword-reply">' + esc('小林：“' + received + version + '”') + '</p><p class="ds-afterword-context">' + esc(strategy + evidence) + '</p></details>';
+  }
   function resultView(s) {
     const result = s.engine.resolve(s.run);
     if (result.blocked) return heading('轮回司 / 因果断点', '这一条线，未能完成。', result.reason) + timeline(s, result) + '<div class="ds-action-line">' + button('重新选择行动', 'back', 'action', 'ds-primary') + button('回去改订单', 'back', 'order', 'ds-outline') + '</div>';
     unlock(s, result);
-    return '<header class="ds-result-heading"><span class="ds-kicker">06 / 轮回司 · 这一单，留下了具体的后果</span><span class="ds-ending-id">' + esc(result.ending.id) + ' / ' + clock(s.engine.meta, result.resources.elapsed) + '</span><h2>' + esc(result.ending.name) + '</h2><p>' + esc(result.ending.text) + '</p></header>' +
-      '<div class="ds-causal-title"><b>从这一单，到这一个结局。</b><span>FOLLOW THE CAUSE</span></div>' + timeline(s, result) +
-      '<div class="ds-tear-prompt"><strong>如果只换掉一份呢？</strong><p>神谕、核券意图、申辩、' + (s.id === 'midnight' ? '开工准备和提交策略' : '分配规则和相处方式') + '全部锁定。让同一套选择，遇上另一份订单。</p>' + button('撕下一行，对比两条时间线 ↗', 'compare-open', null, 'ds-primary') + '</div>' +
+    const guide = replayGuide(s), candidate = guide.best;
+    const shortText = result.ending.text.split('。')[0] + '。';
+    return '<header class="ds-result-heading"><span class="ds-kicker">轮回司 / 这一单留下的得失</span><h2>' + esc(result.ending.name) + '</h2>' + outcomeChips(s, result) + '<p>' + esc(shortText) + '</p></header>' +
+      '<div class="ds-tear-prompt ds-experiment"><span class="ds-kicker">只换一份 / 一个新问题</span><strong>' + esc(candidate ? candidate.question : guide.headline) + '</strong>' +
+      '<p>' + esc(candidate ? '其他选择都锁定。亲自看看，从哪一步开始不一样。' : guide.detail) + '</p>' + button(esc(candidate ? candidate.buttonLabel.replace(/\s*↗\s*$/, '') : '手动换一份，查看断点') + ' <span aria-hidden="true">↗</span>', 'compare-open', null, 'ds-primary ds-experiment-button') + '</div>' +
+      (s.id === 'friend' ? friendAfterword(s, result) : midnightAfterword(s, result)) +
+      '<details class="ds-causal-details"><summary>展开完整因果链 · 看这一单怎样走到这里</summary><p class="ds-full-ending">' + esc(result.ending.text) + '</p>' + timeline(s, result) + '</details>' +
       '<div class="ds-share-row">' + button('保存命运小票 PNG', 'receipt') + button('复制公开重玩链接', 'link') + button('这一局的档案', 'archive') + '</div>' + linkField(s) + rules(s) +
-      '<p class="ds-session-note">种子 ' + s.run.seed + ' · ' + esc(s.run.snapshot.date) + ' · 数据已冻结 · ' + esc(s.run.snapshot.source || '内置演示菜单') + '</p><div class="ds-action-line">' + button('重新点单，保留神谕', 'reorder', null, 'ds-outline') + button('全新的一局', 'new', s.id, 'ds-outline') + '</div>';
+      '<details class="ds-session-note"><summary>本局数据记录</summary><p>种子 ' + s.run.seed + ' · ' + esc(s.run.snapshot.date) + ' · 数据已冻结 · ' + esc(s.run.snapshot.source || '内置演示菜单') + '</p></details><div class="ds-action-line">' + button('回取餐台调整订单', 'back', 'order', 'ds-outline') + button('全新的一局', 'new', s.id, 'ds-outline') + '</div>';
   }
-  function prepareComparison(s) {
+  function prepareComparison(s, manual) {
     const names = Object.keys(s.run.cart).filter(name => s.run.cart[name] > 0), items = catalog(s);
+    if (!manual) { const best = replayGuide(s).best; if (best) { s.from = best.from; s.to = best.to; } }
     if (!names.includes(s.from)) s.from = names[0] || '';
     if (!items.some(item => item.name === s.to) || s.to === s.from) s.to = items.find(item => item.name !== s.from)?.name || '';
     s.comparison = s.engine.compare(s.run, {from: s.from, to: s.to});
@@ -158,11 +231,15 @@
     const names = Object.keys(s.run.cart).filter(name => s.run.cart[name] > 0), items = catalog(s);
     const delta = (s.engine.meta.resources || []).map(resource => {
       const amount = Number(b[resource.key] || 0) - Number(a[resource.key] || 0);
-      return '<div><small>' + esc(resource.label) + (comp.alternate.blocked ? '差*' : '变化') + '</small><b>' + esc(resource.format === 'money' ? (amount > 0 ? '+' : amount < 0 ? '−' : '') + money(Math.abs(amount)) : signed(amount)) + '</b></div>';
+      const unfinishedMoney = comp.alternate.blocked && resource.format === 'money';
+      const label = unfinishedMoney ? '最终' + resource.label : resource.label + (comp.alternate.blocked ? '差*' : '变化');
+      const value = unfinishedMoney ? '未完成' : resource.format === 'money' ? (amount > 0 ? '+' : amount < 0 ? '−' : '') + money(Math.abs(amount)) : signed(amount);
+      return '<div><small>' + esc(label) + '</small><b>' + esc(value) + '</b></div>';
     }).join('');
     const oracle = s.engine.meta.oracles.find(value => value.id === s.run.oracle);
     const lockedChoices = [oracle?.title || s.run.oracle, s.run.coupon ? '核券意图保留' : '不用券', s.engine.arguments(s.run).find(value => value.id === s.run.argument)?.title, s.engine.choices(s.run).find(value => value.id === s.run[s.engine.meta.choiceField])?.title, s.engine.actions(s.run).find(value => value.id === s.run[s.engine.meta.actionField])?.title].filter(Boolean);
     return heading('轮回司 / 一行订单，两条因果', '只换一份，其他选择原封不动。', '保持同一菜单快照和种子。换品让原计划失效时，就停在真实断点，不自动帮你换策略。') +
+      '<p class="ds-comparison-summary">' + esc(window.McReplayGuide ? window.McReplayGuide.describe(s.engine, s.run, comp) : '只替换一份 ' + s.from + ' → ' + s.to + '，其余输入保持相同。') + '</p>' +
       '<div class="ds-replace-form"><label>拿走原订单中的一份<select id="dsReplaceFrom">' + names.map(name => '<option value="' + esc(name) + '"' + (s.from === name ? ' selected' : '') + '>' + esc(name) + '</option>').join('') + '</select></label><span aria-hidden="true">→</span><label>只放回另一份<select id="dsReplaceTo">' + items.filter(item => item.name !== s.from).map(item => '<option value="' + esc(item.name) + '"' + (s.to === item.name ? ' selected' : '') + '>' + esc(item.name) + '</option>').join('') + '</select></label></div>' +
       '<p class="ds-locks">已锁定：' + lockedChoices.map(esc).join(' / ') + '。</p><div class="ds-deltas"><div><small>' + (comp.alternate.blocked ? '完成时间' : '完成时间差') + '</small><b>' + (comp.alternate.blocked ? '未完成' : signed(b.elapsed - a.elapsed) + '′') + '</b></div>' + delta + '</div>' +
       '<div class="ds-first-divergence"><strong>第一次分岔</strong><p>' + esc(first ? first.title + '。' + first.text : '本次替换没有改变后续资源与结局。') + '</p></div>' +
@@ -171,19 +248,53 @@
   }
   function archiveView(s) {
     const endings = s.engine.endings || [];
+    const hints = {
+      'midnight-on-high': '在截止前交出无错误、质量达到75的版本。',
+      'midnight-on-runnable': '先保住截止和可运行，允许细节还没打磨完。',
+      'midnight-on-buggy': '准时按下提交键，看看遗留错误会跟到哪里。',
+      'midnight-late-high': '为了完整版本，愿不愿意承担迟交记录？',
+      'midnight-late-runnable': '错误清掉了，时间有没有一起照顾到？',
+      'midnight-late-buggy': '醒着和多熬，并不保证写对；试着看看那条代价。',
+      'friend-dialogue': '让两人吃够、信任达到60，还赶得上18:30占位。',
+      'friend-missed-seat': '给彼此留出聊天时间，座位又会发生什么？',
+      'friend-spicy-silence': 'TA说了今天不想吃辣，这句话进了订单吗？',
+      'friend-left-hungry': '你吃够了的时候，TA的餐盘里还有多少？',
+      'friend-self-hungry': '把好的一份留给TA，也看看自己付出的饥饿。',
+      'friend-both-hungry': '总价便宜，不代表小食能变成两顿晚饭。',
+      'friend-room-delivery': '两人吃够又合口味，把这次深谈留到以后。',
+      'friend-quiet-meal': '饭够了，信任是否足以接住另一句话？'
+    };
     return heading('轮回司 / ' + s.engine.meta.name + '专属档案', '这些后果，你亲自走过。', '只记录已经完成的因果线；没有通关的存档，仍然从原来的阶段继续。') +
-      '<div class="ds-collection">' + endings.map(ending => { const saved = s.collection[ending.id]; return '<article class="ds-collection-card' + (!saved ? ' ds-locked' : '') + '"><span>' + esc(ending.id) + '</span><h3>' + esc(saved ? ending.name : '尚未走过的一条线') + '</h3><p>' + esc(saved ? saved.text || ending.text : '点不同的一单，保留不同的代价。') + '</p></article>'; }).join('') + '</div><p class="ds-session-note">已完成 ' + Object.keys(s.collection).length + ' / ' + endings.length + ' 种结局。档案保存在当前浏览器；清除站点数据会移除。</p><div class="ds-action-line">' + button('继续这一局', 'return', null, 'ds-primary') + button('全新的一局', 'new', s.id, 'ds-outline') + '</div><div class="ds-cross-links"><span>翻到另一页</span>' + button('早八档案', 'morning-archive') + button(s.id === 'midnight' ? '饭搭子档案' : '凌晨档案', 'other-archive', s.id === 'midnight' ? 'friend' : 'midnight') + '</div>';
+      '<div class="ds-collection">' + endings.map((ending, index) => { const saved = s.collection[ending.id]; return '<article class="ds-collection-card' + (!saved ? ' ds-locked' : '') + '"><span>' + (saved ? '已走过的回响' : '线索 ' + String(index + 1).padStart(2, '0')) + '</span><h3>' + esc(saved ? ending.name : '还有一种可能') + '</h3><p>' + esc(saved ? saved.text || ending.text : hints[ending.id] || '再换一份，看看哪个后果先改变。') + '</p></article>'; }).join('') + '</div><p class="ds-session-note">已完成 ' + Object.keys(s.collection).length + ' / ' + endings.length + ' 种结局。档案保存在当前浏览器；清除站点数据会移除。</p><div class="ds-action-line">' + button('继续这一局', 'return', null, 'ds-primary') + button('全新的一局', 'new', s.id, 'ds-outline') + '</div><div class="ds-cross-links"><span>翻到另一页</span>' + button('早八档案', 'morning-archive') + button(s.id === 'midnight' ? '饭搭子档案' : '凌晨档案', 'other-archive', s.id === 'midnight' ? 'friend' : 'midnight') + '</div>';
   }
   function foodImages(s, names) {
     const items = catalog(s);
     return names.map(name => { const item = items.find(value => value.name === name); return item ? '<img src="' + esc(item.img) + '" alt="' + esc(name) + '">' : ''; }).join('');
   }
+  function midnightMessage(s, data, result) {
+    const elapsed = Number(data.elapsed || 0), title = s.engine.meta.personName || '组员小林';
+    if (result && s.run.work === 'peer' && !result.blocked) {
+      const started = result.timeline.find(event => event.stage === 'choice')?.resources?.elapsed || 0;
+      return {label: title + ' · ' + clock(s.engine.meta, started) + ' 评审时记录', text: data.errors ? '核心路径看过了，但最终版本又留下了回归错误。演示前记得把它写进已知问题。' : '首页、按钮和手机布局都过了核验。版本现在能演示；还没写透的地方，别假装它已经完整。'};
+    }
+    if (elapsed > 12) return {label: title + ' · 01:36 离线前留言', text: '“我先睡了，评审窗口到这里。你还可以自己完成提交，别把待检查当成已通过。”'};
+    const label = title + ' · ' + clock(s.engine.meta, elapsed) + (s.stage === 'order' ? ' 订单预估时刻' : ' 在线');
+    if (s.stage === 'oracle') return {label, text: '我们小组明天要演示网页。首页、按钮、手机布局这三项先保住，再想怎么把它讲完整。'};
+    if (s.stage === 'order') return {label, text: '夜宵能改变你的状态，不能替你点开那三个检查项。先看你准备拿多少分钟去换。'};
+    if (s.stage === 'court') return {label, text: '金额没有问题。网页的问题有没有复现步骤？有的话，先拿出来查一遍。'};
+    if (s.stage === 'choice') return {label, text: data.errors < 3 ? '复现记录收到，至少有一项已经查清。现在是继续冲，还是缓一下再看？' : '三项还在待检查列表。省下核验时间，问题不会自己消失。'};
+    if (s.stage === 'action') return {label, text: s.run.approach === 'break' ? '你歇过这一口气了。要我评审就赶在窗口内发来；自己打磨也记得看截止线。' : '你选了继续冲。现在能交哪一版，得把时间和可能留下的错误一起看。'};
+    return {label, text: data.errors ? '提交记录有了，已知问题也记上。明早演示时，我们得把边界说清楚。' : '能演示的核心保住了。之后再一起补细节，别靠一个绿色按钮判断全部完成。'};
+  }
+  function projectChecks(data) {
+    const errors = Math.max(0, Number(data.errors || 0)), names = ['首页可以打开', '按钮完成核心交互', '手机布局不溢出'];
+    return '<ul class="ds-project-checks" aria-label="小组网页演示检查单">' + names.map((name, index) => { const passed = index < Math.max(0, 3 - errors); return '<li class="' + (passed ? 'ds-check-pass' : 'ds-check-pending') + '"><span aria-hidden="true">' + (passed ? '✓' : '!') + '</span><strong>' + name + '</strong><small>' + (passed ? '已核验' : '待修复') + '</small></li>'; }).join('') + (errors > 3 ? '<li class="ds-check-pending"><span aria-hidden="true">!</span><strong>另有 ' + number(errors - 3) + ' 处回归错误</strong><small>待修复</small></li>' : '') + '</ul>';
+  }
   function midnightScene(s, data) {
     const elapsed = Number(data.elapsed || 0), final = ['result', 'compare'].includes(s.stage), result = final ? s.engine.resolve(s.run) : null;
-    const peer = s.engine.actions(s.run).find(action => action.id === 'peer');
     const status = result?.scene?.status || (s.stage === 'oracle' ? '分支尚未创建' : s.stage === 'order' ? '订单预估 / 未执行' : s.stage === 'court' ? '等待复现证据' : s.stage === 'choice' ? '准备开工' : '等待提交决策');
-    const message = result?.scene?.message || (s.stage === 'oracle' ? '我还能帮你看一遍，但请先把可复现的版本留下。' : s.run.oracle === 'peer' ? (peer?.available === false ? peer.reason : '评审窗口还在。你决定好版本，我就开始看。') : '我收到消息了。你先决定这次要保住什么。');
-    return '<aside class="ds-scene ds-midnight-scene" aria-label="凌晨编辑器现场"><div class="ds-window-bar"><span class="ds-window-dots" aria-hidden="true">● ● ●</span><span>multiverse / submission.html</span></div><div class="ds-editor-tabs"><span class="ds-tab-active">main.js</span><span>review.log</span><span>' + esc(status) + '</span></div><div class="ds-editor"><div><i>01</i><span class="ds-code-purple">const</span> deadline = <span class="ds-code-gold">"02:00"</span>;</div><div><i>02</i><span class="ds-code-purple">let</span> quality = <b>' + number(data.quality) + '</b>;</div><div><i>03</i><span class="ds-code-purple">let</span> errors = <b class="ds-code-red">' + number(data.errors) + '</b>;</div><div><i>04</i><span class="ds-code-comment">// 这行，要拿什么来换？</span></div><div class="ds-code-cursor"><i>05</i>await yourChoice();<span aria-hidden="true">▌</span></div></div><div class="ds-terminal"><span>PROBLEMS / 当前版本</span><p class="' + (data.errors ? 'ds-code-red' : 'ds-code-green') + '">' + (Number(data.errors) ? number(data.errors) + ' 个未修复错误' : '没有遗留错误') + '</p><p>烦躁 ' + number(data.strain) + '/100 · 已用 ' + number(elapsed) + ' 分钟</p><p>' + (final ? '这条因果线已停止执行。' : '只在作出选择时推进。') + '</p></div><div class="ds-scene-message"><span>' + esc(s.engine.meta.personName) + ' / ' + clock(s.engine.meta, elapsed) + '</span><p>' + esc(message) + '</p></div><div class="ds-desk-food">' + (Object.keys(s.run.cart).length ? foodImages(s, Object.keys(s.run.cart)) : '<span>空餐盘，旁边是还没提交的版本。</span>') + '</div></aside>';
+    const message = midnightMessage(s, data, result);
+    return '<aside class="ds-scene ds-midnight-scene" aria-label="凌晨编辑器现场"><div class="ds-window-bar"><span class="ds-window-dots" aria-hidden="true">● ● ●</span><span>小组网页演示 / campus-demo.html</span></div><div class="ds-editor-tabs"><span class="ds-tab-active">演示检查单</span><span>review.log</span><span>' + esc(status) + '</span></div>' + projectChecks(data) + '<div class="ds-terminal"><span>PROBLEMS / 当前版本</span><p class="' + (data.errors ? 'ds-code-red' : 'ds-code-green') + '">' + (Number(data.errors) ? number(data.errors) + ' 个未修复错误' : '没有遗留错误') + '</p><p>烦躁 ' + number(data.strain) + '/100 · 已用 ' + number(elapsed) + ' 分钟</p><p>' + (final ? '这条因果线已停止执行。' : '只在作出选择时推进。') + '</p></div><div class="ds-scene-message"><span>' + esc(message.label) + '</span><p>' + esc(message.text) + '</p></div><div class="ds-desk-food">' + (Object.keys(s.run.cart).length ? foodImages(s, Object.keys(s.run.cart)) : '<span>空餐盘，旁边是还没提交的演示网页。</span>') + '</div></aside>';
   }
   function trayView(s, data, who, trays) {
     const self = who === 'self', tray = trays?.[who], amount = self ? data.ownSatiety : data.friendSatiety;
@@ -196,20 +307,23 @@
     const final = ['result', 'compare'].includes(s.stage), result = final ? s.engine.resolve(s.run) : null;
     const allocated = ['action', 'result', 'compare'].includes(s.stage);
     const trays = allocated ? result?.scene?.trays || p.trays || data.trays : null;
-    const message = result?.scene?.message || (s.stage === 'oracle' ? '我还没吃。今天想吃喜欢的那一口，也想和你坐一会儿。' : s.stage === 'order' ? '你先看看菜单。点什么、怎么分，咱们可以说清楚。' : s.stage === 'court' ? '总价不等于我们每个人都吃好了。你听见我想吃什么了吗？' : s.stage === 'choice' ? '餐在这里了。你准备怎么分？' : '现在轮到我们决定，要不要坐下来。');
+    const received = trays?.friend || [], hasSpicy = received.some(item => item.name === '麦辣鸡腿堡' && item.servings > 0), hasFish = received.some(item => item.name === '麦香鱼' && item.servings > 0);
+    const message = !allocated ? (s.stage === 'oracle' ? '我还没吃。今天不想吃辣，想吃喜欢的那一口，也想和你坐一会儿。' : s.stage === 'order' ? '你先看看菜单。点什么、怎么分，咱们可以说清楚。' : s.stage === 'court' ? '总价不等于我们每个人都吃好了。你听见我想吃什么了吗？' : '餐在这里了。你准备怎么分？') :
+      hasSpicy ? '我今天真的不想吃辣。餐盘里这份辣堡，和刚才说的有点不一样。' : data.friendSatiety < 50 ? '谢谢你留了一口。不过这点还不够一顿，我还得找点吃的。' : data.ownSatiety < 50 ? '我的够了，你那边是不是太少？别总拿自己的半顿来凑。' : result?.scene.conversation ? '你真的听完了。最近我有点撑不住，能再说两句吗？' : final ? (s.run.response === 'drop' ? '晚饭收到。先一起自习吧，想聊的那句话，下次补上。' : hasFish ? '你记得我想吃鱼，这一口我喜欢。刚才想说的……今天先慢慢来。' : '晚饭吃够了。刚才那句话……今天先不急着说完。') : hasFish ? '你记得我想吃鱼。这一口我喜欢，等会儿我们怎么安排？' : '我这份够了。现在轮到我们决定，要不要坐下来。';
     return '<aside class="ds-scene ds-friends-scene" aria-label="饭搭子双人餐桌现场"><div class="ds-table-label"><span>TABLE FOR TWO / 18:10</span><span>' + (final ? '这一晚已归档' : '还有一句话没说完') + '</span></div><div class="ds-table-message"><span>' + esc(s.engine.meta.personName || '饭搭子') + ' / ' + clock(s.engine.meta, data.elapsed) + '</span><p>' + esc(message) + '</p></div><div class="ds-table-surface"><div class="ds-seat ds-seat-one">你</div>' + trayView(s, data, 'self', trays) + '<div class="ds-table-between"><span>' + (allocated ? esc(s.engine.choices(s.run).find(choice => choice.id === s.run.allocation)?.title || '') : '尚未分餐') + '</span><i aria-hidden="true">✦</i></div>' + trayView(s, data, 'friend', trays) + '<div class="ds-seat ds-seat-two">TA</div></div><div class="ds-table-trust"><span>信任</span><strong>' + number(data.trust) + '<small> 游戏分</small></strong><p>' + esc(result?.scene?.status || '份量、口味与相处，会让这张桌子发生变化。') + '</p></div></aside>';
   }
   function frame(s, body, p, data) {
     const meta = s.engine.meta, count = Object.keys(s.collection).length, total = s.engine.endings.length;
-    const masthead = '<div class="ds-top"><span>McMULTIVERSE / FIELD ' + (s.id === 'midnight' ? '002' : '003') + '</span><div>' + button('← 回大殿', 'home') + button('档案 ' + count + '/' + total, 'archive') + '</div></div><div class="ds-title-row"><div><span class="ds-kicker">' + (s.id === 'midnight' ? 'ONE MORE COMMIT. ONE LESS MINUTE.' : 'ONE ORDER. TWO DIFFERENT APPETITES.') + '</span><h1>' + esc(meta.name) + '<span>。</span></h1></div><p>思考不会走时。<br>每一次选择，才留下后果。</p></div>';
+    const masthead = '<div class="ds-top"><span>' + (s.stage === 'result' ? esc(meta.name) + ' / 本局结局' : 'McMULTIVERSE / FIELD ' + (s.id === 'midnight' ? '002' : '003')) + '</span><div>' + button('← 回大殿', 'home') + button('档案 ' + count + '/' + total, 'archive') + '</div></div><div class="ds-title-row"><div><span class="ds-kicker">' + (s.id === 'midnight' ? 'ONE MORE COMMIT. ONE LESS MINUTE.' : 'ONE ORDER. TWO DIFFERENT APPETITES.') + '</span><h1>' + esc(meta.name) + '<span>。</span></h1></div><p>思考不会走时。<br>每一次选择，才留下后果。</p></div>';
     const notice = '<p class="ds-notice" id="dsNotice" role="status" aria-live="polite">' + esc(s.notice || (s.storageWarning ? '当前浏览器限制本地存储；这一局仍可玩，关闭后不会保存。' : '')) + '</p>';
     const wide = ['compare', 'archive'].includes(s.stage);
-    return masthead + (s.stage === 'archive' ? '' : hud(s, data)) + '<div class="ds-layout' + (wide ? ' ds-wide' : '') + '"><div class="ds-main">' + (s.stage === 'archive' || s.stage === 'compare' ? '' : progress(s)) + body + notice + '</div>' + (wide ? '' : s.id === 'midnight' ? midnightScene(s, data) : friendsScene(s, data, p)) + '</div><footer class="ds-footer"><span>虚构情景与游戏规则 · 无真实倒计时</span><span>一份订单，不只结算价钱。</span></footer>';
+    return masthead + (s.stage === 'archive' ? '' : hud(s, data)) + '<div class="ds-layout' + (wide ? ' ds-wide' : '') + '"><div class="ds-main">' + (['archive', 'compare', 'result'].includes(s.stage) ? '' : progress(s)) + body + notice + '</div>' + (wide ? '' : s.id === 'midnight' ? midnightScene(s, data) : friendsScene(s, data, p)) + '</div><footer class="ds-footer"><span>虚构情景与游戏规则 · 无真实倒计时</span><span>一份订单，不只结算价钱。</span></footer>';
   }
   function render(moveFocus) {
     const s = current(); if (!s?.run) return;
     const p = preview(s), data = resourcesAt(s, p), views = {oracle: oracleView, order: orderView, court: courtView, choice: choiceView, action: actionView, result: resultView, compare: compareView, archive: archiveView};
     section.classList.toggle('ds-midnight', s.id === 'midnight'); section.classList.toggle('ds-friend', s.id === 'friend');
+    section.classList.toggle('ds-is-result', s.stage === 'result');
     section.innerHTML = frame(s, (views[s.stage] || oracleView)(s), p, data);
     if (moveFocus) { const heading = section.querySelector('.ds-main h2'); if (heading) { heading.tabIndex = -1; heading.focus({preventScroll: true}); } section.scrollIntoView({block: 'start', behavior: 'instant'}); }
   }
@@ -239,6 +353,7 @@
     if (action === 'other-archive') return showSessionArchive(value);
     if (action === 'morning-archive') { window.showMorningCollection?.(); return; }
     const s = current(); if (!s?.run) return;
+    if (action === 'afterword') { s.afterword = !s.afterword; render(false); section.querySelector('[data-ds-action="afterword"]')?.focus({preventScroll: true}); return; }
     s.notice = ''; let moveFocus = true;
     try {
       if (action === 'oracle') { s.run.oracle = value; s.run.coupon = false; resetAfterOrder(s); s.stage = 'order'; }
@@ -246,7 +361,7 @@
       else if (action === 'next') { if (!preview(s).valid) return; s.stage = value; }
       else if (action === 'argument') { const item = s.engine.arguments(s.run).find(entry => entry.id === value); if (!item || item.available === false) return; s.run.argument = value; s.stage = 'choice'; }
       else if (action === 'choice') { const item = s.engine.choices(s.run).find(entry => entry.id === value); if (!item || item.available === false) return; s.run[s.engine.meta.choiceField] = value; s.stage = 'action'; }
-      else if (action === 'action') { const item = s.engine.actions(s.run).find(entry => entry.id === value); if (!item || item.available === false) return; s.run[s.engine.meta.actionField] = value; s.stage = 'result'; s.sharedLink = ''; }
+      else if (action === 'action') { const item = s.engine.actions(s.run).find(entry => entry.id === value); if (!item || item.available === false) return; s.run[s.engine.meta.actionField] = value; s.stage = 'result'; s.sharedLink = ''; s.afterword = false; }
       else if (action === 'back') { s.stage = value; if (value === 'order' || value === 'oracle') resetAfterOrder(s); }
       else if (action === 'compare-open') { s.stage = 'compare'; s.comparison = null; prepareComparison(s); }
       else if (action === 'archive') s.stage = 'archive';
@@ -264,7 +379,7 @@
     s.notice = '';
     try {
       if (event.target.id === 'dsCoupon') { s.run.coupon = event.target.checked; resetAfterOrder(s); clearReplayHash(); persist(s); render(false); section.querySelector('#dsCoupon')?.focus({preventScroll: true}); }
-      else if (event.target.id === 'dsReplaceFrom' || event.target.id === 'dsReplaceTo') { s.from = section.querySelector('#dsReplaceFrom').value; s.to = section.querySelector('#dsReplaceTo').value; const id = event.target.id; prepareComparison(s); render(false); section.querySelector('#' + id)?.focus({preventScroll: true}); }
+      else if (event.target.id === 'dsReplaceFrom' || event.target.id === 'dsReplaceTo') { s.from = section.querySelector('#dsReplaceFrom').value; s.to = section.querySelector('#dsReplaceTo').value; const id = event.target.id; prepareComparison(s, true); render(false); section.querySelector('#' + id)?.focus({preventScroll: true}); }
     } catch (error) { s.notice = error.message; render(false); }
   }
   async function replayFromLocation() {
@@ -272,7 +387,7 @@
     await ready(); const id = params.get('s');
     if (!IDS.includes(id)) { openSection(); renderError('公开重玩单的情景不受支持。'); return; }
     activeId = id; const s = current();
-    try { s.run = s.engine.decode(location.hash, window.McJourney.captureData()); s.stage = s.actualStage = 'result'; s.comparison = null; s.sharedLink = ''; s.notice = '公开重玩单已载入：同一份订单、同一神谕和所有选择。'; openSection(); persist(s); render(true); }
+    try { s.run = s.engine.decode(location.hash, window.McJourney.captureData()); s.stage = s.actualStage = 'result'; s.comparison = null; s.sharedLink = ''; s.afterword = false; s.notice = '公开重玩单已载入：同一份订单、同一神谕和所有选择。'; openSection(); persist(s); render(true); }
     catch (error) { openSection(); renderError(error.message); }
   }
   function init() {
