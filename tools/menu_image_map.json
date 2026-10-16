@@ -1,0 +1,157 @@
+{
+  "巨无霸": {
+    "file": "assets/menu/巨无霸.png",
+    "official": "巨无霸",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081011205699.png"
+  },
+  "麦辣鸡腿堡": {
+    "file": "assets/menu/麦辣鸡腿汉堡.png",
+    "official": "麦辣鸡腿汉堡",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/04/202504091717393584.png"
+  },
+  "板烧鸡腿堡": {
+    "file": "assets/menu/板烧鸡腿堡.png",
+    "official": "板烧鸡腿堡",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/10/202410121642022710.png"
+  },
+  "双层吉士汉堡": {
+    "file": "assets/menu/双层吉士汉堡.png",
+    "official": "双层吉士汉堡",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/05/202505191553352680.png"
+  },
+  "麦香鱼": {
+    "file": "assets/menu/麦香鱼.png",
+    "official": "麦香鱼",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081013175111.png"
+  },
+  "麦香鸡": {
+    "file": "assets/menu/麦香鸡.png",
+    "official": "麦香鸡",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081013011355.png"
+  },
+  "1+1随心配": {
+    "file": "assets/menu/吉士汉堡包.png",
+    "official": "吉士汉堡包",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081013284833.png"
+  },
+  "麦乐鸡(5块)": {
+    "file": "assets/menu/麦乐鸡(5块).png",
+    "official": "麦乐鸡 (5块)",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091547543048.png"
+  },
+  "小薯条": {
+    "file": "assets/menu/薯条.png",
+    "official": "薯条",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091547349086.png"
+  },
+  "中薯条": {
+    "file": "assets/menu/薯条.png",
+    "official": "薯条",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091547349086.png"
+  },
+  "大薯条": {
+    "file": "assets/menu/薯条.png",
+    "official": "薯条",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091547349086.png"
+  },
+  "脆薯饼": {
+    "file": "assets/menu/脆薯饼.png",
+    "official": "脆薯饼",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091604513345.png"
+  },
+  "玉米杯": {
+    "file": "assets/menu/玉米杯.png",
+    "official": "玉米杯",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091548118821.png"
+  },
+  "麦旋风": {
+    "file": "assets/menu/奥利奥麦旋风.png",
+    "official": "奥利奥麦旋风",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2020/03/202003191447419769.png"
+  },
+  "香芋派": {
+    "file": "assets/menu/香芋派.png",
+    "official": "香芋派",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091556569394.png"
+  },
+  "菠萝派": {
+    "file": "assets/menu/菠萝派.png",
+    "official": "菠萝派",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091557147058.png"
+  },
+  "中杯可乐": {
+    "file": "assets/menu/可口可乐.png",
+    "official": "可口可乐",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091541242793.png"
+  },
+  "大杯可乐": {
+    "file": "assets/menu/可口可乐.png",
+    "official": "可口可乐",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091541242793.png"
+  },
+  "中杯鲜煮咖啡": {
+    "file": "assets/menu/鲜萃咖啡.png",
+    "official": "鲜萃咖啡",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/02/202502201050044696.png"
+  },
+  "中杯冰炫风": {
+    "file": "assets/menu/阳光橙麦炫酷.png",
+    "official": "阳光橙麦炫酷",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2020/03/202003191452518874.png"
+  },
+  "猪柳蛋麦满分": {
+    "file": "assets/menu/猪柳蛋麦满分.png",
+    "official": "猪柳蛋麦满分",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091558498724.png"
+  },
+  "吉士蛋堡": {
+    "file": "assets/menu/火腿扒早安营养卷.png",
+    "official": "火腿扒早安营养卷",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208021616493001.png"
+  },
+  "烟肉蛋堡": {
+    "file": "assets/menu/图林根香肠早安营养卷.png",
+    "official": "图林根香肠早安营养卷",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208021618177760.png"
+  },
+  "脆薯饼(早餐)": {
+    "file": "assets/menu/脆薯饼.png",
+    "official": "脆薯饼",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091604513345.png"
+  },
+  "巨无霸套餐": {
+    "file": "assets/menu/巨无霸.png",
+    "official": "巨无霸",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081011205699.png"
+  },
+  "麦辣鸡腿堡套餐": {
+    "file": "assets/menu/麦辣鸡腿汉堡.png",
+    "official": "麦辣鸡腿汉堡",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/04/202504091717393584.png"
+  },
+  "板烧鸡腿堡套餐": {
+    "file": "assets/menu/板烧鸡腿堡.png",
+    "official": "板烧鸡腿堡",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/10/202410121642022710.png"
+  },
+  "双层吉士汉堡套餐": {
+    "file": "assets/menu/双层吉士汉堡.png",
+    "official": "双层吉士汉堡",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/05/202505191553352680.png"
+  },
+  "麦香鱼套餐": {
+    "file": "assets/menu/麦香鱼.png",
+    "official": "麦香鱼",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081013175111.png"
+  },
+  "麦乐鸡(5块)套餐": {
+    "file": "assets/menu/麦乐鸡(5块).png",
+    "official": "麦乐鸡 (5块)",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091547543048.png"
+  },
+  "开心乐园餐": {
+    "file": "assets/menu/汉堡包.png",
+    "official": "汉堡包",
+    "src": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081011488477.png"
+  }
+}

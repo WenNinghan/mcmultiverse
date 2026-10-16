@@ -1,0 +1,14 @@
+{
+  "_说明": "本文件为真实数据格式示例。实际使用时，在 WorkBuddy 中配置 mcd-mcp 连接器后，调用 query-meals / query-store-coupons 等 Tool，将返回的餐品与价格整理为本格式，另存为 data/mcd-real-data.json 即可被页面自动加载。注意：仅可包含公开商品数据，禁止包含 Token、个人信息、订单信息。",
+  "_来源Tool": ["query-meals", "query-store-coupons", "campaign-calendar"],
+  "_导出时间": "YYYY-MM-DD",
+  "menu": [
+    {"name": "巨无霸", "price": 25.5, "emoji": "🍔"},
+    {"name": "双层吉士堡", "price": 22.0, "emoji": "🍔"},
+    {"name": "麦辣鸡腿堡", "price": 19.5, "emoji": "🌶️"}
+  ],
+  "coupons": [
+    {"name": "麦麦省·满30减5", "min": 30, "off": 5},
+    {"name": "麦麦省·满50减12", "min": 50, "off": 12}
+  ]
+}

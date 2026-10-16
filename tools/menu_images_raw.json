@@ -1,0 +1,566 @@
+[
+  {
+    "name": "巨无霸",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081011205699.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "汉堡包",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081011488477.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "麦辣鸡腿汉堡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/04/202504091717393584.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "板烧鸡腿堡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/10/202410121642022710.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "麦香鸡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081013011355.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "麦香鱼",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081013175111.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "吉士汉堡包",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081013284833.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "双层吉士汉堡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/05/202505191553352680.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "不素之霸双层牛堡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/07/202407021437072297.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "双层深海鳕鱼堡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208111413054231.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "培根安格斯厚牛堡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081022028042.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "芝士安格斯厚牛堡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208081022182900.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "培根蔬萃双层牛堡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/09/202209261029176483.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "酥酥多笋卷",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/12/202412031221494776.png",
+    "cat": "burger",
+    "href": ""
+  },
+  {
+    "name": "薯条",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091547349086.png",
+    "cat": "snack",
+    "href": ""
+  },
+  {
+    "name": "脆脆薯条",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/11/202411281827123412.png",
+    "cat": "snack",
+    "href": ""
+  },
+  {
+    "name": "麦辣鸡翅",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/04/202504091714077263.png",
+    "cat": "snack",
+    "href": ""
+  },
+  {
+    "name": "薄皮焦香V翅",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/03/202503261723251059.png",
+    "cat": "snack",
+    "href": ""
+  },
+  {
+    "name": "麦乐鸡 (5块)",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091547543048.png",
+    "cat": "snack",
+    "href": ""
+  },
+  {
+    "name": "那么大鸡排（椒盐风味）",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091551151077.png",
+    "cat": "snack",
+    "href": ""
+  },
+  {
+    "name": "玉米杯",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091548118821.png",
+    "cat": "snack",
+    "href": ""
+  },
+  {
+    "name": "苹果片",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091552098343.png",
+    "cat": "snack",
+    "href": ""
+  },
+  {
+    "name": "圆筒冰淇淋",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2020/05/202005270949182813.png",
+    "cat": "dessert",
+    "href": ""
+  },
+  {
+    "name": "奥利奥麦旋风",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2020/03/202003191447419769.png",
+    "cat": "dessert",
+    "href": ""
+  },
+  {
+    "name": "草莓麦旋风",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2020/03/202003191447495324.png",
+    "cat": "dessert",
+    "href": ""
+  },
+  {
+    "name": "朱古力新地",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2020/03/202003191510126381.png",
+    "cat": "dessert",
+    "href": ""
+  },
+  {
+    "name": "草莓新地",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2020/03/202003191449258974.png",
+    "cat": "dessert",
+    "href": ""
+  },
+  {
+    "name": "迷你朱古力新地",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/05/202505112256468336.png",
+    "cat": "dessert",
+    "href": ""
+  },
+  {
+    "name": "迷你草莓新地",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/05/202505112259357730.png",
+    "cat": "dessert",
+    "href": ""
+  },
+  {
+    "name": "香芋派",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091556569394.png",
+    "cat": "dessert",
+    "href": ""
+  },
+  {
+    "name": "菠萝派",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091557147058.png",
+    "cat": "dessert",
+    "href": ""
+  },
+  {
+    "name": "可口可乐",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091541242793.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "无糖可口可乐",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091542266222.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "阳光柠檬红茶",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/12/202412111430239925.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "雪碧",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091543354438.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "怡泉+C",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/05/202505112325105835.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "阳光橙麦炫酷",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2020/03/202003191452518874.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "【美汁源】“黄金橙橙”",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/11/202411281822478466.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "100%苹果汁",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/05/202505081052503366.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "优品豆浆",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/12/202412031442538648.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "纯牛奶（盒装）",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/12/202412031439237239.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "锡兰红茶",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091546249996.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "纯悦",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/11/202411281844518339.png",
+    "cat": "drink",
+    "href": ""
+  },
+  {
+    "name": "猪柳麦满分",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091558332871.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "猪柳蛋麦满分",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091558498724.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "双层猪柳蛋麦满分",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/12/202212191104077687.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "火腿扒麦满分",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091559476910.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "大脆鸡扒麦满分",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091600076790.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "原味板烧鸡腿麦满分",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/09/202209301037275168.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "双层原味板烧鸡腿麦满分",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/09/202209301037584746.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "原味板烧鸡腿炒双蛋堡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/12/202212191104292706.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "猪柳炒双蛋堡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091601375124.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "火腿扒早安营养卷",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208021616493001.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "图林根香肠早安营养卷",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208021618177760.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "皮蛋鸡肉粥",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2020/05/202005061021247170.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "雪菜脆笋鸡肉粥",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2020/05/202005061023475981.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "脆薯饼",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091604513345.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "脆香油条",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091605077842.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "德式图林根香肠",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2021/04/202104191521441185.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "优品豆浆",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/12/202412031411454215.png",
+    "cat": "breakfast",
+    "href": ""
+  },
+  {
+    "name": "儿童鱼排堡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2019/09/201909241723061060.png",
+    "cat": "happy",
+    "href": ""
+  },
+  {
+    "name": "汉堡包",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091606247063.png",
+    "cat": "happy",
+    "href": ""
+  },
+  {
+    "name": "麦乐鸡（4块）",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091607474918.png",
+    "cat": "happy",
+    "href": ""
+  },
+  {
+    "name": "薯条（迷你）",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2019/09/201909241658187803.png",
+    "cat": "happy",
+    "href": ""
+  },
+  {
+    "name": "玉米杯 (小)",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091608181706.png",
+    "cat": "happy",
+    "href": ""
+  },
+  {
+    "name": "苹果片",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208091608341382.png",
+    "cat": "happy",
+    "href": ""
+  },
+  {
+    "name": "纯牛奶（盒装）",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/12/202412061721257642.png",
+    "cat": "happy",
+    "href": ""
+  },
+  {
+    "name": "纯悦",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/12/202412061720458477.png",
+    "cat": "happy",
+    "href": ""
+  },
+  {
+    "name": "美汁源100%苹果汁 (小)",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/05/202505081053474066.png",
+    "cat": "happy",
+    "href": ""
+  },
+  {
+    "name": "冰奶铁",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292204543004.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "热奶铁",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292205408283.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "冰燕麦奶铁",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292206117637.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "热燕麦奶铁",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292206368008.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "冰美式",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292208383944.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "热美式",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292209017033.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "冰焦糖玛奇朵",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292209215242.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "热焦糖玛奇朵",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292209422511.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "卡布奇诺",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292210057378.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "浓缩咖啡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2020/11/202011152311386312.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "冰浓浓燕麦黑巧",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292214326960.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "热浓浓燕麦黑巧",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208301011268722.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "冰浓浓抹茶牛奶",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292216395610.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "热浓浓抹茶牛奶",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292216596791.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "冰燕麦奶",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292214522529.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "热燕麦奶",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292215082309.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "鲜萃咖啡",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2025/02/202502201050044696.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "冰浓浓黑巧",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292217199815.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "热浓浓黑巧",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292217366580.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "冰牛奶",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292218348675.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "热牛奶",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292218491274.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "浓浓抹茶雪冰",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292219089745.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "浓浓黑巧雪冰",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2022/08/202208292219557802.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "抹茶阿芙佳朵",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/07/202407251729244473.png",
+    "cat": "mccafe",
+    "href": ""
+  },
+  {
+    "name": "咖啡阿芙佳朵",
+    "img": "https://officiaweb-afd.mcdonalds.com.cn/public/upload/attachment/2024/07/202407251730361207.png",
+    "cat": "mccafe",
+    "href": ""
+  }
+]

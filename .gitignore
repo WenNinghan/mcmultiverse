@@ -1,0 +1,20 @@
+# 麦门宇宙 · McMultiverse —— .gitignore
+
+# 本地调试截图与浏览器日志（正式展示截图统一放 docs/screenshots/）
+shots/
+*.log
+
+# 系统文件
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node / Python 工作产物
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+
+# 编辑器
+.vscode/
+.idea/

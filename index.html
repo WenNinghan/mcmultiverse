@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1e0c0e">
+<meta name="description" content="麦门宇宙 McMultiverse —— 一个由麦当劳中国 MCP 开放平台驱动的玄学点单宇宙：神谕阁每日一卦、审判庭订单审判（真实优惠数据）、轮回司麦门人生 Galgame（108 场景 / 上百种结局）。">
+<meta property="og:title" content="麦门宇宙 · McMultiverse">
+<meta property="og:description" content="神谕阁 · 审判庭 · 轮回司：怀着仪式感吃麦当劳。">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="assets/icon.svg">
+<title>麦门宇宙 · McMultiverse | 神谕阁 · 审判庭 · 轮回司</title>
+<style>
+:root{
+  --bg:#14090b;
+  --bg2:#1e0d10;
+  --red:#da291c;
+  --red-deep:#a01c12;
+  --gold:#ffc72c;
+  --gold-dim:#c99b1d;
+  --cream:#f5e6d3;
+  --card:#241016;
+  --card2:#2d151c;
+  --line:rgba(255,199,44,.28);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  background:#170a0c;
+  color:var(--cream);
+  font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(255,199,44,.17), transparent 62%),
+    radial-gradient(ellipse 100% 70% at 12% 108%, rgba(218,41,28,.26), transparent 62%),
+    radial-gradient(ellipse 60% 45% at 92% 28%, rgba(255,126,41,.11), transparent 58%),
+    radial-gradient(ellipse 55% 40% at 5% 55%, rgba(218,41,28,.11), transparent 55%),
+    linear-gradient(168deg, #1e0c0e 0%, #18090b 45%, #130708 100%);
+}
+/* 细颗粒噪点：压住纯色平底的塑料感 */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+.serif{font-family:"STKaiti","KaiTi","Noto Serif SC","Songti SC",serif;}
+.wrap{max-width:520px;margin:0 auto;padding:0 18px;}
+.hidden{display:none !important;}
+
+/* ===== 拱门 LOGO ===== */
+.arches{display:flex;justify-content:center;align-items:flex-end;gap:6px;height:64px;margin:0 auto 6px;}
+.arch{width:30px;height:56px;border:7px solid var(--gold);border-bottom:none;border-radius:26px 26px 0 0;
+  filter:drop-shadow(0 0 10px rgba(255,199,44,.55));animation:archGlow 3s ease-in-out infinite;}
+.arch:last-child{animation-delay:1.2s;}
+@keyframes archGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(255,199,44,.4));}50%{filter:drop-shadow(0 0 16px rgba(255,199,44,.85));}}
+
+/* ===== 大厅 ===== */
+#hall{padding:56px 0 60px;text-align:center;animation:fadeUp .6s ease;}
+.hall-title{font-size:46px;letter-spacing:10px;margin-top:10px;
+  background:linear-gradient(120deg,#ffe27a 0%,var(--gold) 34%,#ffab3d 62%,#ff5d4d 92%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 3px 20px rgba(255,199,44,.45));}
+.hall-sub{font-size:13px;letter-spacing:6px;color:var(--gold-dim);margin-top:8px;}
+/* 薯条盒红金条纹：大厅与殿头共用的招牌装饰 */
+.m-stripe{height:7px;width:76px;margin:16px auto 0;border-radius:4px;
+  background:repeating-linear-gradient(90deg,var(--red) 0 18px,var(--gold) 18px 23px);
+  box-shadow:0 2px 10px rgba(218,41,28,.35);}
+.hall-slogan{margin:26px auto 8px;font-size:13px;color:rgba(245,230,211,.62);line-height:1.9;max-width:340px;}
+.hall-slogan b{color:var(--cream);}
+.temple-cards{margin-top:30px;display:flex;flex-direction:column;gap:16px;}
+.temple-card{
+  position:relative;display:flex;align-items:center;gap:16px;text-align:left;
+  background:
+    linear-gradient(145deg,rgba(50,22,30,.92),rgba(31,13,18,.95)) padding-box,
+    linear-gradient(140deg,rgba(255,199,44,.55),rgba(218,41,28,.30) 45%,rgba(255,199,44,.14)) border-box;
+  border:1.5px solid transparent;border-radius:16px;padding:20px 18px;cursor:pointer;
+  box-shadow:0 8px 26px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,230,190,.09);
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.temple-card:hover,.temple-card:active{transform:translateY(-4px);
+  box-shadow:0 14px 40px rgba(0,0,0,.5),0 8px 30px rgba(255,199,44,.18),inset 0 1px 0 rgba(255,230,190,.14);}
+.temple-icon{font-size:38px;width:60px;height:60px;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 35% 30%,rgba(255,199,44,.26),rgba(218,41,28,.12) 75%);
+  border:1px solid rgba(255,199,44,.4);border-radius:14px;flex:none;
+  box-shadow:inset 0 0 14px rgba(255,199,44,.1);}
+.temple-info h3{font-size:20px;color:var(--gold);letter-spacing:4px;}
+.temple-info p{font-size:12px;color:rgba(245,230,211,.6);margin-top:6px;line-height:1.7;}
+.temple-go{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--gold-dim);font-size:20px;}
+.hall-foot{margin-top:38px;font-size:11px;color:rgba(245,230,211,.34);line-height:2;}
+
+/* ===== 通用殿内 ===== */
+.temple{padding:26px 0 70px;animation:fadeUp .5s ease;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:1px solid var(--line);color:var(--gold-dim);
+  font-size:13px;padding:7px 14px;border-radius:20px;cursor:pointer;margin-bottom:18px;}
+.back-btn:hover{color:var(--gold);border-color:var(--gold);}
+.temple-head{text-align:center;margin-bottom:22px;}
+.temple-head .t-emoji{font-size:44px;display:block;margin-bottom:8px;filter:drop-shadow(0 0 12px rgba(255,199,44,.4));}
+.temple-head h2{font-size:30px;letter-spacing:8px;color:var(--gold);}
+.temple-head p{font-size:12px;color:rgba(245,230,211,.55);margin-top:8px;letter-spacing:2px;}
+.temple-head::after{content:"";display:block;height:6px;width:64px;margin:14px auto 0;border-radius:3px;
+  background:repeating-linear-gradient(90deg,var(--red) 0 16px,var(--gold) 16px 21px);opacity:.85;
+  box-shadow:0 2px 8px rgba(218,41,28,.28);}
+.btn{
+  display:block;width:100%;padding:15px;border:none;border-radius:14px;cursor:pointer;
+  font-size:16px;letter-spacing:6px;font-weight:700;font-family:inherit;
+  background:linear-gradient(135deg,var(--gold),#e8a90c);color:#3a1503;
+  box-shadow:0 6px 22px rgba(255,199,44,.28);transition:transform .15s ease,box-shadow .2s ease;
+}
+.btn:active{transform:scale(.97);}
+.btn.red{background:linear-gradient(135deg,var(--red),var(--red-deep));color:var(--cream);box-shadow:0 6px 22px rgba(218,41,28,.35);}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--gold-dim);box-shadow:none;font-weight:400;letter-spacing:3px;font-size:14px;}
+.btn-row{display:flex;gap:10px;margin-top:12px;}
+.btn-row .btn{margin-top:0;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+@keyframes shake{0%,100%{transform:rotate(0);}20%{transform:rotate(-9deg);}40%{transform:rotate(8deg);}60%{transform:rotate(-6deg);}80%{transform:rotate(5deg);}}
+@keyframes stampIn{0%{transform:scale(2.6) rotate(-30deg);opacity:0;}55%{transform:scale(.92) rotate(-12deg);opacity:1;}75%{transform:scale(1.06) rotate(-12deg);}100%{transform:scale(1) rotate(-12deg);opacity:1;}}
+@keyframes flipIn{from{transform:rotateY(90deg);opacity:0;}to{transform:rotateY(0);opacity:1;}}
+@keyframes popIn{from{transform:scale(.85);opacity:0;}to{transform:scale(1);opacity:1;}}
+
+/* ===== 神谕阁 ===== */
+.tube-zone{text-align:center;padding:20px 0 26px;}
+.tube{font-size:84px;display:inline-block;cursor:pointer;filter:drop-shadow(0 8px 18px rgba(0,0,0,.5));transition:transform .2s;}
+.tube:hover{transform:translateY(-4px);}
+.tube.shaking{animation:shake .7s ease 2;}
+.tube-hint{font-size:12px;color:rgba(245,230,211,.5);margin-top:14px;letter-spacing:2px;}
+.sign-card{
+  background:linear-gradient(160deg,#f7ead8,#efd9b8);color:#4a1d10;border-radius:14px;
+  padding:26px 22px 22px;position:relative;box-shadow:0 16px 44px rgba(0,0,0,.5);
+  animation:popIn .5s ease;border:2px solid var(--gold);
+}
+.sign-card::before{content:"";position:absolute;inset:6px;border:1px solid rgba(160,28,18,.35);border-radius:9px;pointer-events:none;}
+.sign-level{display:inline-block;background:var(--red);color:#fff;font-size:13px;padding:4px 14px;border-radius:4px;letter-spacing:4px;}
+.sign-name{font-size:26px;color:var(--red-deep);letter-spacing:4px;margin-top:12px;}
+.sign-poem{margin:16px 0;font-size:16px;line-height:2.3;text-align:center;color:#5d2a14;}
+.sign-row{display:flex;gap:10px;margin-top:10px;font-size:13px;line-height:1.8;}
+.sign-row .tag{flex:none;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;}
+.sign-row .tag.yi{background:#b3700a;}
+.sign-row .tag.ji{background:#5d5d5d;}
+.sign-meal{margin-top:16px;background:rgba(218,41,28,.08);border:1px dashed rgba(160,28,18,.4);border-radius:10px;padding:12px 14px;font-size:13px;line-height:2;}
+.sign-meal b{color:var(--red-deep);}
+.sign-score{margin-top:14px;}
+.sign-score .bar{height:8px;background:rgba(74,29,16,.15);border-radius:4px;overflow:hidden;}
+.sign-score .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--gold));border-radius:4px;transition:width 1s ease;}
+.sign-score span{font-size:12px;color:#7a4a2a;}
+.thursday-banner{background:linear-gradient(90deg,var(--red),#7a0f06);border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.9;margin-bottom:14px;border:1px solid rgba(255,199,44,.5);}
+.oracle-actions{margin-top:16px;}
+
+/* ===== 审判庭 ===== */
+/* 今日券讯（真实活动条） */
+.news-strip{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 10px;margin-bottom:6px;scrollbar-width:none;}
+.news-strip::-webkit-scrollbar{display:none;}
+.news-card{flex:0 0 78%;background:linear-gradient(135deg,rgba(255,199,44,.14),rgba(193,39,45,.12));border:1px solid rgba(255,199,44,.4);border-radius:12px;padding:12px 14px;}
+.news-card .nc-date{font-size:10px;color:var(--gold);letter-spacing:1px;border:1px solid rgba(255,199,44,.5);border-radius:6px;padding:1px 6px;display:inline-block;margin-bottom:6px;}
+.news-card .nc-title{font-size:13px;color:var(--cream);font-weight:600;margin-bottom:4px;}
+.news-card .nc-text{font-size:11px;color:rgba(245,230,211,.65);line-height:1.7;}
+.news-card a{color:var(--gold-dim);font-size:10px;text-decoration:none;display:inline-block;margin-top:5px;border-bottom:1px dashed rgba(255,199,44,.4);}
+/* 品类 tab */
+.cat-tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 12px;scrollbar-width:none;}
+.cat-tabs::-webkit-scrollbar{display:none;}
+.cat-tab{flex:0 0 auto;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:7px 14px;font-size:12.5px;color:rgba(245,230,211,.7);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.cat-tab.on{border-color:var(--gold);color:var(--gold);background:rgba(255,199,44,.12);box-shadow:0 0 12px rgba(255,199,44,.15);}
+/* 餐品大卡（点餐系统风） */
+.menu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:8px;}
+.menu-item{background:linear-gradient(145deg,rgba(48,22,30,.9),rgba(31,14,19,.93)) padding-box,
+  linear-gradient(150deg,rgba(255,199,44,.34),rgba(218,41,28,.2) 55%,rgba(255,199,44,.1)) border-box;
+  border:1.5px solid transparent;border-radius:14px;overflow:hidden;position:relative;transition:box-shadow .2s,transform .15s;
+  box-shadow:0 6px 18px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,230,190,.07);
+  animation:fadeUp .45s cubic-bezier(.22,1,.36,1) both;}
+.menu-item:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.44),0 4px 18px rgba(255,199,44,.12),inset 0 1px 0 rgba(255,230,190,.1);}
+.menu-item.selected{box-shadow:0 0 0 1.5px var(--gold),0 12px 30px rgba(0,0,0,.44),0 4px 22px rgba(255,199,44,.25);background:linear-gradient(145deg,rgba(58,30,26,.95),rgba(38,18,20,.95)) padding-box,
+  linear-gradient(150deg,var(--gold),rgba(218,41,28,.5)) border-box;}
+.menu-item .mi-img{height:132px;display:flex;align-items:center;justify-content:center;position:relative;
+  background:radial-gradient(circle at 50% 58%,rgba(255,199,44,.20),rgba(193,39,45,.10) 62%,transparent);}
+.menu-item .mi-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:2px;z-index:2;
+  filter:drop-shadow(0 6px 12px rgba(0,0,0,.45));transition:transform .35s cubic-bezier(.22,1,.36,1);}
+.menu-item:hover .mi-img img{transform:scale(1.08) translateY(-2px);}
+.menu-item .mi-emoji{font-size:46px;line-height:1;opacity:.95;}
+.menu-item.combo .mi-img::after{content:'套餐';position:absolute;top:8px;left:8px;font-size:10px;background:linear-gradient(90deg,var(--red),#a3121a);color:#fff;border-radius:6px;padding:2px 7px;letter-spacing:1px;}
+.menu-item .mi-body{padding:9px 11px 11px;}
+.menu-item .mi-name{font-size:13px;color:var(--cream);font-weight:600;}
+.menu-item .mi-desc{font-size:10.5px;color:rgba(245,230,211,.5);margin-top:3px;line-height:1.5;height:31px;overflow:hidden;}
+.menu-item .mi-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px;}
+.menu-item .mi-price{font-size:15px;color:var(--gold);font-weight:700;}
+.menu-item .mi-price .origin{font-size:10px;color:rgba(245,230,211,.4);text-decoration:line-through;margin-left:4px;font-weight:400;}
+.menu-item .mi-add{width:26px;height:26px;border-radius:50%;border:1px solid var(--gold);background:rgba(255,199,44,.1);color:var(--gold);font-size:15px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.menu-item .mi-add:active{transform:scale(.85);background:var(--gold);color:#1a0505;}
+.menu-item .mi-qty{position:absolute;top:8px;right:8px;background:var(--red);color:#fff;font-size:11px;min-width:20px;height:20px;border-radius:10px;display:none;align-items:center;justify-content:center;padding:0 5px;font-weight:700;box-shadow:0 2px 8px rgba(193,39,45,.5);}
+.menu-item.selected .mi-qty{display:flex;}
+.img-credit{font-size:10px;line-height:1.7;color:rgba(245,230,211,.34);margin:2px 2px 12px;letter-spacing:.2px;}
+.img-credit a{color:rgba(255,199,44,.62);text-decoration:none;border-bottom:1px dashed rgba(255,199,44,.3);}
+.img-credit a:hover{color:var(--gold);}
+/* 券包 */
+.coupon-zone{margin:6px 0 12px;}
+.coupon-zone .cz-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px;}
+.coupon-zone .cz-title{font-size:13px;color:var(--gold);letter-spacing:1px;font-weight:600;}
+.coupon-zone .cz-note{font-size:10px;color:rgba(245,230,211,.45);}
+.coupon-list{display:flex;flex-direction:column;gap:9px;}
+.coupon-row{display:flex;align-items:center;gap:11px;background:linear-gradient(90deg,rgba(193,39,45,.22),rgba(193,39,45,.08) 70%);border:1px solid rgba(255,199,44,.35);border-radius:11px;padding:11px 13px;position:relative;overflow:hidden;}
+.coupon-row.owned{border-color:rgba(255,199,44,.15);background:rgba(255,255,255,.03);opacity:.75;}
+.coupon-row .cr-val{font-size:16px;color:var(--gold);font-weight:800;white-space:nowrap;}
+.coupon-row .cr-info{flex:1;min-width:0;}
+.coupon-row .cr-name{font-size:12.5px;color:var(--cream);}
+.coupon-row .cr-desc{font-size:10px;color:rgba(245,230,211,.5);margin-top:2px;}
+.coupon-row .cr-btn{flex:0 0 auto;font-size:11px;border:1px solid var(--gold);color:var(--gold);background:none;border-radius:14px;padding:5px 12px;cursor:pointer;}
+.coupon-row .cr-btn.got{color:rgba(245,230,211,.5);border-color:rgba(245,230,211,.25);}
+.coupon-row .cr-demo{font-size:9px;color:rgba(245,230,211,.4);border:1px solid rgba(245,230,211,.2);border-radius:5px;padding:0 4px;margin-left:5px;}
+/* 购物车条 */
+.cart-bar{position:sticky;bottom:0;display:flex;align-items:center;gap:12px;background:rgba(20,7,8,.92);backdrop-filter:blur(8px);border:1px solid rgba(255,199,44,.35);border-radius:14px;padding:11px 15px;margin-top:10px;box-shadow:0 -6px 24px rgba(0,0,0,.45);}
+.cart-bar .cb-cart{font-size:20px;position:relative;}
+.cart-bar .cb-cart .cb-badge{position:absolute;top:-6px;right:-9px;background:var(--red);color:#fff;font-size:10px;min-width:17px;height:17px;border-radius:9px;display:none;align-items:center;justify-content:center;font-weight:700;padding:0 4px;}
+.cart-bar .cb-info{flex:1;min-width:0;}
+.cart-bar .cb-total{font-size:18px;color:var(--gold);font-weight:800;}
+.cart-bar .cb-saved{font-size:10.5px;color:#7fd67f;margin-top:1px;}
+.cart-bar .cb-btn{flex:0 0 auto;background:linear-gradient(90deg,var(--red),#a3121a);border:none;color:#fff;font-size:14px;font-weight:700;letter-spacing:2px;border-radius:22px;padding:11px 20px;cursor:pointer;box-shadow:0 4px 14px rgba(193,39,45,.4);}
+.cart-bar .cb-btn:active{transform:scale(.96);}
+/* 结算浮层 */
+.settle-mask{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:60;display:flex;align-items:flex-end;justify-content:center;}
+.settle-sheet{width:100%;max-width:520px;background:#170a0a;border:1px solid rgba(255,199,44,.35);border-radius:18px 18px 0 0;padding:20px 18px 26px;animation:sheetUp .3s cubic-bezier(.22,1,.36,1);}
+@keyframes sheetUp{from{transform:translateY(60px);opacity:0;}}
+.settle-sheet h3{font-size:15px;color:var(--gold);letter-spacing:2px;margin-bottom:12px;text-align:center;}
+.settle-line{display:flex;justify-content:space-between;font-size:13px;color:var(--cream);padding:6px 0;}
+.settle-line .sl-label{color:rgba(245,230,211,.65);}
+.settle-line.total{border-top:1px dashed rgba(255,199,44,.3);margin-top:8px;padding-top:11px;font-size:15px;}
+.settle-line.total .sl-val{color:var(--gold);font-size:19px;font-weight:800;}
+.settle-line.save .sl-val{color:#7fd67f;}
+/* 结算单餐品缩略清单 */
+.settle-items{background:rgba(255,199,44,.05);border:1px solid rgba(255,199,44,.16);border-radius:12px;padding:6px 8px;margin-bottom:10px;max-height:232px;overflow-y:auto;}
+.st-item{display:flex;align-items:center;gap:9px;padding:5px 2px;font-size:12.5px;color:var(--cream);}
+.st-item + .st-item{border-top:1px solid rgba(255,255,255,.06);}
+.st-item img{width:36px;height:36px;object-fit:contain;flex:0 0 36px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.4));}
+.st-item .st-noimg{width:36px;height:36px;flex:0 0 36px;display:flex;align-items:center;justify-content:center;font-size:19px;}
+.st-item .st-name{flex:1;line-height:1.3;}
+.st-item .st-qty{color:var(--gold);font-weight:700;font-size:12px;}
+.order-total{display:flex;justify-content:space-between;align-items:center;background:var(--card);border:1px solid var(--line);
+  border-radius:12px;padding:13px 16px;margin:14px 0;font-size:14px;}
+.order-total b{color:var(--gold);font-size:20px;}
+.court-log{background:#0d0507;border:1px solid var(--line);border-radius:12px;padding:18px 16px;min-height:180px;font-size:13.5px;line-height:2.1;}
+.cl-line{margin-bottom:10px;animation:fadeUp .4s ease;}
+.cl-role{font-weight:700;}
+.cl-role.prosecutor{color:#7eb6ff;}
+.cl-role.judge{color:var(--gold);}
+.cl-role.you{color:#8fd18f;}
+.verdict-paper{
+  background:linear-gradient(160deg,#f7ead8,#eed7b4);color:#4a1d10;border-radius:12px;padding:28px 24px;margin-top:20px;
+  position:relative;animation:popIn .5s ease;border:2px solid var(--red-deep);box-shadow:0 16px 44px rgba(0,0,0,.5);
+}
+.verdict-title{text-align:center;font-size:30px;letter-spacing:14px;color:var(--red-deep);border-bottom:2px solid var(--red-deep);padding-bottom:12px;}
+.verdict-body{margin-top:16px;font-size:14px;line-height:2.2;}
+.verdict-body .charge{margin:10px 0;padding:10px 12px;background:rgba(218,41,28,.07);border-left:3px solid var(--red);border-radius:4px;}
+.verdict-loss{text-align:center;margin:18px 0 8px;}
+.verdict-loss .num{font-size:46px;color:var(--red);font-weight:800;letter-spacing:2px;text-shadow:0 2px 0 rgba(160,28,18,.2);}
+.verdict-loss .lbl{font-size:12px;letter-spacing:4px;color:#7a4a2a;}
+.verdict-rank{text-align:center;font-size:22px;color:var(--red-deep);letter-spacing:6px;margin-top:6px;}
+.verdict-rank small{display:block;font-size:12px;color:#7a4a2a;letter-spacing:1px;margin-top:6px;line-height:1.8;}
+.atone{margin-top:16px;background:rgba(255,199,44,.12);border:1px dashed var(--gold-dim);border-radius:10px;padding:12px 14px;font-size:13px;line-height:2;}
+.atone b{color:#8a5a00;}
+.seal{
+  position:absolute;right:14px;bottom:14px;width:96px;height:96px;border:4px solid var(--red);border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--red);
+  font-size:15px;letter-spacing:2px;opacity:.92;transform:rotate(-12deg);
+  animation:stampIn .55s cubic-bezier(.2,1.4,.4,1) .3s both;pointer-events:none;
+  box-shadow:inset 0 0 0 2px rgba(218,41,28,.3);
+}
+.seal::before{content:"★";font-size:18px;margin-bottom:2px;}
+.seal small{font-size:10px;letter-spacing:1px;margin-top:2px;}
+
+/* ===== 轮回司 ===== */
+.talent-zone{display:flex;gap:10px;justify-content:center;margin:18px 0;}
+.talent-card{
+  width:31%;aspect-ratio:3/4.4;border-radius:12px;padding:10px 8px;text-align:center;cursor:pointer;
+  background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  animation:flipIn .5s ease both;transition:transform .2s,border-color .2s;
+}
+.talent-card:nth-child(2){animation-delay:.12s;}
+.talent-card:nth-child(3){animation-delay:.24s;}
+.talent-card:hover{transform:translateY(-4px);}
+.talent-card.picked{border-color:var(--gold);box-shadow:0 0 18px rgba(255,199,44,.3);}
+.talent-card .tc-rarity{font-size:10px;letter-spacing:2px;padding:2px 8px;border-radius:8px;border:1px solid currentColor;}
+.talent-card .tc-emoji{font-size:30px;}
+.talent-card .tc-name{font-size:13px;color:var(--cream);font-weight:700;}
+.talent-card .tc-desc{font-size:10.5px;color:rgba(245,230,211,.55);line-height:1.6;}
+.r-SSR{color:#ffd94d;}.r-SR{color:#c98bff;}.r-R{color:#7eb6ff;}.r-N{color:#9a9a9a;}
+.life-hud{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0;}
+.hud-item{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 6px;text-align:center;}
+.hud-item .h-lbl{font-size:11px;color:rgba(245,230,211,.55);}
+.hud-item .h-val{font-size:17px;color:var(--gold);font-weight:700;margin-top:4px;transition:color .3s;}
+.hud-item .h-val.flash{color:#fff;text-shadow:0 0 12px var(--gold);}
+.age-banner{text-align:center;margin:10px 0 4px;}
+.age-banner .age-num{font-size:52px;font-weight:800;color:var(--gold);letter-spacing:4px;text-shadow:0 0 20px rgba(255,199,44,.35);}
+.age-banner .age-stage{font-size:13px;color:var(--gold-dim);letter-spacing:6px;margin-top:2px;}
+.event-card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:12px;
+  padding:16px;margin:14px 0;font-size:14px;line-height:2;animation:fadeUp .45s ease;min-height:88px;}
+.event-card .delta{margin-top:8px;font-size:12px;display:flex;gap:12px;flex-wrap:wrap;}
+.delta .up{color:#8fd18f;}.delta .down{color:#ff8f7a;}
+.life-stats{text-align:center;font-size:12px;color:rgba(245,230,211,.5);margin-top:8px;line-height:2;}
+.ending-card{
+  background:linear-gradient(165deg,#f7ead8,#eed7b4);color:#4a1d10;border-radius:14px;padding:28px 22px;margin-top:18px;
+  border:2px solid var(--gold);animation:popIn .5s ease;text-align:center;position:relative;box-shadow:0 16px 44px rgba(0,0,0,.5);
+}
+.ending-card .e-tag{font-size:11px;letter-spacing:6px;color:#8a5a00;}
+.ending-card .e-name{font-size:30px;color:var(--red-deep);letter-spacing:6px;margin:10px 0;}
+.ending-card .e-story{font-size:13.5px;line-height:2.2;text-align:left;margin-top:12px;}
+.ending-card .e-data{margin-top:14px;font-size:12.5px;line-height:2;background:rgba(218,41,28,.07);border-radius:10px;padding:10px;}
+.tombstone{
+  margin:20px auto 0;width:200px;background:linear-gradient(180deg,#4a4a52,#33333a);border-radius:100px 100px 10px 10px;
+  padding:24px 14px 18px;text-align:center;color:#d8d8e0;font-size:12px;line-height:2;box-shadow:0 14px 30px rgba(0,0,0,.55);
+  animation:fadeUp .8s ease;
+}
+.tombstone .rip{font-size:16px;letter-spacing:4px;color:var(--gold);margin-bottom:6px;}
+.reincarnate-note{text-align:center;font-size:12px;color:var(--gold-dim);margin-top:14px;line-height:2;}
+
+/* ===== Galgame 轮回司 ===== */
+.flag-bar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-height:4px;}
+.flag-chip{font-size:10.5px;color:var(--gold);border:1px solid var(--line);border-radius:10px;padding:3px 9px;
+  background:rgba(255,199,44,.07);animation:popIn .4s ease;letter-spacing:1px;}
+.scene-card{background:linear-gradient(165deg,#1d0e12,#170a0e);border:1px solid var(--line);border-radius:16px;
+  overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.45),0 0 0 1px rgba(255,199,44,.06) inset;margin-bottom:14px;}
+.scene-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;
+  background:linear-gradient(90deg,rgba(218,41,28,.22),rgba(255,199,44,.08) 60%,transparent);
+  border-bottom:1px solid var(--line);}
+.scene-age{font-size:12px;color:var(--gold);border:1px solid var(--line);border-radius:8px;padding:2px 8px;flex:none;letter-spacing:1px;}
+.scene-title{font-size:17px;color:var(--cream);letter-spacing:3px;}
+.scene-text{padding:18px 16px 20px;min-height:120px;}
+.scene-line{display:flex;gap:10px;align-items:flex-start;margin-bottom:14px;animation:fadeUp .45s ease both;}
+.scene-line:last-child{margin-bottom:0;}
+.scene-line.narr .avatar{background:rgba(255,199,44,.12);}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--card2);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:18px;flex:none;box-shadow:0 2px 8px rgba(0,0,0,.4);}
+.bubble{flex:1;font-size:14px;line-height:2;color:var(--cream);}
+.bubble .who{color:var(--gold);font-weight:700;margin-right:6px;font-size:12.5px;}
+.bubble .who::after{content:"：";}
+.scene-line.narr .bubble{color:rgba(245,230,211,.72);font-size:13px;line-height:2.1;font-style:italic;}
+.choice-list{display:flex;flex-direction:column;gap:10px;}
+.choice-btn{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:14px 15px;color:var(--cream);font-size:14px;line-height:1.7;cursor:pointer;font-family:inherit;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;transition:all .2s ease;animation:fadeUp .4s ease both;}
+.choice-btn:hover{border-color:var(--gold);background:rgba(255,199,44,.07);transform:translateX(4px);}
+.choice-btn:active{transform:scale(.98);}
+.choice-btn .c-arrow{color:var(--gold-dim);font-size:18px;flex:none;}
+.delta-float{position:fixed;z-index:120;font-size:13px;font-weight:700;color:var(--gold);pointer-events:none;
+  text-shadow:0 2px 8px rgba(0,0,0,.8);animation:floatDelta 1.2s ease forwards;}
+@keyframes floatDelta{0%{opacity:0;transform:translateY(6px);}15%{opacity:1;}100%{opacity:0;transform:translateY(-34px);}}
+.galgame-toast{position:fixed;left:50%;top:18%;transform:translateX(-50%);z-index:121;pointer-events:none;
+  background:linear-gradient(135deg,rgba(218,41,28,.95),rgba(122,15,6,.95));color:var(--cream);
+  border:1px solid var(--gold);border-radius:12px;padding:12px 22px;font-size:14px;letter-spacing:2px;
+  box-shadow:0 10px 40px rgba(218,41,28,.5),0 0 24px rgba(255,199,44,.25);animation:toastIn 2.4s ease forwards;}
+@keyframes toastIn{0%{opacity:0;transform:translate(-50%,14px) scale(.92);}12%{opacity:1;transform:translate(-50%,0) scale(1);}80%{opacity:1;}100%{opacity:0;transform:translate(-50%,-12px);}}
+.ending-no{font-size:11px;letter-spacing:3px;color:#8a5a00;margin-bottom:4px;}
+
+/* 数据徽章 */
+.data-badge{display:inline-block;font-size:10px;border:1px solid var(--line);border-radius:8px;padding:2px 8px;color:var(--gold-dim);margin-left:8px;vertical-align:middle;}
+
+/* ===== 氛围层：粒子 / 光斑 / 漂浮彩蛋 ===== */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.glow-spot{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;}
+.spot1{width:52vw;height:52vw;min-width:340px;min-height:340px;background:rgba(230,44,26,.26);top:-12%;left:-14%;animation:drift1 26s ease-in-out infinite alternate;}
+.spot2{width:44vw;height:44vw;min-width:300px;min-height:300px;background:rgba(255,199,44,.17);bottom:-16%;right:-12%;animation:drift2 32s ease-in-out infinite alternate;}
+.spot3{width:26vw;height:26vw;min-width:200px;min-height:200px;background:rgba(255,140,60,.13);top:38%;left:55%;animation:drift1 38s ease-in-out infinite alternate-reverse;}
+@keyframes drift1{to{transform:translate(9vw,8vh) scale(1.18);}}
+@keyframes drift2{to{transform:translate(-9vw,-10vh) scale(1.12);}}
+.float-emoji{position:fixed;font-size:120px;opacity:.06;pointer-events:none;z-index:0;filter:blur(1.5px) saturate(1.3);animation:floatY 18s ease-in-out infinite alternate;user-select:none;}
+.fe1{top:12%;left:4%;animation-duration:19s;}
+.fe2{top:58%;right:3%;font-size:150px;animation-duration:24s;animation-delay:-8s;}
+.fe3{bottom:6%;left:12%;font-size:95px;animation-duration:21s;animation-delay:-4s;}
+@keyframes floatY{from{transform:translateY(-16px) rotate(-7deg);}to{transform:translateY(18px) rotate(8deg);}}
+/* 漂浮的真实食物：官网产品图做大尺寸半透明背景装饰 */
+.float-food{position:fixed;width:min(38vw,270px);height:auto;opacity:.12;pointer-events:none;z-index:0;
+  filter:blur(1.2px) saturate(1.3) brightness(1.05) drop-shadow(0 24px 44px rgba(0,0,0,.55));
+  animation:floatY 18s ease-in-out infinite alternate;user-select:none;}
+.ff1{top:7%;left:-5%;transform:rotate(-14deg);animation-duration:19s;}
+.ff2{top:54%;right:-6%;width:min(41vw,300px);transform:rotate(10deg);animation-duration:24s;animation-delay:-8s;}
+.ff3{bottom:1%;left:9%;width:min(30vw,215px);transform:rotate(8deg);animation-duration:21s;animation-delay:-4s;}
+
+/* ===== 页面转场 ===== */
+.wipe{position:fixed;inset:-10% -30%;z-index:99;pointer-events:none;opacity:0;
+  background:linear-gradient(105deg,transparent 30%,rgba(255,199,44,.30) 46%,rgba(218,41,28,.34) 54%,transparent 70%);
+  transform:translateX(-120%) skewX(-8deg);}
+.wipe.run{animation:wipeMove .6s cubic-bezier(.4,0,.2,1);}
+@keyframes wipeMove{0%{transform:translateX(-120%) skewX(-8deg);opacity:1;}100%{transform:translateX(120%) skewX(-8deg);opacity:1;}}
+@keyframes pageOut{to{opacity:0;transform:translateY(-18px) scale(.985);}}
+@keyframes pageIn{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+
+/* ===== SVG 拱门 ===== */
+.arch-wrap{display:flex;justify-content:center;margin-bottom:2px;position:relative;}
+.arch-svg{filter:drop-shadow(0 0 14px rgba(255,199,44,.55)) drop-shadow(0 8px 26px rgba(218,41,28,.3));animation:archBreathe 3.4s ease-in-out infinite;}
+@keyframes archBreathe{0%,100%{filter:drop-shadow(0 0 10px rgba(255,199,44,.42)) drop-shadow(0 8px 26px rgba(218,41,28,.25));}50%{filter:drop-shadow(0 0 26px rgba(255,199,44,.9)) drop-shadow(0 8px 30px rgba(218,41,28,.4));}}
+.arch-path{stroke-dasharray:420;stroke-dashoffset:420;animation:archDraw 1.5s cubic-bezier(.6,0,.3,1) .15s forwards;}
+@keyframes archDraw{to{stroke-dashoffset:0;}}
+.arch-halo{position:absolute;top:50%;left:50%;width:190px;height:190px;transform:translate(-50%,-52%);border-radius:50%;
+  background:radial-gradient(circle,rgba(255,199,44,.16),transparent 65%);pointer-events:none;animation:haloPulse 3.4s ease-in-out infinite;}
+@keyframes haloPulse{0%,100%{opacity:.6;transform:translate(-50%,-52%) scale(1);}50%{opacity:1;transform:translate(-50%,-52%) scale(1.12);}}
+
+/* ===== 按钮光泽扫过 ===== */
+.btn{position:relative;overflow:hidden;}
+.btn::after{content:"";position:absolute;top:-20%;left:-90%;width:55%;height:140%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.38),transparent);
+  transform:skewX(-22deg);transition:left .55s ease;pointer-events:none;}
+.btn:hover::after{left:140%;}
+
+/* ===== 卡片光泽 ===== */
+.temple-card{overflow:hidden;}
+.temple-card::after{content:"";position:absolute;top:-30%;left:-90%;width:50%;height:160%;
+  background:linear-gradient(105deg,transparent,rgba(255,199,44,.14),transparent);
+  transform:skewX(-22deg);transition:left .6s ease;pointer-events:none;}
+.temple-card:hover::after{left:150%;}
+
+/* 内容层压住氛围层 */
+.wrap{position:relative;z-index:1;}
+
+@media (prefers-reduced-motion: reduce){
+  .arch-path{animation:none;stroke-dashoffset:0;}
+  .wipe.run{animation-duration:.01s;}
+  .glow-spot,.float-emoji,.float-food,.arch-svg,.arch-halo{animation:none !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= 大厅 ================= -->
+<section id="hall" class="wrap">
+  <div class="arch-wrap">
+    <div class="arch-halo"></div>
+    <svg class="arch-svg" viewBox="0 0 120 92" width="124" height="95" aria-label="金色拱门（代码手绘致敬，非官方商标素材）">
+      <defs>
+        <linearGradient id="goldGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffe082"/>
+          <stop offset=".45" stop-color="#ffc72c"/>
+          <stop offset="1" stop-color="#e09a00"/>
+        </linearGradient>
+      </defs>
+      <path class="arch-path" d="M16 84 C16 30 32 8 45 8 C53 8 57 42 60 84 C63 42 67 8 75 8 C88 8 104 30 104 84"
+            fill="none" stroke="url(#goldGrad)" stroke-width="13" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <h1 class="hall-title serif">麦门宇宙</h1>
+  <div class="hall-sub">McMULTIVERSE</div>
+  <div class="m-stripe"></div>
+  <p class="hall-slogan">本项目<b>不解决任何实际问题</b>，<br>只负责让你怀着仪式感地吃麦当劳。</p>
+  <div class="temple-cards">
+    <div class="temple-card" onclick="go('oracle')">
+      <div class="temple-icon">🎲</div>
+      <div class="temple-info">
+        <h3 class="serif">神谕阁</h3>
+        <p>每日一卦，玄学点单。把「今天吃什么」外包给封建迷信。周四自动发疯。</p>
+      </div>
+      <div class="temple-go">›</div>
+    </div>
+    <div class="temple-card" onclick="go('court')">
+      <div class="temple-icon">⚖️</div>
+      <div class="temple-info">
+        <h3 class="serif">审判庭</h3>
+        <p>把你的订单交给法官。羞辱式省钱，被骂完还想转发。</p>
+      </div>
+      <div class="temple-go">›</div>
+    </div>
+    <div class="temple-card" onclick="go('life')">
+      <div class="temple-icon">📜</div>
+      <div class="temple-info">
+        <h3 class="serif">轮回司</h3>
+        <p>如果每顿都吃麦当劳，你的人生会重开成什么样？抽天赋，过一生，立墓碑。</p>
+      </div>
+      <div class="temple-go">›</div>
+    </div>
+  </div>
+  <p class="hall-foot">基于 麦当劳 MCP × WorkBuddy 开发<br>1024 程序员节创意开发大赛参赛作品 · 非官方产品<br>页面数据为演示数据，真实数据由 MCP 实时驱动</p>
+</section>
+
+<!-- ================= 神谕阁 ================= -->
+<section id="oracle" class="wrap temple hidden">
+  <button class="back-btn" onclick="go('hall')">‹ 回大殿</button>
+  <div class="temple-head">
+    <span class="t-emoji">🎲</span>
+    <h2 class="serif">神谕阁</h2>
+    <p>遇事不决，麦门玄学</p>
+  </div>
+  <div id="thursdayBanner" class="thursday-banner hidden"></div>
+  <div class="tube-zone">
+    <span class="tube" id="tube" onclick="drawSign()">🥤</span>
+    <div class="tube-hint" id="tubeHint">点签筒，抽今日麦运</div>
+  </div>
+  <div id="signArea"></div>
+</section>
+
+<!-- ================= 审判庭 ================= -->
+<section id="court" class="wrap temple hidden">
+  <button class="back-btn" onclick="go('hall')">‹ 回大殿</button>
+  <div class="temple-head">
+    <span class="t-emoji">⚖️</span>
+    <h2 class="serif">审判庭</h2>
+    <p>每一笔冤枉钱，本庭都记得</p>
+  </div>
+  <div id="orderStep">
+    <!-- 今日券讯：调研自麦当劳中国官网的真实活动 -->
+    <div class="news-strip" id="newsStrip"></div>
+    <p style="font-size:13px;color:rgba(245,230,211,.6);margin-bottom:10px;letter-spacing:1px;">如实招来——你这单点了什么：</p>
+    <!-- 品类 tab -->
+    <div class="cat-tabs" id="catTabs"></div>
+    <!-- 餐品网格 -->
+    <div class="menu-grid" id="menuGrid"></div>
+    <p class="img-credit">餐品图取自 <a href="https://www.mcdonalds.com.cn/index/Food/menu/burger" target="_blank" rel="noopener">麦当劳中国官网</a> 真实产品图（640×640）· 版权归麦当劳所有 · 本项目非官方产品</p>
+    <!-- 我的券包 -->
+    <div class="coupon-zone">
+      <div class="cz-head">
+        <span class="cz-title">🎫 今日券讯 · 麦麦省</span>
+        <span class="cz-note">每日更新 · 不领券就开庭，罪加一等</span>
+      </div>
+      <div class="coupon-list" id="couponList"></div>
+    </div>
+    <!-- 购物车 -->
+    <div class="cart-bar">
+      <div class="cb-cart">🛒<span class="cb-badge" id="cartBadge">0</span></div>
+      <div class="cb-info">
+        <div class="cb-total" id="orderTotal">¥0.0</div>
+        <div class="cb-saved" id="cartSaved"></div>
+      </div>
+      <button class="cb-btn" onclick="openSettle()">去开庭</button>
+    </div>
+  </div>
+  <div id="trialStep" class="hidden">
+    <div class="court-log" id="courtLog"></div>
+    <div id="verdictArea"></div>
+    <div class="btn-row hidden" id="appealRow">
+      <button class="btn ghost" onclick="appeal()">我不服，上诉！</button>
+      <button class="btn" onclick="resetCourt()">认罪伏法</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 轮回司 ================= -->
+<section id="life" class="wrap temple hidden">
+  <button class="back-btn" onclick="go('hall')">‹ 回大殿</button>
+  <div class="temple-head">
+    <span class="t-emoji">📜</span>
+    <h2 class="serif">轮回司</h2>
+    <p>每顿都吃麦当劳的人生，值得一过</p>
+  </div>
+  <div id="talentStep">
+    <p style="font-size:13px;color:rgba(245,230,211,.6);text-align:center;letter-spacing:2px;" id="talentHint">—— 开局天赋三连抽 ——</p>
+    <div class="talent-zone" id="talentZone"></div>
+    <button class="btn" id="startLifeBtn" onclick="startLife()" disabled style="opacity:.4;">选 择 一 个 天 赋 入 世</button>
+  </div>
+  <div id="lifeStep" class="hidden">
+    <div class="life-hud">
+      <div class="hud-item"><div class="h-lbl">体重</div><div class="h-val" id="hWeight">50</div></div>
+      <div class="hud-item"><div class="h-lbl">钱包</div><div class="h-val" id="hMoney">100</div></div>
+      <div class="hud-item"><div class="h-lbl">信仰</div><div class="h-val" id="hFaith">30</div></div>
+      <div class="hud-item"><div class="h-lbl">健康</div><div class="h-val" id="hHealth">100</div></div>
+    </div>
+    <div class="flag-bar" id="flagBar"></div>
+    <div class="scene-card">
+      <div class="scene-bar"><span class="scene-age" id="sceneAge">0岁</span><span class="scene-title serif" id="sceneTitle">出生</span></div>
+      <div class="scene-text" id="sceneText"></div>
+    </div>
+    <div class="choice-list" id="choiceList"></div>
+  </div>
+  <div id="endingArea"></div>
+</section>
+
+<!-- ================= 氛围层 ================= -->
+<div class="glow-spot spot1"></div>
+<div class="glow-spot spot2"></div>
+<div class="glow-spot spot3"></div>
+<img class="float-food ff1" src="assets/menu/巨无霸.png" alt="" draggable="false">
+<img class="float-food ff2" src="assets/menu/薯条.png" alt="" draggable="false">
+<img class="float-food ff3" src="assets/menu/奥利奥麦旋风.png" alt="" draggable="false">
+<canvas id="particles"></canvas>
+<div class="wipe" id="wipe"></div>
+
+<script>
+/* =========================================================
+ * 数据层：优先尝试读取 data/mcd-real-data.json（由 WorkBuddy
+ * 调用麦当劳 MCP 真实接口导出），失败则使用内置演示数据。
+ * ========================================================= */
+/* ============ 审判庭数据（菜单/套餐/优惠券） ============
+ * 菜单分类与价格基准：麦当劳中国内地门店 2026 年公开价格体系
+ * 麦麦省单品券：来自麦当劳中国官网活动新闻（真实活动，见 docs/coupon-research-2026-10-16.md）
+ * 满减券：演示结构（接入 MCP query-my-coupons 后由真实券替换）
+ * 每日更新：dailyCoupons() 按日期轮换「今日可领券」；WorkBuddy 可每日调
+ *   MCP available-coupons/query-my-coupons 导出 data/mcd-real-data.json 全量替换
+ */
+const DATA = {
+  cats: [
+    {id:'combo',     name:'超值套餐', emoji:'🍟'},
+    {id:'burger',    name:'主食汉堡', emoji:'🍔'},
+    {id:'snack',     name:'小食',     emoji:'🍗'},
+    {id:'dessert',   name:'甜品',     emoji:'🍦'},
+    {id:'drink',     name:'饮品',     emoji:'🥤'},
+    {id:'breakfast', name:'早餐',     emoji:'🌅'},
+  ],
+  menu: [
+    /* —— 主食（大陆 2026 年公开价格） —— */
+    {name:'巨无霸', img:'assets/menu/巨无霸.png',        price:24.5, emoji:'🍔', cat:'burger', desc:'两层纯牛肉，经典中的经典'},
+    {name:'麦辣鸡腿堡', img:'assets/menu/麦辣鸡腿汉堡.png',    price:24.0, emoji:'🌶️', cat:'burger', desc:'辣味鸡腿排，麦辣系列头牌'},
+    {name:'板烧鸡腿堡', img:'assets/menu/板烧鸡腿堡.png',    price:23.0, emoji:'🍗', cat:'burger', desc:'整块鸡腿排，零油炸'},
+    {name:'双层吉士汉堡', img:'assets/menu/双层吉士汉堡.png',  price:21.0, emoji:'🧀', cat:'burger', desc:'双倍芝士双倍牛肉'},
+    {name:'麦香鱼', img:'assets/menu/麦香鱼.png',        price:19.0, emoji:'🐟', cat:'burger', desc:'鳕鱼排，清爽不腻'},
+    {name:'麦香鸡', img:'assets/menu/麦香鸡.png',        price:12.0, emoji:'🍗', cat:'burger', desc:'经典鸡肉汉堡'},
+    {name:'不素之霸双层牛堡', img:'assets/menu/不素之霸双层牛堡.png', price:26.5, emoji:'🥩', cat:'burger', desc:'名字就很狂，双层牛肉双层狠'},
+    /* —— 小食 —— */
+    {name:'麦乐鸡(5块)', img:'assets/menu/麦乐鸡(5块).png',   price:12.0, emoji:'🍗', cat:'snack', desc:'蘸酸甜酱，灵魂小食'},
+    {name:'小薯条', img:'assets/menu/薯条.png',        price:11.0, emoji:'🍟', cat:'snack', desc:'经典小薯'},
+    {name:'中薯条', img:'assets/menu/薯条.png',        price:13.0, emoji:'🍟', cat:'snack', desc:'经典中薯'},
+    {name:'大薯条', img:'assets/menu/薯条.png',        price:15.0, emoji:'🍟', cat:'snack', desc:'经典大薯'},
+    {name:'脆薯饼', img:'assets/menu/脆薯饼.png',        price:7.5,  emoji:'🥞', cat:'snack', desc:'香脆薯饼'},
+    {name:'玉米杯', img:'assets/menu/玉米杯.png',        price:8.0,  emoji:'🌽', cat:'snack', desc:'香甜玉米杯'},
+    /* —— 甜品 —— */
+    {name:'麦旋风', img:'assets/menu/奥利奥麦旋风.png',        price:13.0, emoji:'🍦', cat:'dessert', desc:'奥利奥麦旋风'},
+    {name:'香芋派', img:'assets/menu/香芋派.png',        price:8.0,  emoji:'🥧', cat:'dessert', desc:'香芋派，酥皮流心'},
+    {name:'菠萝派', img:'assets/menu/菠萝派.png',        price:8.0,  emoji:'🥧', cat:'dessert', desc:'菠萝派，酸甜热乎'},
+    /* —— 饮品 —— */
+    {name:'中杯可乐', img:'assets/menu/可口可乐.png',      price:8.5,  emoji:'🥤', cat:'drink', desc:'冰爽可乐'},
+    {name:'大杯可乐', img:'assets/menu/可口可乐.png',      price:10.0, emoji:'🥤', cat:'drink', desc:'大杯更尽兴'},
+    {name:'中杯鲜煮咖啡', img:'assets/menu/鲜萃咖啡.png',  price:10.0, emoji:'☕', cat:'drink', desc:'鲜煮咖啡'},
+    {name:'中杯冰炫风', img:'assets/menu/阳光橙麦炫酷.png',    price:11.0, emoji:'🧊', cat:'drink', desc:'冰炫风酷饮'},
+    /* —— 早餐（05:00-10:30 供应） —— */
+    {name:'猪柳蛋麦满分', img:'assets/menu/猪柳蛋麦满分.png',  price:14.0, emoji:'🥚', cat:'breakfast', desc:'猪柳蛋麦满分，状元早餐'},
+    {name:'火腿扒麦满分',  img:'assets/menu/火腿扒麦满分.png',  price:10.5, emoji:'🍳', cat:'breakfast', desc:'英式麦芬松软，火腿扒扎实'},
+    {name:'大脆鸡扒麦满分', img:'assets/menu/大脆鸡扒麦满分.png', price:12.5, emoji:'🍗', cat:'breakfast', desc:'大块脆鸡扒，咬下去咔嚓'},
+    {name:'脆薯饼(早餐)', img:'assets/menu/脆薯饼.png',  price:7.5,  emoji:'🥞', cat:'breakfast', desc:'早餐时段供应'},
+    /* —— 套餐（主食+中薯+中饮，比单点省） —— */
+    {name:'巨无霸套餐', img:'assets/menu/巨无霸.png',      price:39.5, emoji:'🍔', cat:'combo', desc:'巨无霸+中薯条+中杯可乐', combo:{main:'巨无霸', side:'中薯条', drink:'中杯可乐'}, origin:46.0},
+    {name:'麦辣鸡腿堡套餐', img:'assets/menu/麦辣鸡腿汉堡.png',  price:38.5, emoji:'🌶️', cat:'combo', desc:'麦辣鸡腿堡+中薯条+中杯可乐', combo:{main:'麦辣鸡腿堡', side:'中薯条', drink:'中杯可乐'}, origin:45.5},
+    {name:'板烧鸡腿堡套餐', img:'assets/menu/板烧鸡腿堡.png',  price:37.5, emoji:'🍗', cat:'combo', desc:'板烧鸡腿堡+中薯条+中杯可乐', combo:{main:'板烧鸡腿堡', side:'中薯条', drink:'中杯可乐'}, origin:44.5},
+    {name:'双层吉士汉堡套餐', img:'assets/menu/双层吉士汉堡.png',price:35.5, emoji:'🧀', cat:'combo', desc:'双层吉士汉堡+中薯条+中杯可乐', combo:{main:'双层吉士汉堡', side:'中薯条', drink:'中杯可乐'}, origin:42.5},
+    {name:'麦香鱼套餐', img:'assets/menu/麦香鱼.png',      price:34.5, emoji:'🐟', cat:'combo', desc:'麦香鱼+中薯条+中杯可乐', combo:{main:'麦香鱼', side:'中薯条', drink:'中杯可乐'}, origin:40.5},
+    {name:'麦乐鸡(5块)套餐', img:'assets/menu/麦乐鸡(5块).png', price:28.5, emoji:'🍗', cat:'combo', desc:'麦乐鸡5块+中薯条+中杯可乐', combo:{main:'麦乐鸡(5块)', side:'中薯条', drink:'中杯可乐'}, origin:33.5},
+    {name:'开心乐园餐', img:'assets/menu/汉堡包.png',      price:22.5, emoji:'🎁', cat:'combo', desc:'小汉堡+小食+饮品+玩具', combo:{main:'麦香鸡', side:'小薯条', drink:'中杯可乐'}, origin:31.5},
+  ],
+  /* 麦麦省单品券：官方真实活动（来源见 docs/），按日轮换展示为「今日可领」 */
+  itemCoupons: [
+    {id:'bigfries99',  name:'大薯条 ¥9.9',        desc:'周一麦麦省·大薯条限时特惠', target:'大薯条', deal:'fix9.9', source:'官网新闻 20260916'},
+    {id:'nuggetbogo',  name:'麦乐鸡(5块) 买一送一', desc:'周一麦麦省·麦乐鸡买一送一', target:'麦乐鸡(5块)', deal:'bogo', source:'官网新闻 20260401/20260916'},
+    {id:'hashbrown99', name:'脆薯饼2份 ¥9.9',      desc:'周一麦麦省·9块9脆薯饼2份', target:'脆薯饼', deal:'fix9.9', source:'官网新闻 20260401'},
+    {id:'snackmix159', name:'王牌小食拼 ¥15.9',    desc:'王牌小食拼 15.9 元吃2样', target:'小薯条', deal:'fix15.9', source:'官网新闻 20260916'},
+    {id:'bf99',        name:'早餐两件套 ¥9.9',     desc:'10/15-10/21 当期·早餐两件套限时券', target:'猪柳蛋麦满分', deal:'fix9.9', source:'官网新闻 20261015'},
+    {id:'wings399',    name:'十块香骨鸡欢享盒 ¥39.9', desc:'周末麦麦惊喜·欢享盒特惠', target:'麦乐鸡(5块)', deal:'fix39.9', source:'官网新闻 20260217'},
+  ],
+  /* 满减券：演示结构（真实结构以 MCP query-my-coupons 返回为准） */
+  fullCoupons: [
+    {id:'f39', name:'麦乐送·满39减6',  min:39, off:6,  demo:true},
+    {id:'f59', name:'麦乐送·满59减12', min:59, off:12, demo:true},
+    {id:'f79', name:'麦乐送·满79减20', min:79, off:20, demo:true},
+  ],
+  /* 今日券讯：调研自麦当劳中国官网活动新闻的真实活动 */
+  news: [
+    {date:'10/15-10/21', title:'周一麦麦省·早餐两件套 ¥9.9', text:'10月15日至21日，周一至周五，大脆鸡扒堡/火腿扒堡/芝香脆鸡扒堡/高达芝士蛋堡 + 鲜萃冰咖，早餐两件套只要 9.9 元。麦当劳 App 专享领券，每天优惠不同，部分券有领取限额。', url:'https://www.mcdonalds.com.cn/news/20261015-breakfast'},
+    {date:'10/17（周六）', title:'周六麦金喜·积分霸王餐', text:'本周六登录麦当劳 App「大抽奖」界面，抽「龙焰鸡腿堡/麦辣鸡腿堡任选」90 次券，0 元吃堡。', url:'https://www.mcdonalds.com.cn/news/20261015-breakfast'},
+    {date:'每周一更新', title:'麦麦省·9块9大薯条', text:'周一麦麦省每周一更新：大薯条 9 块 9、王牌小食拼 15.9 元吃 2 样、麦乐鸡买一送一。吃麦先领券，麦乐送外送费及打包服务费另计。', url:'https://www.mcdonalds.com.cn/news/20260916-WD'},
+    {date:'10/19-10/20 周末', title:'巧克力味厚松饼猪柳蛋堡', text:'周末限定：巧克力味厚松饼猪柳蛋堡上线营业。', url:'https://www.mcdonalds.com.cn/news/20261015-breakfast'},
+    {date:'长期有效', title:'1+1随心配 ¥12.9', text:'汉堡/小食 + 饮品/甜品任选两件 12.9 元，10:30 后供应，学生党性价比之王。', url:'https://www.mcd.cn'},
+  ],
+};
+let REAL_DATA = false;
+fetch('data/mcd-real-data.json').then(r=>r.ok?r.json():null).then(d=>{
+  if(d && d.menu && d.menu.length){ DATA.menu = d.menu; if(d.coupons&&d.coupons.length){ DATA.fullCoupons = d.coupons; } REAL_DATA = true; if(document.getElementById('menuGrid').children.length){ renderNews(); renderCats(); renderMenu(); renderCoupons(); } }
+}).catch(()=>{/* 离线/无真实数据时静默使用演示数据 */});
+
+/* ================= 路由 ================= */
+// localStorage 安全封装（隐私模式/受限环境下静默降级，不影响抽签主流程）
+const store = {
+  get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+const SECTIONS = ['hall','oracle','court','life'];
+let navBusy = false;
+function go(id){
+  if(navBusy) return;
+  const current = SECTIONS.map(s=>document.getElementById(s)).find(el=>!el.classList.contains('hidden'));
+  const next = document.getElementById(id);
+  if(current === next) return;
+  navBusy = true;
+  const wipe = document.getElementById('wipe');
+  wipe.classList.remove('run'); void wipe.offsetWidth; wipe.classList.add('run');
+  current.style.animation = 'pageOut .26s ease forwards';
+  setTimeout(()=>{
+    current.classList.add('hidden'); current.style.animation = '';
+    next.classList.remove('hidden');
+    next.style.animation = 'pageIn .5s cubic-bezier(.22,1,.36,1) both';
+    window.scrollTo({top:0});
+    // 子元素级联入场
+    const items = next.querySelectorAll('.temple-card,.menu-item,.talent-card,.hud-item,.temple-head,.order-total,.tube-zone');
+    items.forEach((c,i)=>{ c.style.animation='none'; void c.offsetWidth; c.style.animation=`fadeUp .5s cubic-bezier(.22,1,.36,1) ${Math.min(i*0.05,0.5)}s both`; });
+    // 动画结束后清空内联动画，避免 fill-mode 压住 hover 效果
+    setTimeout(()=>{ next.style.animation=''; items.forEach(c=>{ c.style.animation=''; }); navBusy = false; }, 1100);
+    if(id==='oracle') initOracle();
+    if(id==='court' && !document.getElementById('menuGrid').children.length){ renderNews(); renderCats(); renderMenu(); renderCoupons(); }
+    if(id==='life' && !document.getElementById('talentZone').children.length) rollTalents();
+  }, 240);
+}
+
+/* ================= 神谕阁 ================= */
+const SIGNS = [
+  {level:'大吉', name:'巨无霸当头', poem:'层层牛肉叠叠高，芝士融处见真招。<br>今日麦门亲点将，巨无霸里藏大刀。', yi:'点巨无霸、加培根、发朋友圈炫耀', ji:'节食、轻食、假装自律', meal:'巨无霸套餐', lucky:'酸黄瓜（隐藏在汉堡里的贵人）', dir:'离你最近的麦当劳门店方向', score:98},
+  {level:'大吉', name:'双吉临门', poem:'两片牛肉双层吉，好运翻倍不稀奇。<br>麦门今日开恩典，芝士就是硬实力。', yi:'点双层吉士堡、给饭搭子也带一份', ji:'只吃一层、辜负第二层芝士', meal:'双层吉士堡 × 2', lucky:'融化的芝士角', dir:'金色拱门所向', score:95},
+  {level:'中吉', name:'薯条沾喜', poem:'金黄薯条刚出锅，盐粒均匀福气多。<br>甜酸酱里蘸一蘸，今日好运不用挪。', yi:'趁热吃、多要两盒酱', ji:'薯条放软、酱只拿一盒', meal:'中薯条 + 麦乐鸡', lucky:'最长的那根薯条', dir:'炸锅方向', score:81},
+  {level:'中吉', name:'旋风拂面', poem:'麦旋风里奥利奥，搅碎烦恼千百条。<br>今日甜品先落肚，苦事自然绕道跑。', yi:'饭后加甜品、第二份半价拉上同事', ji:'忍住不吃冰、一个人吃两份', meal:'麦旋风', lucky:'旋到最匀的那一勺', dir:'甜品站方向', score:78},
+  {level:'小吉', name:'满分晨光', poem:'猪柳蛋配麦满分，豆浆一杯稳住神。<br>早八若能先吃饱，板书再密也精神。', yi:'吃早餐、提前十分钟出门', ji:'空腹早八、踩点进教室', meal:'猪柳蛋麦满分 + 咖啡', lucky:'烤得微焦的饼边', dir:'太阳升起的门店方向', score:72},
+  {level:'平', name:'麦乐鸡守恒', poem:'鸡块五块不多不少，人生起伏恰似油炸。<br>外皮虽皱内心滚烫，平平淡淡也是章法。', yi:'按部就班、蘸酱要均匀', ji:'数别人的鸡块、眼红隔壁桌', meal:'麦乐鸡(5块)', lucky:'最后一块（寿星吃的）', dir:'取餐柜方向', score:60},
+  {level:'平', name:'派中自有乾坤', poem:'香芋派皮酥掉渣，烫嘴也要一口下。<br>心急吃不了热派，凡事晾凉再回答。', yi:'小口慢吃、边吹边咬', ji:'一口闷、被内馅偷袭', meal:'香芋派 × 2', lucky:'掉在包装纸上的酥皮渣', dir:'派柜方向', score:58},
+  {level:'凶', name:'空腹早八', poem:'闹钟响过七八遍，空腹冲向教学楼。<br>若问今日何所忌，不吃早餐是祸首。', yi:'立刻下楼、麦满分续命', ji:'硬扛、喝风、说"我不饿"', meal:'任意早餐组合（现在就去）', lucky:'最后一杯热豆浆', dir:'宿舍楼下方向', score:33},
+  {level:'大凶', name:'断酱之灾', poem:'薯条在手酱已无，甜酸酱盒空空如。<br>点餐未言要酱料，此刻方知世间苦。', yi:'立刻回去补酱、认命干吃', ji:'迁怒店员、迁命于天', meal:'薯条（记得要酱）', lucky:'压箱底的那盒备用酱', dir:'来时的方向（回去拿酱）', score:11},
+];
+const THURSDAY = {level:'疯狂', name:'星期四·天命', poem:'我本是显赫一时的卷王，却被早八所害、DDL 所逼。<br>如今重生归来——V 我 50，听我复仇大计。', yi:'发疯、组局、把本文案转发到五个群', ji:'假装不知道今天是周四、一个人偷偷吃', meal:'疯狂星期四限定组合', lucky:'第 50 个看到这条消息的人', dir:'所有方向（今天全是麦门方向）', score:50};
+
+let oracleInit = false;
+function initOracle(){
+  if(oracleInit) return; oracleInit = true;
+  const isThursday = new Date().getDay() === 4;
+  if(isThursday){
+    const b = document.getElementById('thursdayBanner');
+    b.classList.remove('hidden');
+    b.innerHTML = '⚠️ <b>检测到今日为星期四</b>，神谕阁已进入疯狂状态。今日所有卦象将被强制替换为【疯狂星期四·天命】。';
+  }
+  const key = 'oracle_' + new Date().toISOString().slice(0,10);
+  const saved = store.get(key);
+  if(saved !== null){
+    document.getElementById('tubeHint').textContent = '今日卦象已定，天机不可泄露（也可强行改命）';
+    renderSign(JSON.parse(saved), true);
+  }
+}
+function drawSign(){
+  const tube = document.getElementById('tube');
+  const key = 'oracle_' + new Date().toISOString().slice(0,10);
+  const existed = store.get(key) !== null;
+  tube.classList.remove('shaking'); void tube.offsetWidth; tube.classList.add('shaking');
+  setTimeout(()=>{
+    let sign;
+    if(new Date().getDay() === 4){ sign = THURSDAY; }
+    else { sign = SIGNS[Math.floor(Math.random()*SIGNS.length)]; }
+    store.set(key, JSON.stringify(sign));
+    renderSign(sign, existed);
+    document.getElementById('tubeHint').textContent = '今日卦象已定，明日再来求签';
+  }, 1300);
+}
+function renderSign(s, redraw){
+  const area = document.getElementById('signArea');
+  area.innerHTML = `
+    <div class="sign-card serif">
+      <span class="sign-level">${s.level}</span>
+      ${REAL_DATA?'<span class="data-badge">MCP 真实数据</span>':''}
+      <div class="sign-name">${s.name}</div>
+      <div class="sign-poem">${s.poem}</div>
+      <div class="sign-row"><span class="tag yi">宜</span><span>${s.yi}</span></div>
+      <div class="sign-row"><span class="tag ji">忌</span><span>${s.ji}</span></div>
+      <div class="sign-meal">
+        🍔 <b>今日麦运套餐</b>：${s.meal}<br>
+        🍀 <b>幸运单品</b>：${s.lucky}<br>
+        🧭 <b>开运方位</b>：${s.dir}
+      </div>
+      <div class="sign-score">
+        <span>麦运指数 ${s.score}</span>
+        <div class="bar"><i style="width:0%"></i></div>
+      </div>
+    </div>
+    <div class="oracle-actions">
+      <button class="btn ghost" onclick="defyFate()">🎲 强行逆天改命</button>
+    </div>`;
+  requestAnimationFrame(()=>{ setTimeout(()=>{ const bar = area.querySelector('.bar i'); if(bar) bar.style.width = s.score + '%'; }, 80); });
+  if(redraw){ /* 已从存档恢复，无需提示 */ }
+}
+function defyFate(){
+  store.del('oracle_' + new Date().toISOString().slice(0,10));
+  document.getElementById('signArea').innerHTML = '';
+  document.getElementById('tubeHint').textContent = '命数已改，后果自负（再抽一次就是）';
+}
+
+/* ================= 审判庭 ================= */
+let cart = {};          // name -> qty
+let curCat = 'combo';   // 当前品类
+const claimedKey = ()=> 'mcd_claimed_' + new Date().toISOString().slice(0,10);
+let claimed = new Set(); // 今日已领券 id（每日重置）
+
+/* 今日券池：3 张麦麦省单品券（按日期轮换）+ 3 张麦乐送满减券 */
+function dailyCoupons(){
+  const today = new Date().toISOString().slice(0,10);
+  let h = 0; for(const ch of today) h = (h*31 + ch.charCodeAt(0)) >>> 0;
+  const pool = [...DATA.itemCoupons];
+  for(let i=pool.length-1;i>0;i--){ h = (h*1103515245+12345)>>>0; const j = h % (i+1); [pool[i],pool[j]]=[pool[j],pool[i]]; }
+  return [...pool.slice(0,3).map(c=>({...c, type:'item'})), ...DATA.fullCoupons.map(c=>({...c, type:'full'}))];
+}
+function renderNews(){
+  const strip = document.getElementById('newsStrip');
+  strip.innerHTML = DATA.news.map(n=>`
+    <div class="news-card">
+      <span class="nc-date">${n.date}</span>
+      <div class="nc-title">${n.title}</div>
+      <div class="nc-text">${n.text}</div>
+      <a href="${n.url}" target="_blank" rel="noopener">查看官方活动原文 ↗</a>
+    </div>`).join('');
+}
+function renderCats(){
+  const tabs = document.getElementById('catTabs');
+  tabs.innerHTML = [{id:'all',name:'全部',emoji:'✨'}, ...DATA.cats].map(c=>
+    `<div class="cat-tab ${c.id===curCat?'on':''}" onclick="switchCat('${c.id}')">${c.emoji} ${c.name}</div>`).join('');
+}
+function switchCat(id){ curCat = id; renderCats(); renderMenu(); }
+function renderMenu(){
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = '';
+  const list = curCat==='all' ? DATA.menu : DATA.menu.filter(m=>m.cat===curCat);
+  list.forEach((m,i)=>{
+    const div = document.createElement('div');
+    div.className = 'menu-item' + (m.combo?' combo':'') + (cart[m.name]?' selected':'');
+    div.dataset.name = m.name;
+    const imgTag = m.img
+      ? `<img src="${m.img}" alt="${m.name}" loading="lazy" decoding="async" onerror="this.remove()">`
+      : '';
+    div.innerHTML = `<div class="mi-img">${imgTag}<span class="mi-emoji">${m.emoji}</span></div><div class="mi-qty">${cart[m.name]||0}</div>
+      <div class="mi-body">
+        <div class="mi-name">${m.name}</div>
+        <div class="mi-desc">${m.desc||''}</div>
+        <div class="mi-row">
+          <div class="mi-price">¥${m.price.toFixed(1)}${m.origin?`<span class="origin">¥${m.origin.toFixed(1)}</span>`:''}</div>
+          <button class="mi-add" onclick="chgQty('${m.name}',1)">＋</button>
+        </div>
+      </div>`;
+    div.style.animationDelay = Math.min(i*0.04, .4) + 's';
+    grid.appendChild(div);
+  });
+  updateTotal();
+}
+function chgQty(name, d){
+  cart[name] = Math.max(0, (cart[name]||0) + d);
+  if(cart[name]===0) delete cart[name];
+  const el = document.querySelector(`[data-name="${name}"]`);
+  if(el){ el.classList.toggle('selected', !!cart[name]); const q = el.querySelector('.mi-qty'); if(q) q.textContent = cart[name]||0; }
+  updateTotal();
+}
+/* 已领券中对某餐品生效的单品券 */
+function claimedCouponFor(name){
+  for(const id of claimed){
+    const c = dailyCoupons().find(x=>x.id===id && x.type==='item' && x.target===name);
+    if(c) return c;
+  }
+  return null;
+}
+function cartCalc(){
+  let origin = 0, afterItem = 0;
+  const used = [];
+  Object.entries(cart).forEach(([n,q])=>{
+    const m = DATA.menu.find(x=>x.name===n); if(!m) return;
+    origin += m.price * q;
+    const c = claimedCouponFor(n);
+    let line = m.price * q;
+    if(c){
+      if(c.deal==='bogo')      line = (Math.floor(q/2)*2)*m.price/2 + (q%2)*m.price; // 买一送一
+      else if(c.deal==='fix9.9')  line = 9.9*q;
+      else if(c.deal==='fix15.9') line = 15.9*q;
+      else if(c.deal==='fix39.9') line = 39.9*q;
+      if(line < m.price*q) used.push({name:n, q, save:m.price*q-line, coupon:c});
+    }
+    afterItem += line;
+  });
+  // 已领满减券取最优
+  const fulls = DATA.fullCoupons.filter(c=>claimed.has(c.id));
+  let best = null;
+  fulls.forEach(c=>{ if(afterItem >= c.min && (!best || c.off > best.off)) best = c; });
+  const fullOff = best ? best.off : 0;
+  return {origin, afterItem, itemOff: origin-afterItem, fullOff, best, final: Math.max(0, afterItem-fullOff), used};
+}
+function cartCount(){ return Object.values(cart).reduce((a,b)=>a+b,0); }
+function updateTotal(){
+  const c = cartCalc();
+  document.getElementById('orderTotal').textContent = '¥' + c.final.toFixed(1);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = cartCount();
+  badge.style.display = cartCount() ? 'flex' : 'none';
+  const saved = document.getElementById('cartSaved');
+  const totalSave = c.itemOff + c.fullOff;
+  saved.textContent = totalSave > 0 ? `已省 ¥${totalSave.toFixed(1)}` : (cartCount() ? '未领券，血亏预备中' : '选好餐，开庭时见分晓');
+}
+function renderCoupons(){
+  const zone = document.getElementById('couponList');
+  zone.innerHTML = dailyCoupons().map(c=>{
+    const got = claimed.has(c.id);
+    const val = c.type==='item' ? c.name : `¥${c.off}`;
+    return `<div class="coupon-row ${got?'owned':''}">
+      <div class="cr-val">${got?'✓':val}</div>
+      <div class="cr-info">
+        <div class="cr-name">${c.name}${c.demo?'<span class="cr-demo">演示结构</span>':''}</div>
+        <div class="cr-desc">${got?'已放入卡包 · 开庭自动核验':(c.desc||`满 ¥${c.min} 可用`)}</div>
+      </div>
+      <button class="cr-btn ${got?'got':''}" onclick="${got?'return':'claimCoupon(\''+c.id+'\')'}">${got?'已领取':'领取'}</button>
+    </div>`;
+  }).join('');
+}
+function claimCoupon(id){
+  claimed.add(id);
+  saveClaimed();
+  renderCoupons();
+  updateTotal();
+}
+function saveClaimed(){ store.set(claimedKey(), JSON.stringify([...claimed])); }
+function loadClaimed(){
+  try{ const s = store.get(claimedKey()); claimed = new Set(s ? JSON.parse(s) : []); }catch(e){ claimed = new Set(); }
+}
+/* 结算浮层 */
+function openSettle(){
+  if(cartCount() === 0){ alert('法官：空订单也敢来开庭？先去选餐。'); return; }
+  const c = cartCalc();
+  const items = Object.entries(cart).map(([n,q])=>`${n} × ${q}`).join('、');
+  const itemRows = Object.entries(cart).map(([n,q])=>{
+    const m = DATA.menu.find(x=>x.name===n) || {};
+    return `<div class="st-item">${m.img?`<img src="${m.img}" alt="">`:'<span class="st-noimg">🍽</span>'}<span class="st-name">${n}</span><span class="st-qty">×${q}</span></div>`;
+  }).join('');
+  const rows = [
+    `<div class="settle-line"><span class="sl-label">订单原价</span><span class="sl-val">¥${c.origin.toFixed(1)}</span></div>`,
+    ...c.used.map(u=>`<div class="settle-line save"><span class="sl-label">🎟️ ${u.coupon.name}</span><span class="sl-val">-¥${u.save.toFixed(1)}</span></div>`),
+  ];
+  if(c.best) rows.push(`<div class="settle-line save"><span class="sl-label">🎟️ ${c.best.name}</span><span class="sl-val">-¥${c.fullOff.toFixed(1)}</span></div>`);
+  rows.push(`<div class="settle-line total"><span class="sl-label">实付金额</span><span class="sl-val">¥${c.final.toFixed(1)}</span></div>`);
+  const mask = document.createElement('div');
+  mask.className = 'settle-mask';
+  mask.innerHTML = `<div class="settle-sheet">
+    <h3>⚖️ 麦门审判庭 · 庭前结算</h3>
+    <div class="settle-items">${itemRows}</div>
+    ${rows.join('')}
+    <button class="btn red" style="width:100%;margin-top:16px;" onclick="closeSettle();openTrial()">确认账单 · 正式开庭</button>
+    <button class="btn ghost" style="width:100%;margin-top:9px;" onclick="closeSettle()">再点点别的</button>
+  </div>`;
+  mask.onclick = e=>{ if(e.target===mask) closeSettle(); };
+  document.body.appendChild(mask);
+}
+function closeSettle(){ const m = document.querySelector('.settle-mask'); if(m) m.remove(); }
+
+let trialState = null;
+/* 开庭：算「应有最优价 vs 实际支付」，差额即血亏 */
+function openTrial(){
+  const total = cartCalc();
+  if(cartCount() === 0){ alert('法官：空订单也敢来开庭？先去选餐。'); return; }
+  document.getElementById('orderStep').classList.add('hidden');
+  document.getElementById('trialStep').classList.remove('hidden');
+  document.getElementById('courtLog').innerHTML = '';
+  document.getElementById('verdictArea').innerHTML = '';
+  document.getElementById('appealRow').classList.add('hidden');
+  runTrial(total, false);
+}
+/* 理想价：所有可用的券（含未领的）全用上的价格 */
+function idealCalc(){
+  const saved = new Set(claimed);
+  const c = cartCalc();
+  // 假设全部可领券都已领，重算
+  claimed = new Set(dailyCoupons().map(x=>x.id));
+  const ideal = cartCalc();
+  claimed = saved;
+  return ideal;
+}
+function runTrial(total, isAppeal){
+  const ideal = idealCalc();
+  const loss = Math.max(0, total.final - ideal.final);
+  // 未领但对订单有用的券
+  const missed = dailyCoupons().filter(c=>!claimed.has(c.id)).filter(c=>{
+    if(c.type==='full') return ideal.best && c.id===ideal.best.id;
+    return Object.keys(cart).includes(c.target);
+  });
+  // 凑单建议：差一点点到门槛
+  let upsell = null;
+  DATA.fullCoupons.forEach(c=>{
+    if(total.afterItem < c.min && (c.min - total.afterItem) <= 12 && (!ideal.best || c.off > ideal.fullOff)){
+      const gap = (c.min - total.afterItem).toFixed(1);
+      const suggest = DATA.menu.find(m=>m.price >= c.min - total.afterItem);
+      if(suggest) upsell = {coupon:c, gap, item:suggest};
+    }
+  });
+  trialState = {total, loss, ideal, missed, upsell, isAppeal, best: total.best};
+
+  const items = Object.entries(cart).map(([n,q])=>`${n} × ${q}`).join('、');
+  const L = [];
+  const P = (role, cls, text)=>L.push({role, cls, text});
+  P('书记员','judge', isAppeal ? '二审开庭。全体起立。（你可以不起立）' : '现在开庭。全体起立。（你可以不起立）');
+  P('公诉人','prosecutor', `被告人当庭供述：本单购入 ${items}。`);
+  P('公诉人','prosecutor', `经核算，订单原价共计 ¥${total.origin.toFixed(1)}，实际支付 ¥${total.final.toFixed(1)}。`);
+  if(missed.length){
+    P('法官','judge', `本庭查证：今日麦麦省可领【${missed.map(c=>c.name).join('】、【')}】，被告人一张未领。`);
+    P('法官','judge', `领完后本单应付 ¥${ideal.final.toFixed(1)}。差价 ¥${loss.toFixed(1)}，铁证如山。`);
+  } else if(total.best){
+    P('法官','judge', `本庭查证：被告人已领【${total.best.name}】，本单立减 ¥${total.fullOff.toFixed(1)}。券用得不错，记你一功。`);
+  } else if(upsell){
+    P('法官','judge', `本庭查证：被告人差 ¥${upsell.gap} 即可满足【${upsell.coupon.name}】。`);
+    P('法官','judge', `加一份${upsell.item.name}（¥${upsell.item.price.toFixed(1)}），立减 ¥${upsell.coupon.off}。这账，被告人没算。`);
+  } else {
+    P('法官','judge', '本庭查证：本单确实没有可用之券。公诉人，你告了个寂寞。');
+    P('公诉人','prosecutor', '……公诉人申请下班。');
+  }
+  P('被告人（你）','you', missed.length ? '我……我不知道有券。' : '我这单，有问题吗？');
+  if(missed.length) P('法官','judge', isAppeal
+    ? '不知者亦当罚！一键领券就在那里，你一次都没点。二审驳回上诉，罪加一等——罪名：嘴硬。'
+    : '不知者，亦当罚。一键领券就在那里，你一次都没点。');
+  typeLines(L, ()=>showVerdict(trialState));
+}
+function typeLines(lines, done){
+  const log = document.getElementById('courtLog');
+  let i = 0;
+  (function next(){
+    if(i >= lines.length){ done && done(); return; }
+    const l = lines[i++];
+    const div = document.createElement('div');
+    div.className = 'cl-line';
+    div.innerHTML = `<span class="cl-role ${l.cls}">${l.role}：</span>${l.text}`;
+    log.appendChild(div);
+    setTimeout(next, 620);
+  })();
+}
+function verdictRank(loss){
+  if(loss <= 0)  return {name:'无罪释放', desc:'本单无券可省，法官当庭表扬：会点。'};
+  if(loss <= 5)  return {name:'精打细算', desc:'小亏。麦门记账本上给你画了个小红花。'};
+  if(loss <= 12) return {name:'平平无奇', desc:'亏得中规中矩，是大多数麦民的样子。'};
+  if(loss <= 20) return {name:'败家玩意', desc:'亏出了风格，亏出了水平。'};
+  return {name:'麦门叛徒', desc:'即日起逐出麦门，拱门永不为你亮起。（领了券还是好麦民）'};
+}
+function showVerdict(s){
+  const rank = verdictRank(s.loss);
+  const items = Object.entries(cart).map(([n,q])=>`${n} × ${q}`).join('、');
+  let atoneHtml;
+  if(s.missed.length){
+    atoneHtml = `🎟️ <b>赎罪清单</b>：立即领取【${s.missed.map(c=>c.name).join('、')}】，同款订单实付 <b>¥${s.ideal.final.toFixed(1)}</b>，立省 ¥${s.loss.toFixed(1)}。领券路径：审判庭 → 今日券讯 → 一键领取。`;
+  } else if(s.upsell){
+    atoneHtml = `🎟️ <b>救赎方案</b>：加一份${s.upsell.item.name}，凑满 ¥${s.upsell.coupon.min} 用【${s.upsell.coupon.name}】，实付反而更少。多花钱是为了少花钱，这就是麦门辩证法。`;
+  } else {
+    atoneHtml = '🎟️ <b>庭外建议</b>：本单无可指摘。法官建议保持，并酌情加个麦旋风庆祝无罪。';
+  }
+  document.getElementById('verdictArea').innerHTML = `
+    <div class="verdict-paper serif">
+      <div class="verdict-title">判 决 书</div>
+      <div class="verdict-body">
+        <div class="charge"><b>犯罪事实</b>：购入 ${items}，原价 ¥${s.total.origin.toFixed(1)}${s.missed.length?`，有券未领`:(s.total.best?`，已用【${s.total.best.name}】`:'')}。</div>
+        ${s.isAppeal?'<div class="charge"><b>加重情节</b>：被告不服一审判决，当庭嘴硬，二审维持原判并追加批评。</div>':''}
+        <div class="verdict-loss">
+          <div class="lbl">血 亏 金 额</div>
+          <div class="num">¥${s.loss.toFixed(1)}</div>
+        </div>
+        <div class="verdict-rank">${s.isAppeal && s.loss>0 ? '罪加一等 · ' : ''}${rank.name}<small>${rank.desc}</small></div>
+        <div class="atone">${atoneHtml}</div>
+      </div>
+      <div class="seal serif">麦门<small>审判庭</small></div>
+    </div>`;
+  document.getElementById('appealRow').classList.remove('hidden');
+  document.getElementById('verdictArea').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function appeal(){
+  if(trialState && trialState.isAppeal){ alert('终审判决，不得上诉。（其实是法官懒得再审了）'); return; }
+  document.getElementById('courtLog').innerHTML = '';
+  document.getElementById('verdictArea').innerHTML = '';
+  document.getElementById('appealRow').classList.add('hidden');
+  runTrial(trialState.total, true);
+}
+function resetCourt(){
+  cart = {};
+  document.getElementById('trialStep').classList.add('hidden');
+  document.getElementById('orderStep').classList.remove('hidden');
+  renderNews(); renderCats(); renderMenu(); renderCoupons();
+}
+
+/* ================= 轮回司 ================= */
+const TALENTS = [
+  {name:'优惠券雷达', rarity:'SSR', emoji:'📡', desc:'任何满减券都逃不过你的眼睛，钱包消耗 -30%', mod:{moneySave:0.3}},
+  {name:'麦辣耐受体', rarity:'SSR', emoji:'🌶️', desc:'辣度免疫，吃麦辣鸡腿堡面不改色', mod:{faithBonus:2}},
+  {name:'大胃王', rarity:'SR', emoji:'🍔', desc:'食量+50%，体重增速+50%，快乐增速+100%', mod:{weightGain:1.5}},
+  {name:'健身叛徒', rarity:'SR', emoji:'🏋️', desc:'吃炸鸡不长胖，但每口都伴随内疚', mod:{weightGain:0.5, faithDrain:2}},
+  {name:'社恐·得来速专精', rarity:'SR', emoji:'🚗', desc:'从不下车点餐，得来速车道是你永远的家', mod:{healthBonus:1}},
+  {name:'拼单之王', rarity:'SR', emoji:'🧮', desc:'宿舍拼单永远凑出最优满减，人人敬你三分', mod:{moneySave:0.15}},
+  {name:'早八之魂', rarity:'R', emoji:'⏰', desc:'早餐场景战斗力翻倍，麦满分信徒', mod:{faithBonus:1}},
+  {name:'薯条鉴赏家', rarity:'R', emoji:'🍟', desc:'能吃出薯条出锅秒数，盐粒不匀会难过', mod:{}},
+  {name:'积分囤积癖', rarity:'R', emoji:'🪙', desc:'十年不兑换，积分比存款多', mod:{}},
+  {name:'可乐品鉴师', rarity:'N', emoji:'🥤', desc:'坚持认为麦当劳的可乐就是比外面好喝（确实）', mod:{}},
+];
+let life = null;
+function rollTalents(){
+  const zone = document.getElementById('talentZone');
+  zone.innerHTML = '';
+  const pool = [...TALENTS].sort(()=>Math.random()-.5).slice(0,3);
+  pool.forEach(t=>{
+    const c = document.createElement('div');
+    c.className = 'talent-card';
+    c.innerHTML = `<span class="tc-rarity r-${t.rarity}">${t.rarity}</span><div class="tc-emoji">${t.emoji}</div>
+      <div class="tc-name">${t.name}</div><div class="tc-desc">${t.desc}</div>`;
+    c.onclick = ()=>{
+      document.querySelectorAll('.talent-card').forEach(x=>x.classList.remove('picked'));
+      c.classList.add('picked');
+      life = {talent:t, age:0, attrs:{weight:50, money:100, faith:30, health:100}, flags:new Set(), gen:(life?life.gen:0)+1, bigmac:0, cost:0};
+      const btn = document.getElementById('startLifeBtn');
+      btn.disabled = false; btn.style.opacity = 1;
+      btn.textContent = `携【${t.name}】入 世`;
+    };
+    zone.appendChild(c);
+  });
+}
+
+/* =========================================================
+ * Galgame 剧情引擎：节点图 + 选项分歧 + 旗标 + 属性
+ * 剧情线：共享主线 ×（麦门职员 / 考研自习室 / 健身叛徒 / 发疯文学 /
+ *          薅羊毛党 / 积分赌狗 / 麦门神谕 / 薯条行为艺术）支线
+ * 结局 = 核心结局（旗标线30+ × 属性组合6）× 属性前缀修饰 × 墓志铭，池子上百
+ * ========================================================= */
+const AVATAR = {旁白:'📖',店长:'👨‍🍳',妈妈:'👩',同学:'🧑‍🎓',室友:'🧑‍🤝‍🧑',教官:'🫡',医生:'🩺',老婆:'👰',儿子:'👦',孙子:'🧒',女友:'👧',教练:'💪',店员:'🧑‍💼',群友:'👥',电台:'📻',HR:'🧑‍💻',保安:'💂',馆长:'🏛️',自媒体:'📱',扫地机器人:'🤖',死神:'☠️',学妹:'👩‍🎓',网友:'🌐'};
+const FLAG_LINES = {
+  staff:'麦门职员线', staff_chief:'店长之路', staff_leave:'出走的前店员',
+  study:'考研自习室线', shangan:'A12 上岸', tiaoji:'调剂哲学',
+  gym:'健身叛徒线', fitblogger:'健身博主', gymquit:'还俗的狠人',
+  fry:'薯条异端线', fry_lover:'蘸冰淇淋的异端宗师',
+  shy:'老实人线', net:'黑夜里的人生', crew:'老位置 A12',
+  bigmac_first:'巨无霸初心', save:'省钱基因',
+  romance_mcd:'麦门爱情线', romance_fancy:'法餐厅的叛徒',
+  wedding_burger:'巨无霸婚礼', collector:'蛋糕收藏家', sharer:'切开传家宝的人',
+  legacy:'薯条给爸', strict_dad:'饭先吃干净', liar:'体检报告上的谎言', reformed:'每周三顿',
+  procrastinate:'明天再减', diet:'健康饮食第一天', smart_eat:'去皮的艺术', eat_more:'为了更好地吃',
+  a12_pie:'那个香芋派', giveup_once:'提前离场的夜晚', treat:'请全组麦乐送的人', miser:'存起来的人',
+  bribe:'六个麦辣鸡腿堡', oldtimer:'不如我年轻时那个', grandpa_love:'爷爷再给你买一个',
+  /* —— 新增剧情线 —— */
+  newborn_weirdo:'出生即异端', arch_smile:'被拱门逗笑的孩子',
+  toy_autopsy:'拆解玩具的工程师', silent_eater:'沉默的干饭人', class_philanthropist:'请全班的小圣人',
+  shadow_mai:'幕后麦神', waiting:'等一个值得的日子', pie_fry:'薯条蘸派宗师', taste_class:'开设吃法讲堂的人',
+  mcd_novel:'麦当劳作家', wish_arch:'向拱门许愿', wish_arch2:'考场前的许愿', gaokao_feast:'状元三日宴',
+  class_pack:'包场的散伙饭', summer_work:'散伙饭时间去打工', burger_salute:'敬礼的汉堡兵',
+  vlog:'军训区博主', mcd_club:'麦门文化研究会', oracle_daily:'麦门运势日报', gacha:'积分抽奖入门',
+  student_union:'学生会的叛徒', robot_bro:'扫地机器人的把兄弟', freelancer:'接单的大学生',
+  crazy:'发疯文学线', crazy_first:'凌晨三点的第一篇', crazy_ppt:'先做PPT再发疯', crazy_mom:'发给妈妈的处女作',
+  crazy_reply:'回怼质疑者', crazy_live:'直播朗读发疯文学', crazy_quit:'被做成表情包后封笔',
+  crazy_official:'被官方翻牌', crazy_pure:'拒绝商业化的纯粹发疯人', crazy_ad:'接广告的发疯作家',
+  wool:'薅羊毛党线', wool_rules:'满减规则研究员', wool_alt:'十个手机号的男人', wool_leader:'羊毛党魁',
+  wool_math:'精确到分的凑单', wool_share:'凑单凑出一宿舍派', wool_fail:'凑单失败含泪加购',
+  wool_book:'《薅羊毛兵法》作者', wool_risk:'被风控标记的人', wool_to_burger:'羊毛全换巨无霸',
+  art:'薯条行为艺术线', art_eaten:'吃掉蒙娜丽莎', art_show:'五块钱门票的展览', art_gallery:'美术馆的邀约',
+  art_sauce:'一千个空酱盒', art_ketchup:'我蹭的是番茄酱', art_designer:'回店做美工',
+  oracle:'麦门神谕线', oracle_astro:'真太阳时排盘', oracle_ad:'日报夹带私货', oracle_minimal:'极简神谕大师',
+  oracle_temple:'麦门神谕阁主', oracle_paid:'收费解卦被骂割韭菜', oracle_prophet:'预言史诗级满减',
+  gacha_line:'积分赌狗线', gacha_first:'第一发入魂', gacha_ten:'十连全保底', gacha_hoard:'积分守财奴',
+  gacha_pay:'氪金抽限定', gacha_borrow:'借号抽卡', gacha_ding:'定投抽奖的定力',
+  gacha_enter:'欧皇附体', gacha_roof:'天台悟道', gacha_bucket:'积分换全家桶',
+  paper_review:'品鉴厕所纸的人', fry_names:'给薯条起名字', heritage_seat:'非遗座位守护神', supply_chain:'管全城薯条的人',
+  a12_landlord:'A12包租公', pie_worship:'拜派教徒', math_pie:'让店长讲数学题', a12_staff:'A12编外店员',
+  scale_resale:'卖体脂秤的人', mcd_diet:'麦门减脂餐博主', light_mcd:'麦门轻食创始人',
+  work_cards:'收藏卡打工人', work_parents:'给爸妈点麦乐送', work_996:'得来速是唯一亮着的灯',
+  work_didi:'专接麦当劳订单的滴滴司机', work_hr:'用公司电脑发疯的人', work_quit:'麦门深夜食堂老板',
+  love_cats:'喂流浪猫的约会', love_ppt:'三页PPT讲巨无霸', wedding_delivery:'婚礼麦乐送自助', wedding_ring:'麦旋风里的婚戒',
+  health_plane:'折成纸飞机的体检报告', health_premium:'全年私教+营养师', mid_hide:'被儿子藏起巨无霸', mid_reunion:'同学会谈薯条盐粒',
+  mid_hair:'生发水配麦旋风', mid_wool:'中年薅羊毛小号', child_gacha:'带儿子抽奖的爸', child_a12:'A12祖传座位',
+  retire_donate:'捐蛋糕的人', retire_newhire:'退休第一天报到', old_race:'得来速车神', old_letter:'万字建议信',
+  final_fullmenu:'全菜单吃席', final_smell:'闻闻味儿就行'
+};
+const SCENES = {
+  birth:{age:0, title:'出生', text:[
+    '旁白:你出生在一座离麦当劳三百米的小城。产房窗外，金色拱门在夜里亮得温柔。',
+    '妈妈:哭这么响，以后是干麦门这行的料。'],
+    choices:[
+      {t:'人生第一声啼哭', d:{}, next:'toddler'},
+      {t:'抱着医院"麦"字指示牌啃了一口', d:{faith:5}, flag:'newborn_weirdo', next:'toddler'},
+      {t:'被护士抱过麦当劳时，突然不哭了', d:{faith:4}, flag:'arch_smile', next:'toddler'}]},
+  toddler:{age:3, title:'开心乐园餐', text:[
+    '旁白:三岁生日，爸爸拎回一个开心乐园餐。',
+    '妈妈:玩具比饭重要，先把饭吃干净。'],
+    choices:[
+      {t:'选玩具（薯条掉地上也值了）', d:{faith:6, money:-2}, next:'kid1'},
+      {t:'选薯条（干饭人的本能）', d:{faith:3, weight:4}, flag:'fry', next:'kid1'},
+      {t:'把玩具拆了，研究薯条为什么比饭香', d:{faith:4, health:-1}, flag:'toy_autopsy', next:'kid1'}]},
+  kid1:{age:6, title:'生日派对', text:[
+    '旁白:六岁生日，妈妈说今年可以选：麦当劳派对，或者……'],
+    choices:[
+      {t:'麦当劳派对！我要纸皇冠！', d:{faith:12, money:-3}, next:'kid2'},
+      {t:'在家吃妈妈做的面（省钱）', d:{faith:-2, money:2}, flag:'save', next:'kid2'},
+      {t:'派对上不说话，默默吃了八份薯条', d:{weight:5, faith:6}, flag:'silent_eater', next:'kid2'},
+      {t:'用派对预算请全班吃，自己看着', d:{faith:8, money:-2}, flag:'class_philanthropist', next:'kid2'}]},
+  kid2:{age:10, title:'零花钱的抉择', text:[
+    '旁白:十岁的你攒了三个月零花钱，二十八块五。巨无霸，二十五块五。'],
+    choices:[
+      {t:'全款拿下巨无霸，一口封神', d:{faith:10, money:-3}, flag:'bigmac_first', next:'taste'},
+      {t:'买普通汉堡，剩下的买干脆面卡片', d:{faith:2}, next:'taste'},
+      {t:'让同桌代买，你要当幕后麦神', d:{faith:6, money:-1}, flag:'shadow_mai', next:'taste'},
+      {t:'攒着不买，说要等一个值得的日子', d:{faith:3, money:2}, flag:'waiting', next:'taste'}]},
+  taste:{age:12, title:'异端的美味', text:[
+    '同学:噫——你把薯条蘸麦旋风吃？恶心死了！',
+    '旁白:全桌人的眼神像在看一个异端。但你知道，那是神的味道。'],
+    choices:[
+      {t:'"这是艺术，你们不懂。"继续蘸', d:{faith:12, health:-2, weight:3}, flag:'fry_lover', next:'tween_art'},
+      {t:'"……好吧。"放下薯条，随大流', d:{faith:-4}, flag:'shy', next:'tween'},
+      {t:'当场发明"薯条蘸派"，申报非物质文化遗产', d:{faith:14, health:-3, weight:3}, flag:'pie_fry', next:'tween_art'},
+      {t:'开班授课，门票两块，来了七个同学', d:{faith:6, money:1}, flag:'taste_class', next:'tween_art'}]},
+  tween:{age:14, title:'晚自习之后', text:[
+    '旁白:晚自习后的夜晚，两条路摆在面前。'],
+    choices:[
+      {t:'溜去麦当劳刷完三套卷子', d:{faith:8, health:-2}, flag:'study', next:'gaokao'},
+      {t:'去网吧打两把（别告诉妈）', d:{faith:-3, health:-3}, flag:'net', next:'gaokao'},
+      {t:'在麦当劳写小说《我在麦当劳的十八年》', d:{faith:6, health:-1}, flag:'mcd_novel', next:'gaokao'},
+      {t:'对着金色拱门许愿：保佑数学及格', d:{faith:8}, flag:'wish_arch', next:'gaokao'}]},
+  gaokao:{age:18, title:'高考日', text:[
+    '妈妈:今天早餐必须吃好。猪柳蛋麦满分，状元餐。',
+    '旁白:进考场前，你路过考场对面的麦当劳，还没开门。'],
+    choices:[
+      {t:'麦满分下肚，超常发挥', d:{faith:14, health:2}, next:'party'},
+      {t:'普通早餐，稳字当头', d:{health:1}, next:'party'},
+      {t:'提前两小时到，对着麦当劳许愿', d:{faith:10, health:-1}, flag:'wish_arch2', next:'party'},
+      {t:'早麦满分、午麦辣堡、晚自带，科举级配置', d:{faith:12, money:-2, weight:2}, flag:'gaokao_feast', next:'party'}]},
+  party:{age:18, title:'散伙饭', text:[
+    '室友:最后一次聚餐，去哪？'],
+    choices:[
+      {t:'麦当劳！老位置，A12 桌', d:{faith:12, weight:2}, flag:'crew', next:'uni1'},
+      {t:'去酒店吃顿好的（AA 真贵）', d:{money:-4, faith:4}, next:'uni1'},
+      {t:'全班包场，店员以为是来团建的', d:{faith:14, money:-5}, flag:'class_pack', next:'uni1'},
+      {t:'散伙饭不吃了，去麦当劳打零工挣学费', d:{money:4, faith:5}, flag:'summer_work', next:'uni1'}]},
+  uni1:{age:19, title:'军训与汉堡', text:[
+    '教官:谁再拎着汉堡回来吃，全排加练！',
+    '旁白:你手里拎着六个麦辣鸡腿堡，袋子在发烫。'],
+    choices:[
+      {t:'"教官，天太热，给大家补充补充。"', d:{faith:8, money:-3}, flag:'bribe', next:'uni1b'},
+      {t:'"我错了。"含泪吃完六个', d:{weight:6, faith:6}, next:'uni1b'},
+      {t:'把汉堡供在军训帽里，敬个礼再吃', d:{faith:12, weight:3}, flag:'burger_salute', next:'uni1b'},
+      {t:'开直播《军训vlog之汉堡的108种带法》', d:{money:2, faith:6}, flag:'vlog', next:'uni1b'}]},
+  uni1b:{age:20, title:'百团大战', text:[
+    '旁白:社团招新日，整个食堂门口都是传单。你手里被塞了十七张。',
+    '学妹:同学，看看我们摄影社！……啊你手上那是麦门文化研究会的传单？'],
+    choices:[
+      {t:'加入麦门文化研究会（你创的，全社三人）', d:{faith:10, money:-1}, flag:'mcd_club', next:'art1'},
+      {t:'开始做《麦门运势日报》，每天发年级群', d:{faith:8}, flag:'oracle_daily', next:'oracle1'},
+      {t:'沉迷积分抽奖，一发不可收拾', d:{faith:4}, flag:'gacha', next:'gacha1'},
+      {t:'加入学生会，从此忙到没空吃', d:{faith:-4, health:-2}, flag:'student_union', next:'uni2'}]},
+  uni2:{age:20, title:'课程设计', text:[
+    '旁白:期末周，全校区就剩一个地方有网有电有空调。'],
+    choices:[
+      {t:'麦当劳驻点写代码', d:{faith:8}, next:'fork1'},
+      {t:'在宿舍硬肝（热到秃头）', d:{health:-5}, next:'fork1'},
+      {t:'通宵三天，和扫地机器人拜了把子', d:{faith:10, health:-6}, flag:'robot_bro', next:'fork1'},
+      {t:'接毕设外包，赚到人生第一桶金', d:{money:5, health:-2}, flag:'freelancer', next:'fork1'}]},
+  fork1:{age:21, title:'分叉路口', text:[
+    '旁白:大三暑假，五条路摆在面前。麦当劳的灯，自习室的灯，健身房的灯，还有你键盘上那盏没关的灯。'],
+    choices:[
+      {t:'去麦当劳兼职（店长人挺好）', d:{money:5, faith:6}, flag:'staff', next:'staff1'},
+      {t:'暑假闭关考研（A12 是我的座）', d:{faith:5, health:-2}, flag:'study', next:'study1'},
+      {t:'办张健身卡，做个狠人', d:{health:5, money:-4}, flag:'gym', next:'gym1'},
+      {t:'全职写疯狂星期四发疯文学', d:{faith:6, health:-2}, flag:'crazy', next:'crazy1'},
+      {t:'加入麦麦省羊毛党，钻研满减的尽头', d:{money:2, faith:3}, flag:'wool', next:'wool1'}]},
+  /* —— 职员线 —— */
+  staff1:{age:21, title:'面试', text:[
+    '店长:为什么想来麦当劳上班？',
+    '旁白:你深吸一口气。'],
+    choices:[
+      {t:'"因为热爱。"（真心话）', d:{faith:10, money:2}, next:'staff2'},
+      {t:'"因为想吃员工餐。"（大实话）', d:{faith:6, money:2}, next:'staff2'},
+      {t:'"因为你们家厕所纸特别好。"（认真的）', d:{faith:3, money:2}, flag:'paper_review', next:'staff2'}]},
+  staff2:{age:22, title:'第一次炸薯条', text:[
+    '店长:薯条下锅，一百八十秒。多一秒少一秒，都不行。',
+    '旁白:你盯着油锅，像在进行某种仪式。'],
+    choices:[
+      {t:'背下全部餐品配方', d:{faith:8, health:-2, weight:2}, next:'staff3'},
+      {t:'"差不多得了。"', d:{faith:-2}, next:'staff3'},
+      {t:'给每一根薯条起名字再下锅', d:{faith:10, health:-2}, flag:'fry_names', next:'staff3'}]},
+  staff3:{age:23, title:'去留', text:[
+    '店长:总部有个储备店长的名额。但考上了，就真的走不了了。'],
+    choices:[
+      {t:'考！麦门需要我', d:{faith:15, money:5}, flag:'staff_chief', next:'staff_work'},
+      {t:'离职，去更大的世界', d:{faith:-5, money:5}, flag:'staff_leave', next:'staff_work'},
+      {t:'考上了，但要求把 A12 设为非遗座位', d:{faith:15, money:5}, flag:'heritage_seat', next:'staff_work'},
+      {t:'转去总部做供应链，从此管全城的薯条', d:{faith:12, money:8}, flag:'supply_chain', next:'staff_work'}]},
+  /* —— 考研线 —— */
+  study1:{age:21, title:'A12', text:[
+    '旁白:24 小时麦当劳，靠窗第二排，座位编号 A12。你占了八个月。',
+    '店员:老位置？今天还是中可乐加大薯？'],
+    choices:[
+      {t:'"嗯，今天加个麦旋风。"', d:{faith:10, money:-3, weight:2}, next:'study2'},
+      {t:'"今天不吃了，省钱。"', d:{health:-2, money:1}, next:'study2'},
+      {t:'把 A12 租给学弟，自己收租金', d:{money:4, faith:-2}, flag:'a12_landlord', next:'study2'}]},
+  study2:{age:22, title:'模拟考砸了', text:[
+    '旁白:数学模拟考，58 分。你在 A12 坐了一整夜。',
+    '店长:（递来一个派）新人福利。香芋派，吃了再战。'],
+    choices:[
+      {t:'吃掉派，擦干泪继续', d:{faith:10, health:2}, flag:'a12_pie', next:'study3'},
+      {t:'提前离场，回出租屋躺平', d:{health:-5}, flag:'giveup_once', next:'study3'},
+      {t:'把派供在桌角，每天拜三拜', d:{faith:12, health:1}, flag:'pie_worship', next:'study3'},
+      {t:'让店长给你讲一遍那道数学题', d:{faith:6, health:1}, flag:'math_pie', next:'study3'}]},
+  study3:{age:23, title:'放榜', text:[
+    '旁白:复试结束那晚，你回 A12 坐了很久。全店只剩甜酸酱盒碰撞的声音。'],
+    choices:[
+      {t:'上岸！给 A12 鞠一躬', d:{faith:12, money:3}, flag:'shangan', next:'study_work'},
+      {t:'调剂也认了，有学上就行', d:{faith:4}, flag:'tiaoji', next:'study_work'},
+      {t:'没考上，但成了 A12 的编外店员', d:{faith:10, money:2}, flag:'a12_staff', next:'study_work'}]},
+  /* —— 健身线 —— */
+  gym1:{age:21, title:'体检报告', text:[
+    '医生:体脂率 28%，脂肪肝前期。你才 21 岁。',
+    '旁白:回家路上，你办了一张年卡，又买了一盒麦乐鸡。'],
+    choices:[
+      {t:'从今天开始，健康饮食', d:{health:12, faith:-3}, flag:'diet', next:'gym2'},
+      {t:'先吃为敬，明天再减', d:{health:-5, faith:8}, flag:'procrastinate', next:'gym2'},
+      {t:'买体脂秤测了一次，第二天卖给了室友', d:{health:4, faith:-2}, flag:'scale_resale', next:'gym2'}]},
+  gym2:{age:24, title:'抉择', text:[
+    '教练:今天练腿，然后必须吃够蛋白。你转身又进了得来速。',
+    '旁白:得来速窗口的小灯，像健身房镜子里的麦芒。'],
+    choices:[
+      {t:'板烧鸡腿堡，去皮，是优质蛋白', d:{health:8, faith:6}, flag:'smart_eat', next:'gym3'},
+      {t:'健身就是为了更好地吃', d:{faith:10, health:-4}, flag:'eat_more', next:'gym3'},
+      {t:'开发"麦门减脂餐"发小红书，被骂上热门', d:{money:6, faith:6}, flag:'mcd_diet', next:'gym3'}]},
+  gym3:{age:27, title:'镜子', text:[
+    '旁白:练了六年，你在镜子里看见两种自己：一个低体脂，一个高信仰。'],
+    choices:[
+      {t:'当健身博主，科普"怎么吃麦不长胖"', d:{health:8, money:6}, flag:'fitblogger', next:'gym_work'},
+      {t:'算了，健身不了一辈子，麦可以', d:{faith:12, health:-3}, flag:'gymquit', next:'gym_work'},
+      {t:'开"麦门轻食"，菜单只有麦满分去面包', d:{money:8, faith:8}, flag:'light_mcd', next:'gym_work'}]},
+  /* —— 发疯文学线 —— */
+  crazy1:{age:21, title:'第一篇发疯文学', text:[
+    '旁白:周四凌晨三点，宿舍的灯还亮着。你的文档标题是《我本是 HUST 显赫一时的AI大使……》。',
+    '群友:你又开始了？上周那篇我还没走出来。'],
+    choices:[
+      {t:'写完就发，读完自己起了一身鸡皮疙瘩', d:{faith:10, health:-2}, flag:'crazy_first', next:'crazy2'},
+      {t:'先做 PPT 分析受众画像再动笔', d:{faith:6, money:-1}, flag:'crazy_ppt', next:'crazy2'},
+      {t:'写了不敢发，先发给了妈妈', d:{faith:4}, flag:'crazy_mom', next:'crazy2'}]},
+  crazy2:{age:23, title:'爆火', text:[
+    '旁白:你的《复仇计划》被转进了 47 个群。有人夸你是当代鲁迅，有人让你去挂号。',
+    '网友:听我一句劝，先听我一句：V我50。'],
+    choices:[
+      {t:'回应质疑：真正的艺术不需要标题', d:{faith:12, money:3}, flag:'crazy_reply', next:'crazy3'},
+      {t:'趁热开直播，朗读自己的作品', d:{money:5, faith:8}, flag:'crazy_live', next:'crazy3'},
+      {t:'被做成表情包后，宣布永久封笔', d:{faith:-3, money:2}, flag:'crazy_quit', next:'crazy_work'}]},
+  crazy3:{age:25, title:'官方翻牌', text:[
+    '旁白:麦当劳官方账号转发了你的文案，配文："周四见。"你的手机开始发烫。',
+    'HR:您好，我司市场部想和您聊聊合作……'],
+    choices:[
+      {t:'截图保存，从此设为人生巅峰', d:{faith:15, money:5}, flag:'crazy_official', next:'crazy_work'},
+      {t:'拒绝一切合作，发疯必须纯粹', d:{faith:10}, flag:'crazy_pure', next:'crazy_work'},
+      {t:'接广告，一条三千，发疯也是事业', d:{money:10, faith:-5}, flag:'crazy_ad', next:'crazy_work'}]},
+  /* —— 薅羊毛线 —— */
+  wool1:{age:20, title:'麦麦省', text:[
+    '旁白:你注册了麦麦省会员。从这一刻起，你看待世界的方式变了——万物皆可满减。',
+    '群友:帮我砍一刀！就差 0.01！'],
+    choices:[
+      {t:'逐条研究每一条满减规则，做笔记', d:{faith:5, money:1}, flag:'wool_rules', next:'wool2'},
+      {t:'注册十个手机号，领十份新人券', d:{money:3, faith:2}, flag:'wool_alt', next:'wool2'},
+      {t:'建群教全年级薅羊毛，被尊称党魁', d:{faith:6, money:2}, flag:'wool_leader', next:'wool2'}]},
+  wool2:{age:22, title:'凑单的艺术', text:[
+    '旁白:购物车里躺着 47 块 8，距离"满 50 减 12"还差 2 块 2。你的瞳孔开始地震。'],
+    choices:[
+      {t:'精确计算到每一分钱的完美凑单', d:{faith:8, money:3}, flag:'wool_math', next:'wool3'},
+      {t:'凑单买一堆派，分给全宿舍', d:{faith:6, money:-1, weight:2}, flag:'wool_share', next:'wool3'},
+      {t:'凑单失败，含泪多买一份', d:{faith:4, weight:2}, flag:'wool_fail', next:'wool3'}]},
+  wool3:{age:24, title:'江湖地位', text:[
+    '旁白:全校都在传一份 PDF：《薅羊毛兵法》，作者署名"麦门韦小宝"。'],
+    choices:[
+      {t:'兵法流传全网，你被封为理财导师', d:{faith:10, money:4}, flag:'wool_book', next:'wool_work'},
+      {t:'操作太狠，被麦麦省风控系统标记', d:{faith:3, money:-2}, flag:'wool_risk', next:'wool_work'},
+      {t:'省下的钱全部换成巨无霸，理财闭环', d:{faith:12, money:-4, weight:3}, flag:'wool_to_burger', next:'wool_work'}]},
+  /* —— 麦门神谕线 —— */
+  oracle1:{age:20, title:'运势日报第一期', text:[
+    '旁白:《麦门运势日报》创刊号今日发布，全年级 312 人收到。内容只有一个板块：今日宜吃什么。',
+    '群友:准！我今天按你说的吃了麦满分，高数课没睡着！'],
+    choices:[
+      {t:'引入真太阳时与麦门历法，学术化排盘', d:{faith:10}, flag:'oracle_astro', next:'oracle2'},
+      {t:'日报夹带私货，推荐最贵的套餐', d:{money:2, faith:4}, flag:'oracle_ad', next:'oracle2'},
+      {t:'只发四个字"宜吃麦满分"，被誉为极简大师', d:{faith:8}, flag:'oracle_minimal', next:'oracle2'}]},
+  oracle2:{age:24, title:'十万信徒', text:[
+    '旁白:你的日报有了十万订阅。每天清晨，全城有十万个人在等你说今天该吃什么。',
+    '网友:大师，我今天适合吃麦辣鸡腿堡吗？我水逆。'],
+    choices:[
+      {t:'建"麦门神谕阁"，每日一卦，雷打不动', d:{faith:15}, flag:'oracle_temple', next:'oracle_work'},
+      {t:'开始收费解卦，被骂割韭菜', d:{money:4, faith:-3}, flag:'oracle_paid', next:'oracle_work'},
+      {t:'预言"本周将有史诗级满减"，准了', d:{faith:12, money:3}, flag:'oracle_prophet', next:'oracle_work'}]},
+  /* —— 积分赌狗线 —— */
+  gacha1:{age:20, title:'第一次抽奖', text:[
+    '旁白:你在积分商城发现了"汉堡回车键"限定周边。抽奖按钮是红色的，像恶魔的眼睛。'],
+    choices:[
+      {t:'单抽，中了！全宿舍沸腾', d:{faith:6, money:1}, flag:'gacha_first', next:'gacha2'},
+      {t:'十连，全是保底，陷入沉默', d:{faith:3, money:-2}, flag:'gacha_ten', next:'gacha2'},
+      {t:'攒着不抽，要做积分守财奴', d:{faith:4, money:2}, flag:'gacha_hoard', next:'gacha2'}]},
+  gacha2:{age:22, title:'上头', text:[
+    '旁白:"就再抽一发"——这句话你本月说了 300 次。'],
+    choices:[
+      {t:'氪金抽限定周边，钱包阵亡', d:{money:-6, faith:10}, flag:'gacha_pay', next:'gacha3'},
+      {t:'借同学的号一起抽，有难同当', d:{faith:5}, flag:'gacha_borrow', next:'gacha3'},
+      {t:'定投：每周只抽一次，定力惊人', d:{faith:5, health:1}, flag:'gacha_ding', next:'gacha3'}]},
+  gacha3:{age:24, title:'天台', text:[
+    '旁白:第 300 抽。天台上风很大。你手里攥着手机，屏幕上转着那个圈。'],
+    choices:[
+      {t:'中了汉堡回车键！全群见证欧皇诞生', d:{faith:15, money:3}, flag:'gacha_enter', next:'gacha_work'},
+      {t:'300 抽没中，吹了一夜风后顿悟', d:{faith:6, health:-3}, flag:'gacha_roof', next:'gacha_work'},
+      {t:'卸载 App，积分换了一顿全家桶', d:{faith:8, weight:2}, flag:'gacha_bucket', next:'gacha_work'}]},
+  /* —— 薯条行为艺术线 —— */
+  art1:{age:21, title:'蒙娜丽莎', text:[
+    '旁白:社团第一次活动，你买了 200 包薯条，说要拼一幅《蒙娜丽莎》。社员们觉得你疯了，然后帮你拆包装。',
+    '同学:拼不完怎么办？',
+    '旁白:你说：拼不完，就吃掉。这就是行为艺术的名字——《人生苦短》。'],
+    choices:[
+      {t:'拼到一半全吃了，作品只剩照片', d:{faith:10, weight:3}, flag:'art_eaten', next:'art2'},
+      {t:'拼完了，开展览，门票五块钱', d:{money:4, faith:8}, flag:'art_show', next:'art2'},
+      {t:'被美术馆看中，邀你办个展', d:{money:6, faith:6}, flag:'art_gallery', next:'art2'}]},
+  art2:{age:23, title:'艺术的冬天', text:[
+    '旁白:薯条会馊，艺术会饿。评论区说你是"史上第一个靠过期食品办展的艺术家"。'],
+    choices:[
+      {t:'转型装置艺术：1000 个空酱盒垒成塔', d:{faith:10, money:2}, flag:'art_sauce', next:'art_work'},
+      {t:'回怼批评者：我蹭的是番茄酱', d:{faith:8, money:1}, flag:'art_ketchup', next:'art_work'},
+      {t:'金盆洗手，回麦当劳做美工', d:{faith:5, money:3}, flag:'art_designer', next:'art_work'}]},
+
+  /* ===== 剧情线专属场景（25-80岁后段 + 中学异端前置） ===== */
+  staff_work:{age:25, title:'转正', text:[
+    '店长:欢迎转正。你的工位在煎炉旁边，全店最热的位置。',
+    '旁白:同事平均年龄 38，最小的比你大六岁。你是全店唯一的"青年员工"。'
+  ],
+    choices:[
+      {t:'三个月考下全部岗位证书，包括甜品站', d:{faith:10, money:2}, flag:'staff_cert', next:'staff_love'},
+      {t:'发现排班表漏洞，每周多休一天', d:{money:3, faith:2}, flag:'staff_schedule', next:'staff_love'},
+      {t:'重画了店里的海报，客流涨了 12%', d:{money:4, faith:6}, flag:'staff_poster', next:'staff_love'},
+      {t:'发工资第一天，请全组吃麦乐送', d:{money:-8, faith:12, weight:3}, flag:'treat', next:'staff_love'}
+  ]},
+  staff_love:{age:30, title:'店长介绍的相亲', text:[
+    '店长:总部下来一个审计，人不错，就是较真。我帮你要了微信。',
+    '旁白:见面地点你定了 A12。对方穿着正装，在麦当劳里像一颗误入的面包糠。'
+  ],
+    choices:[
+      {t:'带她参观后厨，背出全部配方当才艺', d:{faith:12, money:-1}, flag:'staff_love_tour', next:'staff_marry'},
+      {t:'她问收入，你掏出一沓攒了五年的优惠券', d:{faith:10}, flag:'staff_love_coupon', next:'staff_marry'},
+      {t:'她审计出门店 0.3 元的误差，你当场求婚', d:{faith:8, money:-2}, flag:'staff_love_audit', next:'staff_marry'}
+  ]},
+  staff_marry:{age:33, title:'店里办的婚礼', text:[
+    '店长:婚宴？我包了。员工价，八折。',
+    '旁白:婚礼在打烊后的门店里办。得来速车道挂满彩灯，像一条通往麦门的隧道。'
+  ],
+    choices:[
+      {t:'全体员工列队捧场，司仪是值班经理', d:{faith:12, money:-4}, flag:'staff_wedding_all', next:'staff_health'},
+      {t:'婚礼蛋糕是三层麦旋风塔，化了三层', d:{faith:10, money:-3}, flag:'wedding_burger', next:'staff_health'},
+      {t:'请全体员工连吃一周员工餐，随叫随到', d:{faith:14, money:-5}, flag:'staff_wedding_week', next:'staff_health'}
+  ]},
+  staff_health:{age:38, title:'油烟', text:[
+    '医生:肺纹理增粗，和长期接触油烟有关。建议换岗。',
+    '旁白:你想起自己炸过的薯条，能绕门店三圈。'
+  ],
+    choices:[
+      {t:'戴上 N95 继续炸，麦门需要这一口', d:{health:-8, faith:12}, flag:'staff_health_n95', next:'staff_mid'},
+      {t:'转岗甜品站，从此和麦旋风相依为命', d:{health:5, faith:5}, flag:'staff_health_dessert', next:'staff_mid'},
+      {t:'办了停薪留职，去海边晒了三个月', d:{health:10, faith:-3}, flag:'staff_health_sea', next:'staff_mid'}
+  ]},
+  staff_mid:{age:42, title:'值班经理', text:[
+    '旁白:你已经是值班经理，胸牌上多了三道杠。00 后新人管你叫"哥"。',
+    '新人:哥，客人说薯条不够咸，怎么办？'
+  ],
+    choices:[
+      {t:'给新人讲 A12 的古老传说，讲了俩小时', d:{faith:10}, flag:'staff_mid_legend', next:'staff_child'},
+      {t:'被叫"叔"那天，你在休息室坐了很久', d:{faith:4, health:-2}, flag:'staff_mid_uncle', next:'staff_child'},
+      {t:'发明"三秒打包法"，全区域推广', d:{money:4, faith:8}, flag:'staff_mid_pack', next:'staff_child'}
+  ]},
+  staff_child:{age:45, title:'店里长大的孩子', text:[
+    '儿子:爸，我们班同学都羡慕我，能在麦当劳写作业。',
+    '旁白:儿子的作业本上画满了拱门。全店店员轮流给他讲题，尤其是数学。'
+  ],
+    choices:[
+      {t:'儿子说长大要当店长，你老泪纵横', d:{faith:12}, flag:'staff_child_chief', next:'staff_retire'},
+      {t:'儿子说长大想当顾客，你陷入存在危机', d:{faith:6, health:-2}, flag:'staff_child_customer', next:'staff_retire'},
+      {t:'教他背配方，四岁会做巨无霸', d:{faith:10, money:1}, flag:'staff_child_recipe', next:'staff_retire'},
+      {t:'"选玩具，薯条给爸。"祖传规矩', d:{faith:10}, flag:'legacy', next:'staff_retire'}
+  ]},
+  staff_retire:{age:60, title:'退休', text:[
+    '旁白:退休欢送会上，门店宣布：今日可乐免费续杯一整天。',
+    '店长:你的工牌，我们挂在 A12 上方了。'
+  ],
+    choices:[
+      {t:'去对家门店挑刺，被店员认出', d:{faith:8, money:-1}, flag:'staff_retire_spy', next:'staff_old'},
+      {t:'回总部当顾问，继续管全城的薯条', d:{money:5, faith:6}, flag:'staff_retire_consult', next:'staff_old'},
+      {t:'每天来店里坐着，不点单，就坐着', d:{faith:12}, flag:'staff_retire_sit', next:'staff_old'},
+      {t:'把工牌和退休蛋糕一起供起来，当传家宝', d:{faith:10, money:-2}, flag:'collector', next:'staff_old'}
+  ]},
+  staff_old:{age:72, title:'老员工', text:[
+    '旁白:你成了这家店的"镇店之宝"。新店员入职第一课：认识你。',
+    '孙子:爷爷，这个叔叔为什么给你鞠躬？'
+  ],
+    choices:[
+      {t:'给新店长提了 47 条建议，被采纳 3 条', d:{faith:10}, flag:'staff_old_advice', next:'staff_final'},
+      {t:'带孙子来店里，说这是爷爷的青春', d:{faith:8}, flag:'staff_old_grandson', next:'staff_final'},
+      {t:'谁的薯条没给酱，你第一个发现', d:{faith:8, health:-2}, flag:'staff_old_ketchup', next:'staff_final'}
+  ]},
+  staff_final:{age:80, title:'最后一锅薯条', text:[
+    '旁白:这一生，你炸了四十年薯条。最后一顿，你想自己点一单。',
+    '店员:老员工内部价，五折。'
+  ],
+    choices:[
+      {t:'吃一份自己炸了四十年的薯条', d:{faith:15, weight:3}, flag:'staff_final_fry', next:null},
+      {t:'让全店店员列队送你，你回了最后一个礼', d:{faith:12, weight:2}, flag:'staff_final_salute', next:null},
+      {t:'闭眼最后一刻，看见的还是那口油锅', d:{faith:10, weight:3}, flag:'staff_final_fryer', next:null},
+      {t:'"最后一顿，把菜单全上一遍。"', d:{faith:15, weight:3, money:-5}, flag:'final_fullmenu', next:null}
+  ]},
+  study_work:{age:25, title:'研究生毕业', text:[
+    '旁白:你硕士毕业了。简历上最亮眼的一行：麦当劳 24 小时店深度用户（八年）。',
+    'HR:为什么你每段实习都在麦当劳附近？'
+  ],
+    choices:[
+      {t:'去大厂，工位必须离麦当劳三公里内', d:{money:5, faith:5}, flag:'study_work_big', next:'study_love'},
+      {t:'留校读博，导师问研究方向你说麦门经济学', d:{faith:10, money:2}, flag:'study_work_phd', next:'study_love'},
+      {t:'回 24 小时店考研上岸区当"区代表"', d:{faith:12}, flag:'study_work_a12', next:'study_love'}
+  ]},
+  study_love:{age:30, title:'图书馆的爱情', text:[
+    '旁白:对象是图书馆认识的。TA 第一次问你：为什么总坐同一个位置？',
+    '女友:那个座位……是有魔力吗？'
+  ],
+    choices:[
+      {t:'带 TA 回 A12，讲了八个月的故事', d:{faith:10, money:-1}, flag:'romance_mcd', next:'study_marry'},
+      {t:'送 TA 一台二手打印机，附赠错题集', d:{money:-2, faith:6}, flag:'study_love_printer', next:'study_marry'},
+      {t:'在 A12 求婚，全店顾客鼓掌', d:{faith:15, money:-2}, flag:'study_love_propose', next:'study_marry'}
+  ]},
+  study_marry:{age:33, title:'论文与婚礼', text:[
+    '老婆:婚礼和你的答辩撞了，你自己选。',
+    '旁白:你选择了……成年人的世界当然有标准答案。'
+  ],
+    choices:[
+      {t:'答辩完穿着西装冲进婚礼现场', d:{faith:10, money:-3, health:-2}, flag:'study_marry_rush', next:'study_health'},
+      {t:'婚礼办在麦当劳，导师坐 A12 主桌', d:{faith:15, money:-4}, flag:'study_marry_mcd', next:'study_health'},
+      {t:'请全组同学吃散伙饭，顺便二刷散伙饭', d:{money:-5, faith:8}, flag:'study_marry_again', next:'study_health'}
+  ]},
+  study_health:{age:38, title:'久坐的诊断', text:[
+    '医生:腰椎曲度变直，和你长期在快餐店久坐有关。建议换硬椅子。',
+    '旁白:你想起 A12 的椅子。确实是软的。'
+  ],
+    choices:[
+      {t:'换回硬椅子，但依旧每天去', d:{health:4, faith:8}, flag:'study_health_chair', next:'study_mid'},
+      {t:'把体检报告夹进 A12 的桌板缝里', d:{faith:10, health:-3}, flag:'study_health_hide', next:'study_mid'},
+      {t:'买了人体工学椅放家里，主要是坐得舒服', d:{health:6, money:-3}, flag:'study_health_ergo', next:'study_mid'}
+  ]},
+  study_mid:{age:42, title:'副教授的烦恼', text:[
+    '旁白:你评上了副高。学生问你：老师，您的学术偶像是谁？',
+    '旁白:你想说是 A12 那个凌晨三点扫地的阿姨。'
+  ],
+    choices:[
+      {t:'开一门《自习室的自我修养》，爆满', d:{money:4, faith:10}, flag:'study_mid_course', next:'study_child'},
+      {t:'论文致谢里写了 A12 和香芋派', d:{faith:15}, flag:'study_mid_thanks', next:'study_child'},
+      {t:'带学生回 A12 调研，美其名曰田野', d:{money:2, faith:8}, flag:'study_mid_field', next:'study_child'}
+  ]},
+  study_child:{age:45, title:'A12 第三代', text:[
+    '儿子:爸，我们能不能不去麦当劳写作业？同学们说我是"麦当劳长大的"。',
+    '旁白:你看着儿子，仿佛看见当年那个在 A12 刷完三套卷子的自己。'
+  ],
+    choices:[
+      {t:'给他讲 A12 的历史，讲到他睡着', d:{faith:8}, flag:'study_child_story', next:'study_retire'},
+      {t:'尊重他，选家里的书桌', d:{health:2, faith:4}, flag:'study_child_desk', next:'study_retire'},
+      {t:'带他去一次，他写完作业主动说还想来', d:{faith:12}, flag:'study_child_back', next:'study_retire'},
+      {t:'"不许挑食，饭先吃干净。"', d:{faith:4}, flag:'strict_dad', next:'study_retire'}
+  ]},
+  study_retire:{age:60, title:'荣休', text:[
+    '旁白:荣休报告会上，你最后一页 PPT 是一张照片：A12 的桌面。',
+    '同事:这桌子……有什么故事？'
+  ],
+    choices:[
+      {t:'讲了两个小时，校史馆收录了这段', d:{faith:12}, flag:'study_retire_talk', next:'study_old'},
+      {t:'把 A12 的椅子买了下来，放在办公室', d:{money:-2, faith:10}, flag:'study_retire_chair', next:'study_old'},
+      {t:'只说了一句：那是我的课桌。', d:{faith:8}, flag:'study_retire_brief', next:'study_old'}
+  ]},
+  study_old:{age:72, title:'常坐 A12 的老人', text:[
+    '旁白:你还是每天去 A12。店员给你留好了靠窗的位置，和你留了四十年的那个。',
+    '孙子:爷爷，这个位置是不是你家？'
+  ],
+    choices:[
+      {t:'给孙子讲每道菜背后的题，从高数到概率', d:{faith:10}, flag:'study_old_story', next:'study_final'},
+      {t:'写《A12 编年史》，没人看，但你写完了', d:{faith:12}, flag:'study_old_book', next:'study_final'},
+      {t:'只是坐着，看年轻人来了又走', d:{faith:6, health:1}, flag:'study_old_sit', next:'study_final'},
+      {t:'"不如我年轻时那个。"', d:{faith:8}, flag:'oldtimer', next:'study_final'}
+  ]},
+  study_final:{age:80, title:'交卷', text:[
+    '旁白:这一生像一张答完的卷子。最后一题：如果重来，还会选 A12 吗？',
+    '店员:今天还是老位置？'
+  ],
+    choices:[
+      {t:'会。而且要多坐几年。', d:{faith:15}, flag:'study_final_yes', next:null},
+      {t:'把没刷完的真题带下去，继续', d:{faith:10, weight:2}, flag:'study_final_papers', next:null},
+      {t:'不用了，这次我坐家里。', d:{faith:6, health:2}, flag:'study_final_home', next:null}
+  ]},
+  gym_work:{age:25, title:'第一桶金', text:[
+    '旁白:你靠教"怎么吃麦不长胖"月入过万。祖师爷赏饭吃。',
+    '学员:教练，练完能吃巨无霸吗？'
+  ],
+    choices:[
+      {t:'去皮去酱去面包，你有一套完整方法论', d:{money:6, faith:5}, flag:'gym_work_method', next:'gym_love'},
+      {t:'能。但只能吃一口，剩下的我吃', d:{faith:8, money:2}, flag:'gym_work_bite', next:'gym_love'},
+      {t:'开直播连吃三个巨无霸再练三小时', d:{money:5, health:-4}, flag:'gym_work_live', next:'gym_love'}
+  ]},
+  gym_love:{age:30, title:'健身房恋情', text:[
+    '旁白:对象是会员。第一次约会，你带TA去吃了麦旋风——两只。',
+    '女友:说好的健康饮食呢？'
+  ],
+    choices:[
+      {t:'"欺骗餐是计划的一部分。"', d:{faith:10, money:-2}, flag:'gym_love_cheat', next:'gym_marry'},
+      {t:'带 TA 练腿，练到 TA 说分手', d:{health:4, faith:5}, flag:'gym_love_leg', next:'gym_marry'},
+      {t:'两人对吃麦旋风，吃到第三只停手', d:{faith:8, weight:2}, flag:'gym_love_sundae', next:'gym_marry'}
+  ]},
+  gym_marry:{age:33, title:'婚礼上的深蹲', text:[
+    '老婆:婚礼上你能不能不提"蛋白质"三个字？',
+    '旁白:你答应了。司仪说"交换戒指"时，你接了一句"优质蛋白摄入完成"。'
+  ],
+    choices:[
+      {t:'婚礼现场摆满鸡胸肉蛋糕和麦旋风', d:{faith:12, money:-4}, flag:'gym_marry_cake', next:'gym_health'},
+      {t:'带着全健身房来捧场，人均深蹲一百', d:{health:3, faith:8}, flag:'gym_marry_squad', next:'gym_health'},
+      {t:'蜜月去迪士尼，主要是为了走三万步', d:{health:5, faith:6, money:-3}, flag:'gym_marry_walk', next:'gym_health'}
+  ]},
+  gym_health:{age:38, title:'体检单', text:[
+    '医生:体脂 18%，很标准。但尿酸偏高，你蛋白质吃太多了。',
+    '旁白:你盯着报告，像当年盯着体脂率 28% 那张。'
+  ],
+    choices:[
+      {t:'把蛋白粉换成……更多的麦旋风', d:{health:-4, faith:10}, flag:'gym_health_powder', next:'gym_mid'},
+      {t:'严格执行，三个月后尿酸正常', d:{health:8, faith:-3}, flag:'gym_health_strict', next:'gym_mid'},
+      {t:'开始研究"麦门低碳水套餐",发论文', d:{money:4, health:4, faith:5}, flag:'gym_health_paper', next:'gym_mid'}
+  ]},
+  gym_mid:{age:42, title:'两种镜子', text:[
+    '旁白:健身房的镜子照了二十年。你开始分不清：是你在照镜子，还是麦在照你。',
+    '学员:教练，你最近是不是胖了点？'
+  ],
+    choices:[
+      {t:'承认，并宣布进入"佛系期"', d:{health:2, faith:8, weight:2}, flag:'gym_mid_buddha', next:'gym_child'},
+      {t:'不信，再测一次体脂', d:{health:4, faith:5}, flag:'gym_mid_remeasure', next:'gym_child'},
+      {t:'把"麦门轻食"做到上市，镜子归你', d:{money:8, faith:6}, flag:'gym_mid_ipo', next:'gym_child'}
+  ]},
+  gym_child:{age:45, title:'遗传的腹肌', text:[
+    '儿子:爸，我体育课仰卧起坐全班第一！',
+    '旁白:你很欣慰。直到老师问：孩子妈妈说你家是不是开健身房的？'
+  ],
+    choices:[
+      {t:'带儿子吃麦旋风庆祝，父慈子孝', d:{faith:10, weight:2}, flag:'gym_child_sundae', next:'gym_retire'},
+      {t:'教他"三分练七分吃",全家崩溃', d:{health:2, faith:6}, flag:'gym_child_teach', next:'gym_retire'},
+      {t:'给儿子报奥数班，全面发展', d:{money:-3, faith:4}, flag:'gym_child_math', next:'gym_retire'}
+  ]},
+  gym_retire:{age:60, title:'还俗仪式', text:[
+    '旁白:退休那天，你办了张麦当劳终身会员卡，把健身房年卡退了。',
+    '教练:真不练了？'
+  ],
+    choices:[
+      {t:'不练了。麦门才是终身体育', d:{faith:12, health:-3}, flag:'gym_retire_quit', next:'gym_old'},
+      {t:'还是练，但改成"散步去麦当劳"', d:{health:6, faith:6}, flag:'gym_retire_walk', next:'gym_old'},
+      {t:'把健身房改成麦门主题，开业大吉', d:{money:6, faith:10}, flag:'gym_retire_theme', next:'gym_old'}
+  ]},
+  gym_old:{age:72, title:'老年健身博主', text:[
+    '旁白:你重新开播了。标题：《72 岁，教你健康地吃巨无霸》。',
+    '网友:爷爷，我爷爷让我问您还收学员吗？'
+  ],
+    choices:[
+      {t:'收。学费是一顿麦旋风', d:{faith:12}, flag:'gym_old_student', next:'gym_final'},
+      {t:'不收。发疯要趁早，健身看缘分', d:{faith:8}, flag:'gym_old_nostudent', next:'gym_final'},
+      {t:'转型吃播，只吃巨无霸，越吃越瘦', d:{faith:10, money:4}, flag:'gym_old_eat', next:'gym_final'},
+      {t:'"好吃！爷爷再给你买一个！"', d:{faith:6, money:-2}, flag:'grandpa_love', next:'gym_final'}
+  ]},
+  gym_final:{age:80, title:'最后一组', text:[
+    '旁白:医生说，这辈子最后一组"训练"了。你点了份巨无霸。',
+    '家人:医生说了不能……'
+  ],
+    choices:[
+      {t:'最后一组：去皮去酱，规矩一辈子', d:{faith:10, health:2}, flag:'gym_final_peel', next:null},
+      {t:'最后一餐：全都要，叛徒到底', d:{faith:15, weight:3}, flag:'gym_final_all', next:null},
+      {t:'把蛋白粉冲进可乐，干了这杯', d:{faith:12, health:-2}, flag:'gym_final_mix', next:null}
+  ]},
+  crazy_work:{age:25, title:'发疯文学家', text:[
+    '旁白:你的发疯文学结集出版，书名《星期四的复仇》。首印三万册。',
+    '编辑:读者问，周四到底有什么深仇大恨？'
+  ],
+    choices:[
+      {t:'"周四没有深仇，周四只有饥饿。"', d:{faith:12, money:4}, flag:'crazy_work_book', next:'crazy_love'},
+      {t:'开公司，专接品牌方的"疯"', d:{money:6, faith:-2}, flag:'crazy_work_company', next:'crazy_love'},
+      {t:'拒绝出版：发疯是免费的，神圣不可侵犯', d:{faith:10}, flag:'crazy_work_pure', next:'crazy_love'},
+      {t:'裸辞开"麦门深夜食堂",其实就是麦当劳', d:{money:-4, faith:12}, flag:'work_quit', next:'crazy_love'}
+  ]},
+  crazy_love:{age:30, title:'发疯式约会', text:[
+    '旁白:对象是评论区认识的。TA 说：我是看着你的发疯文学失恋的。',
+    '女友:初次见面，请先用一段发疯文学介绍自己。'
+  ],
+    choices:[
+      {t:'即兴发疯三百字，TA 泪流满面', d:{faith:10, money:-1}, flag:'crazy_love_impromptu', next:'crazy_marry'},
+      {t:'冷静介绍自己，TA 说"你变了"', d:{faith:-3, health:1}, flag:'crazy_love_calm', next:'crazy_marry'},
+      {t:'带 TA 去麦当劳考察，寻找周四的素材', d:{faith:12, money:-2}, flag:'crazy_love_field', next:'crazy_marry'},
+      {t:'第一次约会去了法餐厅，TA 以为你改邪归正了', d:{money:-6, faith:-4}, flag:'romance_fancy', next:'crazy_marry'}
+  ]},
+  crazy_marry:{age:33, title:'婚礼发疯', text:[
+    '老婆:婚礼上司仪让我俩讲讲恋爱经过。你来。',
+    '旁白:你清了清嗓子，全场安静。你知道，属于你的时刻来了。'
+  ],
+    choices:[
+      {t:'当场念了一篇两千字发疯文学，全场哭成狗', d:{faith:15, money:-3}, flag:'crazy_marry_speech', next:'crazy_health'},
+      {t:'正常讲述，被老婆质疑"你是谁"', d:{faith:-2, health:1}, flag:'crazy_marry_normal', next:'crazy_health'},
+      {t:'婚礼办在周四，全场 V 我 50', d:{faith:12, money:6}, flag:'crazy_marry_thursday', next:'crazy_health'}
+  ]},
+  crazy_health:{age:38, title:'创作的代价', text:[
+    '医生:腱鞘炎，颈椎反弓，用眼过度。你这才 38 岁。',
+    '旁白:你想起自己写过最狠的一句："键盘敲烂，月薪过万。"现在手先烂了。'
+  ],
+    choices:[
+      {t:'语音输入，发疯速度反而快了', d:{health:3, faith:8}, flag:'crazy_health_voice', next:'crazy_mid'},
+      {t:'停更三个月，去麦当劳采风', d:{health:6, faith:4}, flag:'crazy_health_break', next:'crazy_mid'},
+      {t:'不停。疼的是我，疯的是你们', d:{health:-6, faith:12}, flag:'crazy_health_stubborn', next:'crazy_mid'}
+  ]},
+  crazy_mid:{age:42, title:'江郎才尽', text:[
+    '旁白:你盯着空白文档三个小时。周四快到了。评论区在催更。',
+    '群友:今天怎么还没发？是不是去住院了？'
+  ],
+    choices:[
+      {t:'发了一篇《今天不疯了》，全网破防', d:{faith:10}, flag:'crazy_mid_blank', next:'crazy_child'},
+      {t:'复读自己三十年前的旧作，依然爆款', d:{money:4, faith:5}, flag:'crazy_mid_remix', next:'crazy_child'},
+      {t:'培养儿子接班，家学渊源', d:{faith:8}, flag:'crazy_mid_heir', next:'crazy_child'}
+  ]},
+  crazy_child:{age:45, title:'发疯世家', text:[
+    '儿子:爸，我们班主任让写《我的理想》。我写"当发疯文学家"。',
+    '旁白:老师在评语里写：建议先完成作业。'
+  ],
+    choices:[
+      {t:'支持！并把自己账号密码交给了儿子', d:{faith:10, money:-1}, flag:'crazy_child_support', next:'crazy_retire'},
+      {t:'劝他学门正经手艺，比如薅羊毛', d:{faith:4, money:2}, flag:'crazy_child_realist', next:'crazy_retire'},
+      {t:'帮儿子润色作文，被请家长', d:{faith:8, health:-2}, flag:'crazy_child_polish', next:'crazy_retire'}
+  ]},
+  crazy_retire:{age:60, title:'封笔', text:[
+    '旁白:你宣布封笔。最后一篇只有一句话："疯不动了，但麦还吃。"',
+    '网友:青春结束了。'
+  ],
+    choices:[
+      {t:'把全部作品刻进麦当劳的餐巾纸，永久保存', d:{faith:12}, flag:'crazy_retire_napkin', next:'crazy_old'},
+      {t:'去麦当劳打工，体验"正常人的周四"', d:{money:2, faith:8}, flag:'crazy_retire_job', next:'crazy_old'},
+      {t:'开一个只发旧作的账号，养老', d:{money:3, faith:5}, flag:'crazy_retire_old', next:'crazy_old'}
+  ]},
+  crazy_old:{age:72, title:'老疯子', text:[
+    '旁白:你成了"非物质文化遗产"——评论区说的，每篇旧作下面都有"考古"二字。',
+    '孙子:爷爷，你当年真的 V 过别人 50 吗？'
+  ],
+    choices:[
+      {t:'V 过。一共 47 个 50。', d:{faith:10, money:-3}, flag:'crazy_old_50', next:'crazy_final'},
+      {t:'没 V 过，但被 V 过 47 个', d:{money:4, faith:6}, flag:'crazy_old_bev', next:'crazy_final'},
+      {t:'给孙子讲每个周四的故事，讲到睡着', d:{faith:8}, flag:'crazy_old_story', next:'crazy_final'}
+  ]},
+  crazy_final:{age:80, title:'最后一篇', text:[
+    '旁白:这一生的最后一篇文案。标题你早就想好了。',
+    '旁白:文档开着，光标在闪。周四快到了。'
+  ],
+    choices:[
+      {t:'《我本是黄土一抔，却被麦香请回了人间》', d:{faith:15}, flag:'crazy_final_title', next:null},
+      {t:'只写四个字：V 我 50。', d:{faith:12}, flag:'crazy_final_v50', next:null},
+      {t:'合上电脑：这次，真的疯了。', d:{faith:10, health:1}, flag:'crazy_final_close', next:null}
+  ]},
+  wool_work:{age:25, title:'羊毛财务', text:[
+    '旁白:你的副业是帮全公司薅麦当劳羊毛，月入三千。同事叫你"麦门韦小宝"。',
+    '领导:小X 啊，帮我也凑一单？'
+  ],
+    choices:[
+      {t:'成立"公司羊毛事业部"，你任部长', d:{money:6, faith:6}, flag:'wool_work_ministry', next:'wool_love'},
+      {t:'只帮领导一个人薅，精准定位', d:{money:5, faith:3}, flag:'wool_work_boss', next:'wool_love'},
+      {t:'辞职专职薅羊毛，惊动全家', d:{money:4, faith:8}, flag:'wool_work_fulltime', next:'wool_love'}
+  ]},
+  wool_love:{age:30, title:'凑单式恋爱', text:[
+    '女友:你请我吃顿饭，怎么还要凑满减？',
+    '旁白:你解释说：满 50 减 12，我再加个派就回本了。她沉默了。'
+  ],
+    choices:[
+      {t:'给她算了一晚上账，她成了你女友', d:{money:-2, faith:10}, flag:'wool_love_calc', next:'wool_marry'},
+      {t:'当场买了全菜单，证明你不抠', d:{money:-8, faith:5}, flag:'wool_love_full', next:'wool_marry'},
+      {t:'带她入伙，从此两人一起薅', d:{money:3, faith:8}, flag:'wool_love_partner', next:'wool_marry'}
+  ]},
+  wool_marry:{age:33, title:'满减婚礼', text:[
+    '老婆:婚庆公司报价 3 万 8。你说你能砍到 8 千。',
+    '旁白:婚礼当天，司仪是凑单凑来的，酒水是满减叠的，连婚车都是优惠券换的。'
+  ],
+    choices:[
+      {t:'全场宾客都学会了"先领券再下单"', d:{money:5, faith:10}, flag:'wool_marry_teach', next:'wool_health'},
+      {t:'婚戒是积分兑换的，爱情是满减凑的', d:{faith:12, money:-3}, flag:'wool_marry_points', next:'wool_health'},
+      {t:'请柬上印满优惠券，宾客撕着玩', d:{faith:8, money:2}, flag:'wool_marry_invite', next:'wool_health'}
+  ]},
+  wool_health:{age:38, title:'钱包与体检', text:[
+    '医生:你各项指标都很好——你多久没吃油炸食品了？',
+    '旁白:你愣住了。为了凑单，你已经三年没吃过超过 15 块的套餐。'
+  ],
+    choices:[
+      {t:'顿悟：省下的钱，要换成健康', d:{health:8, faith:4}, flag:'wool_health_wake', next:'wool_mid'},
+      {t:'顿悟：健康是最大的羊毛，要薅', d:{health:5, faith:6, money:2}, flag:'wool_health_wool', next:'wool_mid'},
+      {t:'没顿悟。继续研究满减到凌晨三点', d:{health:-6, money:5}, flag:'wool_health_allnighter', next:'wool_mid'}
+  ]},
+  wool_mid:{age:42, title:'风控之后', text:[
+    '旁白:你的账号被麦麦省标记为"疑似羊毛党"。你用了十年的大号，就这么没了。',
+    '客服:经检测，您的领取行为存在异常。'
+  ],
+    choices:[
+      {t:'写申诉信，逻辑严密，被客服录用', d:{money:5, faith:6}, flag:'wool_mid_appeal', next:'wool_child'},
+      {t:'注册小号重来，中年人第二春', d:{money:4, faith:4}, flag:'mid_wool', next:'wool_child'},
+      {t:'放下屠刀：不薅了，全额购买', d:{health:4, faith:8}, flag:'wool_mid_quit', next:'wool_child'}
+  ]},
+  wool_child:{age:45, title:'家学', text:[
+    '儿子:爸，我们班同学都叫你"优惠券侠"。',
+    '旁白:儿子的书包里，你给他塞了 47 张过期优惠券。你说：这是传家宝。'
+  ],
+    choices:[
+      {t:'教儿子第一课：先看规则，再看菜单', d:{money:3, faith:8}, flag:'wool_child_rules', next:'wool_retire'},
+      {t:'把全部优惠券传给儿子，完成交接', d:{faith:12}, flag:'wool_child_inherit', next:'wool_retire'},
+      {t:'告诉儿子：别学我，全额买想吃的', d:{health:2, faith:6}, flag:'wool_child_free', next:'wool_retire'}
+  ]},
+  wool_retire:{age:60, title:'退休羊毛', text:[
+    '旁白:退休后你有了大把时间。你的新战场：全城所有能薅的渠道。',
+    '群友:老爷子，这个券怎么用？'
+  ],
+    choices:[
+      {t:'建"老年羊毛群"，成员三百', d:{money:4, faith:10}, flag:'wool_retire_group', next:'wool_old'},
+      {t:'出山授课：《论羊毛的边界》', d:{money:5, faith:6}, flag:'wool_retire_course', next:'wool_old'},
+      {t:'金盆洗手，只吃原价巨无霸', d:{health:5, faith:8}, flag:'wool_retire_quit', next:'wool_old'}
+  ]},
+  wool_old:{age:72, title:'老年风控', text:[
+    '旁白:你的号又被封了。这次你很平静——姜太公钓鱼，愿者上钩。',
+    '孙子:爷爷，这个月你又省了多少？'
+  ],
+    choices:[
+      {t:'"没省。但这个月的满减，我都算过。"', d:{faith:10}, flag:'wool_old_calc', next:'wool_final'},
+      {t:'把毕生笔记写成《薅羊毛编年史》', d:{money:3, faith:12}, flag:'wool_old_book', next:'wool_final'},
+      {t:'告诉孙子：记住，规则比优惠重要', d:{faith:8}, flag:'wool_old_rule', next:'wool_final'}
+  ]},
+  wool_final:{age:80, title:'最后一次凑单', text:[
+    '旁白:最后一顿。购物车里有 48 块 2，距离满 50 减 12 还差 1 块 8。',
+    '旁白:你的手在抖。这一单，凑了八十年。'
+  ],
+    choices:[
+      {t:'加一个派。凑单的尊严，至死方休', d:{faith:12, weight:2}, flag:'wool_final_pie', next:null},
+      {t:'不凑了。原价，是最后的体面', d:{faith:10, health:2}, flag:'wool_final_full', next:null},
+      {t:'把购物车分享给全家人，集思广益', d:{faith:8, money:-2}, flag:'wool_final_family', next:null}
+  ]},
+  oracle_work:{age:25, title:'神谕阁主', text:[
+    '旁白:你的《麦门运势日报》成了百万订阅。你搬进了一间办公室，门口挂匾：神谕阁。',
+    '助理:阁主，今天全城的"宜吃"怎么写？'
+  ],
+    choices:[
+      {t:'大数据+真太阳时，双引擎排盘', d:{faith:10, money:5}, flag:'oracle_work_data', next:'oracle_love'},
+      {t:'只凭感觉。直觉才是最大的神谕', d:{faith:8}, flag:'oracle_work_feel', next:'oracle_love'},
+      {t:'外包给 AI 生成，自己签字', d:{money:6, faith:-2}, flag:'oracle_work_ai', next:'oracle_love'}
+  ]},
+  oracle_love:{age:30, title:'神谕姻缘', text:[
+    '女友:你先算算，咱俩合不合？',
+    '旁白:你当场排盘：天作之合，麦门吉日。她笑了，你说这是科学。'
+  ],
+    choices:[
+      {t:'把恋爱过程写成《合盘案例集》', d:{faith:10, money:2}, flag:'oracle_love_case', next:'oracle_marry'},
+      {t:'求婚要选"巨无霸宜食日"，仪式感拉满', d:{faith:12, money:-2}, flag:'oracle_love_propose', next:'oracle_marry'},
+      {t:'算了但没完全算：缘分天注定', d:{faith:8, health:1}, flag:'oracle_love_fate', next:'oracle_marry'}
+  ]},
+  oracle_marry:{age:33, title:'神谕婚礼', text:[
+    '老婆:婚礼日期，你找人算了吗？',
+    '旁白:你算了。不仅要宜嫁娶，还要宜麦满分、宜薯条、宜麦旋风。全城只有一个日子。'
+  ],
+    choices:[
+      {t:'婚礼办在"麦门大吉"日，全城播报', d:{faith:15, money:-3}, flag:'oracle_marry_day', next:'oracle_health'},
+      {t:'现场给每位宾客发当日运势卡', d:{faith:10, money:-2}, flag:'oracle_marry_card', next:'oracle_health'},
+      {t:'日子不重要，人是最大吉兆', d:{faith:8, health:2}, flag:'oracle_marry_human', next:'oracle_health'}
+  ]},
+  oracle_health:{age:38, title:'泄露天机', text:[
+    '医生:你这是用眼过度。再这么排盘，要瞎。',
+    '旁白:你想说：天机不可泄露，但视力可以泄露。'
+  ],
+    choices:[
+      {t:'转语音播报，神谕进入 5G 时代', d:{health:5, faith:8}, flag:'oracle_health_voice', next:'oracle_mid'},
+      {t:'雇三个助理轮流排盘，风险均摊', d:{money:-3, health:4}, flag:'oracle_health_staff', next:'oracle_mid'},
+      {t:'不停。瞎了也能心算', d:{health:-8, faith:12}, flag:'oracle_health_blind', next:'oracle_mid'}
+  ]},
+  oracle_mid:{age:42, title:'翻车', text:[
+    '旁白:你预言"本周必有史诗级满减"。满减没来，来的是全网群嘲。',
+    '网友:大祭司，说好的满减呢？我饭都戒了。'
+  ],
+    choices:[
+      {t:'直播道歉，并表演生吃三个巨无宝', d:{faith:8, money:3}, flag:'oracle_mid_apology', next:'oracle_child'},
+      {t:'硬撑：满减虽迟但到，信者得救', d:{faith:5, health:-3}, flag:'oracle_mid_stubborn', next:'oracle_child'},
+      {t:'改行做"麦门避坑指南"，反向收割', d:{money:5, faith:4}, flag:'oracle_mid_pitfall', next:'oracle_child'}
+  ]},
+  oracle_child:{age:45, title:'神谕世家', text:[
+    '儿子:爸，同学让我给他们算考试运。',
+    '旁白:你说：先收费，再排盘。商业社会，神谕也要讲 KPI。'
+  ],
+    choices:[
+      {t:'开"学生档"，全场八折，童叟无欺', d:{money:3, faith:8}, flag:'oracle_child_student', next:'oracle_retire'},
+      {t:'免费。神谕属于全人类', d:{faith:12}, flag:'oracle_child_free', next:'oracle_retire'},
+      {t:'教儿子第一课：不可全信，不可不信', d:{faith:6, money:1}, flag:'oracle_child_lesson', next:'oracle_retire'}
+  ]},
+  oracle_retire:{age:60, title:'最后一卦', text:[
+    '旁白:退休前最后一期日报。你写了四个字：诸事皆宜。',
+    '网友:就这？'
+  ],
+    choices:[
+      {t:'不解释。懂的人自然懂', d:{faith:12}, flag:'oracle_retire_brief', next:'oracle_old'},
+      {t:'加更一期：解释"诸事皆宜"的三重境界', d:{faith:8, money:2}, flag:'oracle_retire_explain', next:'oracle_old'},
+      {t:'把日报交给 AI，人类退场', d:{money:4, faith:4}, flag:'oracle_retire_ai', next:'oracle_old'},
+      {t:'把最后一卦的运势分享给全城人', d:{faith:12}, flag:'sharer', next:'oracle_old'}
+  ]},
+  oracle_old:{age:72, title:'麦门大祭司', text:[
+    '旁白:你被尊为"麦门大祭司"。每天清晨，还有人在你楼下等今日运势。',
+    '邻居:老爷子，今天宜吃啥？'
+  ],
+    choices:[
+      {t:'"宜吃你手里的这个。"', d:{faith:10}, flag:'oracle_old_witty', next:'oracle_final'},
+      {t:'写自传：《我算准了每一次满减》', d:{money:3, faith:10}, flag:'oracle_old_book', next:'oracle_final'},
+      {t:'闭门谢客：天机，到此为止', d:{faith:8}, flag:'oracle_old_close', next:'oracle_final'}
+  ]},
+  oracle_final:{age:80, title:'大凶', text:[
+    '旁白:最后一期日报，只给自己算。你算出的结果是两个字。',
+    '旁白:你盯着那个卦象看了很久，笑了。'
+  ],
+    choices:[
+      {t:'大吉。来世还做麦门信徒', d:{faith:15}, flag:'oracle_final_lucky', next:null},
+      {t:'大凶。但神谕说：凶中带吉，宜食', d:{faith:12, weight:2}, flag:'oracle_final_unlucky', next:null},
+      {t:'不给自己算了。天机最后属于自己', d:{faith:10, health:2}, flag:'oracle_final_none', next:null}
+  ]},
+  gacha_work:{age:25, title:'欧皇的代价', text:[
+    '旁白:你抽中汉堡回车键的视频还有 47 万播放。评论区叫你"欧皇本皇"。',
+    '网友:兄弟，帮我也抽一发？'
+  ],
+    choices:[
+      {t:'开直播代抽，抽中分红，抽空认栽', d:{money:6, faith:6}, flag:'gacha_work_agent', next:'gacha_love'},
+      {t:'不帮。欧气是不可再生资源', d:{faith:8}, flag:'gacha_work_selfish', next:'gacha_love'},
+      {t:'收了 200 块，用脚本抽，被封号', d:{money:4, faith:-3}, flag:'gacha_work_script', next:'gacha_love'}
+  ]},
+  gacha_love:{age:30, title:'抽奖式恋爱', text:[
+    '旁白:对象问：你爱我吗？你说：咱们抽个奖，抽中就是爱。',
+    '女友:……你认真的？'
+  ],
+    choices:[
+      {t:'单抽出奇迹，中了"表白券"', d:{faith:10, money:-1}, flag:'gacha_love_single', next:'gacha_marry'},
+      {t:'十连保底，攒了个"婚戒周边"', d:{money:-4, faith:6}, flag:'gacha_love_ten', next:'gacha_marry'},
+      {t:'不抽了。爱情不是概率问题', d:{health:2, faith:6}, flag:'gacha_love_serious', next:'gacha_marry'}
+  ]},
+  gacha_marry:{age:33, title:'积分婚礼', text:[
+    '老婆:婚戒是积分抽的，婚宴是积分换的，我嫁的是积分吗？',
+    '旁白:你当场又抽了一发，中了"永久幸福券"。她笑了。'
+  ],
+    choices:[
+      {t:'把"永久幸福券"裱起来，挂在新房', d:{faith:12, money:-2}, flag:'gacha_marry_frame', next:'gacha_health'},
+      {t:'承诺：这辈子只抽一次，已经用完了', d:{faith:10}, flag:'gacha_marry_once', next:'gacha_health'},
+      {t:'继续抽。万一有"二胎券"呢', d:{money:-5, faith:8}, flag:'gacha_marry_more', next:'gacha_health'}
+  ]},
+  gacha_health:{age:38, title:'非酋的体检', text:[
+    '医生:熬夜，焦虑，内分泌紊乱。你最近是不是在赌什么东西？',
+    '旁白:你说没有。医生指了指你的黑眼圈：那这是什么？你说：这是欧气的代价。'
+  ],
+    choices:[
+      {t:'卸载 App，重新做人', d:{health:10, faith:-3}, flag:'gacha_health_quit', next:'gacha_mid'},
+      {t:'改成云抽奖，绝不亲自操作', d:{health:3, faith:5}, flag:'gacha_health_cloud', next:'gacha_mid'},
+      {t:'加大剂量。医生说对了，但我戒不了', d:{health:-8, faith:10}, flag:'gacha_health_addict', next:'gacha_mid'}
+  ]},
+  gacha_mid:{age:42, title:'守财奴', text:[
+    '旁白:你的积分攒到了 47 万。系统提示：即将过期，请尽快使用。',
+    '旁白:你不为所动。你说：这不是积分，是信仰。'
+  ],
+    choices:[
+      {t:'全部换汉堡，吃了一周，吃吐了', d:{weight:4, faith:8}, flag:'gacha_mid_binge', next:'gacha_child'},
+      {t:'继续攒。留给儿子当彩礼', d:{money:3, faith:6}, flag:'gacha_mid_heir', next:'gacha_child'},
+      {t:'兑成"汉堡回车键"全家桶，供起来', d:{faith:12, money:-2}, flag:'gacha_mid_shrine', next:'gacha_child'}
+  ]},
+  gacha_child:{age:45, title:'青出于蓝', text:[
+    '儿子:爸，我们班同学都说你是"积分侠"。',
+    '旁白:你教他第一课：单抽出奇迹，十连毁一生。他记在了小本本上。'
+  ],
+    choices:[
+      {t:'带他抽了人生第一发，中了！', d:{faith:12}, flag:'gacha_child_first', next:'gacha_retire'},
+      {t:'没收他的设备：赌狗之路，到此为止', d:{health:3, faith:5}, flag:'gacha_child_ban', next:'gacha_retire'},
+      {t:'父子组队，双倍欧气', d:{faith:10, money:-1}, flag:'gacha_child_team', next:'gacha_retire'}
+  ]},
+  gacha_retire:{age:60, title:'最后一抽', text:[
+    '旁白:退休那天，你决定抽最后一发。系统提示：您还有 47 万积分。',
+    '旁白:你深吸一口气。这一发，是给这辈子一个交代。'
+  ],
+    choices:[
+      {t:'全砸进去！中了限定金色拱门', d:{faith:15, money:3}, flag:'gacha_retire_allin', next:'gacha_old'},
+      {t:'分 47 次抽，细水长流', d:{faith:10}, flag:'gacha_retire_stream', next:'gacha_old'},
+      {t:'全部兑换成汉堡，请全店吃', d:{faith:12, money:-3}, flag:'gacha_retire_feast', next:'gacha_old'}
+  ]},
+  gacha_old:{age:72, title:'欧气守恒', text:[
+    '旁白:你成了小区里的"欧皇爷爷"。谁家孩子考试，都来求你摸个头。',
+    '孙子:爷爷，你这一辈子，抽到过最好的东西是什么？'
+  ],
+    choices:[
+      {t:'"一个汉堡回车键。"（撒谎）', d:{faith:10}, flag:'gacha_old_lie', next:'gacha_final'},
+      {t:'"你们。"（说实话）', d:{faith:12, health:2}, flag:'gacha_old_truth', next:'gacha_final'},
+      {t:'"机会。下次一定中的机会。"', d:{faith:8}, flag:'gacha_old_chance', next:'gacha_final'}
+  ]},
+  gacha_final:{age:80, title:'最后一发', text:[
+    '旁白:这一生的最后一发。屏幕上，光圈在转。全家人围着你。',
+    '旁白:转得很慢。像过完了一生。'
+  ],
+    choices:[
+      {t:'金光照耀！是限定金色传说！', d:{faith:15}, flag:'gacha_final_gold', next:null},
+      {t:'又是保底。但你说：保底也是希望', d:{faith:10}, flag:'gacha_final_pity', next:null},
+      {t:'没抽完就睡着了。也好，梦里有求必应', d:{faith:8, health:1}, flag:'gacha_final_sleep', next:null}
+  ]},
+  art_work:{age:25, title:'青年艺术家', text:[
+    '旁白:你的《蒙娜丽莎》系列火了。美术馆给你办了展，门票 80，黄牛炒到 300。',
+    '馆长:下一幅作品，打算用什么材料？'
+  ],
+    choices:[
+      {t:'继续用薯条。薯条是时代的眼泪', d:{faith:10, money:4}, flag:'art_work_fry', next:'art_love'},
+      {t:'转型装置：一万个空酱盒的地球', d:{faith:12, money:2}, flag:'art_work_sauce', next:'art_love'},
+      {t:'封笔。最好的作品已经吃完', d:{faith:8}, flag:'art_work_quit', next:'art_love'}
+  ]},
+  art_love:{age:30, title:'艺术与爱情', text:[
+    '旁白:对象是策展人。第一次约会，TA 带了两个麦旋风，说：我懂你的作品。',
+    '女友:吃吗？我买了收藏级包装纸。'
+  ],
+    choices:[
+      {t:'当场创作《约会》，吃完即展出', d:{faith:12, money:-2}, flag:'art_love_perform', next:'art_marry'},
+      {t:'先聊三小时艺术史，麦旋风化了', d:{faith:6, money:-1}, flag:'art_love_history', next:'art_marry'},
+      {t:'带 TA 去麦当劳后厨，寻找终极材料', d:{faith:8, money:-1}, flag:'art_love_kitchen', next:'art_marry'}
+  ]},
+  art_marry:{age:33, title:'行为艺术婚礼', text:[
+    '老婆:婚礼怎么办？你总不能再搞行为艺术了吧？',
+    '旁白:你沉默了。她懂了。'
+  ],
+    choices:[
+      {t:'婚礼 = 展览开幕式，宾客 = 观众', d:{faith:12, money:-4}, flag:'art_marry_show', next:'art_health'},
+      {t:'交换的戒指是薯条盒折的，可食用', d:{faith:10, money:-2}, flag:'wedding_ring', next:'art_health'},
+      {t:'正常办。艺术需要留白', d:{health:2, faith:6}, flag:'art_marry_normal', next:'art_health'}
+  ]},
+  art_health:{age:38, title:'材料的反噬', text:[
+    '医生:你吃薯条吃出了胰腺炎。再这么吃下去，命没了。',
+    '旁白:你躺在病床上，还在构思：用输液管做一幅《生命线》。'
+  ],
+    choices:[
+      {t:'封嘴。改用过期麦旋风壳创作', d:{health:6, faith:6}, flag:'art_health_shell', next:'art_mid'},
+      {t:'不停。病床是终极展厅', d:{health:-8, faith:12}, flag:'art_health_bed', next:'art_mid'},
+      {t:'转型美食评论，换个赛道吃', d:{health:4, money:3}, flag:'art_health_food', next:'art_mid'}
+  ]},
+  art_mid:{age:42, title:'中年解构', text:[
+    '旁白:你开始解构"吃"本身。作品《咀嚼》在厕所纸卷芯上完成，售价 47 万。',
+    '评论家:这是对消费主义的终极反讽。'
+  ],
+    choices:[
+      {t:'乘胜追击：《消化》三部曲', d:{money:6, faith:8}, flag:'art_mid_trilogy', next:'art_child'},
+      {t:'公开销毁全部作品，只留下照片', d:{faith:12, money:-3}, flag:'art_mid_destroy', next:'art_child'},
+      {t:'回麦当劳做美工，钱不钱的无所谓', d:{money:3, faith:10}, flag:'art_mid_designer', next:'art_child'}
+  ]},
+  art_child:{age:45, title:'小小艺术家', text:[
+    '儿子:爸，我们美术作业是《我的爸爸》。我画了你吃薯条的样子。',
+    '旁白:老师给了 A。评语：观察入微，情感真挚。'
+  ],
+    choices:[
+      {t:'带儿子办父子展：《两代人的咀嚼》', d:{faith:12, money:1}, flag:'art_child_show', next:'art_retire'},
+      {t:'告诉他：艺术很苦，先吃饭', d:{health:2, faith:6}, flag:'art_child_realist', next:'art_retire'},
+      {t:'教他用番茄酱画油画，被老婆禁足', d:{faith:8, health:-2}, flag:'art_child_ketchup', next:'art_retire'}
+  ]},
+  art_retire:{age:60, title:'回顾展', text:[
+    '旁白:美术馆给你办了回顾展。入口处只有一个空薯条盒，和一句话。',
+    '旁白:"他来过，他吃过，他艺术过。"'
+  ],
+    choices:[
+      {t:'把所有作品吃掉，完成终极行为', d:{faith:12, weight:3}, flag:'art_retire_eat', next:'art_old'},
+      {t:'捐给美术馆，立一块牌子：请勿食用', d:{money:4, faith:8}, flag:'art_retire_donate', next:'art_old'},
+      {t:'在展厅里卖麦旋风，日入过千', d:{money:6, faith:5}, flag:'art_retire_sell', next:'art_old'}
+  ]},
+  art_old:{age:72, title:'最后的材料', text:[
+    '旁白:你的新作品只剩最后一种材料没试过。你盯着镜子里的自己。',
+    '孙子:爷爷，你在干嘛？'
+  ],
+    choices:[
+      {t:'创作《一生》：用一生做材料', d:{faith:15}, flag:'art_old_life', next:'art_final'},
+      {t:'停笔。作品完成了，作者该下场了', d:{faith:10, health:2}, flag:'art_old_stop', next:'art_final'},
+      {t:'教孙子：记住，薯条凉了更好吃', d:{faith:8}, flag:'art_old_lesson', next:'art_final'},
+      {t:'摇轮椅冲进得来速车道，无人敢拦', d:{faith:10, health:-3}, flag:'old_race', next:'art_final'}
+  ]},
+  art_final:{age:80, title:'最后一幅', text:[
+    '旁白:最后一幅作品，只展一次。名字你早就想好了。',
+    '旁白:工作人员问：需要布展吗？'
+  ],
+    choices:[
+      {t:'不用。作品就是我', d:{faith:15}, flag:'art_final_self', next:null},
+      {t:'展一份薯条。和六十年前那根一样', d:{faith:12, weight:2}, flag:'art_final_fry', next:null},
+      {t:'不展了。艺术是活出来的', d:{faith:10, health:2}, flag:'art_final_live', next:null}
+  ]},
+  tween_art:{age:14, title:'异端的中学生涯', text:[
+    '同学:全校都知道了，"薯条蘸派"是你发明的。教导主任找你谈话。',
+    '主任:同学，学校是学习的地方，不是餐饮创新基地。'
+  ],
+    choices:[
+      {t:'在升旗仪式上演示"薯条的一百种死法"', d:{faith:10, health:-2}, flag:'art_teen_show', next:'tween_art2'},
+      {t:'收敛一点，偷偷精进技艺', d:{faith:6, weight:2}, flag:'art_teen_hide', next:'tween_art2'},
+      {t:'写《异端吃法论文集》，在校内流传', d:{faith:8, money:1}, flag:'art_teen_paper', next:'tween_art2'}
+  ]},
+  tween_art2:{age:17, title:'文艺汇演', text:[
+    '旁白:学校文艺汇演，你的节目是行为艺术：《咀嚼》。台上只有你，和一份薯条。',
+    '同学:节目完了吗？教导主任脸都绿了。'
+  ],
+    choices:[
+      {t:'没完。还有第二幕：《回味》', d:{faith:12, health:-2}, flag:'art_teen_act2', next:'gaokao'},
+      {t:'完了。但鞠躬时口袋掉出了三包番茄酱', d:{faith:8}, flag:'art_teen_ketchup', next:'gaokao'},
+      {t:'被轰下台。但照片挂上了校园墙', d:{faith:10, money:1}, flag:'art_teen_wall', next:'gaokao'}
+  ]},
+};
+const FLAG_ENDINGS = [
+  {flag:'staff_chief', name:'麦门店长', text:'你把一生交给了金色拱门。从煎炉前的暑假工，到签下第一份店长任命书，你用了七年。退休那天，店员们在得来速车道旁排成一列——那里立着一块牌子："本店店龄最长的顾客，是店长本人。"'},
+  {flag:'staff_leave', name:'出走的前店员', text:'你离开了麦门，去写字楼里做了白领。工牌换了四张，只有你知道每张工牌背面都写着同一句话：薯条一百八十秒。每年 1024，你都会回 A12 坐一会儿。'},
+  {flag:'shangan', name:'A12 走出的研究生', text:'你在 A12 写完了一整套真题，上岸那天给 A12 鞠了一躬。后来你的名字出现在了系里光荣榜，但只有 A12 的店员知道，那上面每一个笔画，都是可乐和薯条喂出来的。'},
+  {flag:'tiaoji', name:'调剂的哲学家', text:'调剂也认了，有学上就行——你这样说。多年后你在课堂上对学生说："人生没有白走的门店，只有白坐的座位。"他们以为你在讲调剂，其实你在讲 A12。'},
+  {flag:'fitblogger', name:'麦门健身博主', text:'你成了百万粉健身博主，教三百万人在减脂期正确地吃巨无霸：去皮、去酱、去面包，只留牛肉。评论区说你邪教，你笑他们不懂。你确实懂——你减掉了脂肪，减不掉信仰。'},
+  {flag:'gymquit', name:'还俗的狠人', text:'你办了六年健身卡，练出一身腱子肉，最后全部还给了麦门。健身房的镜子照了六年，你发现镜子里的自己，越练越像一张餐巾纸上的印字：欢迎再来。'},
+  {flag:'fry_lover', name:'蘸冰淇淋的异端宗师', text:'十二岁那年你把薯条蘸进麦旋风，被全世界嘲笑。四十年后，这个吃法有了学名，有了论文，有了你的铜像。铜像底座刻着你的名言："他们不懂艺术。"'},
+  {flag:'shy', name:'没蘸过薯条的一生', text:'十二岁那年，你放下了那根蘸了冰淇淋的薯条。你从此规规矩矩地活，规规矩矩地吃，规规矩矩地老。临终前你想：那根薯条，到底是什么味道？'},
+  {flag:'net', name:'A12 之外的黑夜', text:'晚自习后，你走向了网吧而不是麦当劳。你成了很厉害的人，只是每次路过金色拱门，都会莫名走快两步。有人说你仇富，你说不是。只有你知道，那是一种乡愁。'},
+  {flag:'romance_fancy', name:'法餐厅的叛徒', text:'第一次约会你选了法餐厅，切鹅肝的样子很体面。婚后第七年，妻子在 A12 找到你——你面前摆着三个巨无霸包装纸。她没有生气，只是坐下说："我也想吃很久了。"'},
+  {flag:'romance_mcd', name:'麦门爱情故事', text:'你把约会定在 A12，所有人都说你疯了。三十年后，妻子在婚礼纪念日重申当年的判断："疯得刚刚好。"你们的结婚照挂在 A12 的墙上，与麦旋风宣传画并列。'},
+  {flag:'wedding_burger', name:'巨无霸婚礼', text:'你的婚礼蛋糕是两层巨无霸，酸黄瓜夹心，芝士淋面。司仪说"新郎可以亲吻新郎了"——全场起立鼓掌。从此麦门多了一条传说：婚礼上有巨无霸的，都白头到老。'},
+  {flag:'collector', name:'蛋糕收藏家', text:'退休那天你供起了那个巨无霸蛋糕，从此家里多了一尊神。孙子问这是什么，你说这是爷爷的青春。蛋糕放到第三年，你媳妇偷偷换了个真的。你吃得很开心，像在吃青春。'},
+  {flag:'sharer', name:'切开传家宝的人', text:'退休仪式上，你当场切开了那个巨无霸蛋糕，分给每一个人。有人说你俗，你说：麦门的东西，生来就是用来分的。那天全组都吃到了你的人生，都说咸的，是眼泪。'},
+  {flag:'legacy', name:'薯条给爸', text:'三十八岁那年，你把薯条让给了儿子。二十年后你当上爷爷，又对孙子说出了同一句话。这句话在你们家传了三代，每一代的开头都是：选玩具，薯条给爸。'},
+  {flag:'strict_dad', name:'饭先吃干净', text:'你对儿子说：不许挑食，饭先吃干净。儿子后来成了营养师，专门教别人怎么不挑食。他每次开讲座都会提到一个反例——他爸，麦门虔徒，体脂率 28%。'},
+  {flag:'a12_pie', name:'那个香芋派', text:'考砸那晚，店长递给你一个香芋派。你把它供在桌角，学完最后一套卷子。后来你成了工程师，办公桌上永远有一个空派盒。同事问起，你说：这是充电器。'},
+  {flag:'treat', name:'请全组麦乐送的人', text:'第一次发工资，你请全组吃了麦乐送。报销没下来，但江湖地位下来了。十年后你跳槽，全组在 A12 给你送行——你说大可不必，他们说你规矩。'},
+  {flag:'oldtimer', name:'不如我年轻时那个', text:'七十岁，你尝了一口新出的限定汉堡，说：不如我年轻时那个。孙子们笑你怀旧，你笑他们没吃过 2026 年的巨无霸。那一口你等了五十年，等的不是味道，是座位。'},
+  {flag:'grandpa_love', name:'爷爷再给你买一个', text:'七十岁那年，你对孙子说：好吃！爷爷再给你买一个！孙子吃了一口就跑了，你坐下来，慢慢吃完了两个。一个是给他的，一个是给 1948 年的你自己。'},
+  {flag:'crazy_official', name:'发疯文学大宗师', text:'麦当劳官方转发你文案的那天，你在 A12 坐了一下午。从此每周四，全网的麦门信徒都在等你的新作。有人统计过，你一生写下 1200 篇发疯文学，累计换来 47 万次"哈哈哈哈"和 3 次警方提醒（误）。你的作品被印在餐巾纸上，随每一份麦乐送流向全国。'},
+  {flag:'crazy_pure', name:'纯粹发疯人', text:'你拒绝了一切商业合作。广告商在 A12 排成长龙，你坐在靠窗的位置，慢慢吃着一个麦旋风。有人说你清高，有人说你傻。只有你知道，发疯是这个世界仅存的不需要 KPI 的行为艺术。你的文集自费出版，首印 500 册，至今卖出 6 册——其中 3 册是妈妈买的。'},
+  {flag:'crazy_ad', name:'接广告的发疯作家', text:'你把发疯做成了产业：一条三千，一周三条，年入五十万。同行骂你堕落，你笑他们穷。你的广告文案依然是全网最好的发疯文学，只是每篇结尾都多了一句"本条由麦当劳赞助播出"。你晚年接受采访，记者问你怎么平衡艺术与商业，你说：商业是艺术的面包，艺术是商业的酱。'},
+  {flag:'wool_book', name:'薅羊毛菩萨', text:'你写的《薅羊毛兵法》被印成正式出版物，扉页上写着"本书所有方法均已通过麦麦省官方合规审核"。你靠薅羊毛实现了财务自由，然后又全数换成了麦当劳的储值卡——你说这叫"取之于麦，用之于麦"。麦门年报里有一行小字："感谢客户羊毛居士，本年度满减券核销率创历史新高。"'},
+  {flag:'wool_to_burger', name:'理财闭环的男人', text:'你用薅羊毛省下的每一分钱都换了巨无霸，完成了"省钱—吃堡—省钱"的经济学永动机。经济学家把你的消费模型写进论文，命名为"巨无霸循环"。模型结论只有一句：当省钱带来的快乐小于吃堡带来的快乐时，该省；反之，该吃。'},
+  {flag:'oracle_temple', name:'麦门大祭司', text:'你把《麦门运势日报》做成了百年老店，每日一卦，风雨无阻。信徒们清晨打开手机，先看你的卦象再决定早餐。你死后，日报没有停更——AI 继承了你留下的十万条卦象数据，继续每日推送。第一条 AI 卦象是："今日宜吃麦满分。大祭司说，累了就歇歇。"'},
+  {flag:'oracle_prophet', name:'预言史诗级满减的人', text:'你预言"本周将有史诗级满减"的那个周一，麦麦省全线崩服。你的名字被刻在门店的会员手册第一页，称号是"史诗级满减先知"。此后每一代麦门信徒入门第一课，都是学习你的预言原文。而你本人只是淡淡地说：我不是预言家，我只是把 47 个群里的风声汇总了一下。'},
+  {flag:'gacha_enter', name:'欧皇附体的一生', text:'第 300 抽，汉堡回车键出金的那一秒，全宿舍的尖叫差点掀翻楼板。此后你的人生像开了挂：抽奖必中，优惠必抢，连随机分配的座位都是 A12。晚年你总结自己的一生，只用了八个字："运气而已，信仰加持。"你的回车键被供奉在家族神龛里，与财神并列。'},
+  {flag:'gacha_roof', name:'天台悟道', text:'300 抽没中的那个夜晚，你在天台吹了一夜的风。天亮时你顿悟了：抽卡的本质不是欧非，是执念。你下山点了两份麦乐鸡，一份吃，一份敬。从此你成了"麦门禅宗"初代祖师，流传下来的偈语只有一句："不出金，便是最好的金。"'},
+  {flag:'art_gallery', name:'薯条艺术家', text:'美术馆为你办了名为《麦门当代艺术四十年》的个展。展厅中央是那幅用 200 包薯条拼成的《蒙娜丽莎》——防腐处理过，保存至今。策展人在前言里写："这是人类历史上第一次，一幅油画的原材料同时是它的票房毒药。"你站在自己的作品前，久久不语，然后问工作人员：附近有麦当劳吗？'},
+  {flag:'art_eaten', name:'吃掉蒙娜丽莎的人', text:'那幅《蒙娜丽莎》拼到一半，被你一口一口吃掉了。剩下的照片成了艺术史上最贵的未完成作品。艺评人写道："他用吃这个动作完成了对消费主义最彻底的诠释——艺术不是被观看的，是被消灭的。"你对此的回应是：当时主要是饿了。'},
+  {flag:'burger_salute', name:'向汉堡敬礼的人', text:'军训那年，你把汉堡供在帽子里敬礼的视频传遍了全排。二十年后同学聚会，教官已经白发苍苍，他端着酒杯对你说：当年那个敬礼，是我这辈子见过最标准的军礼。你起身回敬，帽子里的汉堡当然不在了，但那个动作刻进了骨子里——对食物的敬畏，就是对生活的敬畏。'},
+  {flag:'robot_bro', name:'扫地机器人的把兄弟', text:'那个期末周，你和扫地机器人拜了把子。它见证了你三天写完的课程设计，也见证了你七次差点睡死在桌上。毕业时你送它去报废场，它绕着你的脚转了三圈。多年后你在一部纪录片里看到它——原来那台机器人被另一届学生救下，至今仍在麦当劳巡逻，工位铭牌上写着：A12 编外守护神。'},
+  {flag:'a12_landlord', name:'A12 包租公', text:'你把 A12 以每学期两百块的价格租给了七届学弟学妹，自己靠窗另坐。你成了麦门最神秘的传说——没人见过房东本人，但每个 A12 的新住客都会在租约末尾发现一行小字："此处曾走出一个研究生。祝好。"你的租约攒了满满一鞋盒，临终前你说：那是我这辈子最成功的投资。'},
+  {flag:'heritage_seat', name:'非遗座位守护神', text:'你说服总部把 A12 列入了门店非物质文化遗产名录。那块铜牌至今挂在靠窗第二排，上面刻着："A12：一个诞生了 3 个研究生、47 篇课程设计、1200 条发疯文学的精神座位。"你每周都会去擦一遍铜牌，风雨无阻。你说：座位不会记住人，但人会记住座位。'},
+  {flag:'work_quit', name:'麦门深夜食堂老板', text:'你裸辞开的那家"麦门深夜食堂"，菜单上只有四样东西：巨无霸、中薯、大可乐、香芋派。不营业的时候，你就坐在吧台后面吃自己的。有客人问你为什么这么装修，你说：因为这里本来就是麦当劳。客人说：所以你这店的意义是什么？你说：意义就是，凌晨两点，灯亮着。'},
+  {flag:'old_race', name:'得来速车神', text:'七十二岁那年，你摇着轮椅冲进得来速车道的视频，被三百万人看过。交警后来找你谈话，你拿出 1958 年的驾照和一颗虔诚的心。交警最后说：下不为例。你说：下辈子也不敢了。视频最后，你摇着轮椅滑出车道，背影配着字幕："他只是想再年轻一次，哪怕一秒。"'},
+  {flag:'wedding_ring', name:'麦旋风里的婚戒', text:'你的婚戒在麦旋风里，被新娘吃出来的那一刻，全场哭成一片。这个片段至今挂在门店的宣传屏上，标题是《真爱是什么味道的》。五十金婚那天，你们又买了一对钻戒，一个藏进巨无霸，一个藏进麦旋风——这次是两个人同时吃出来的。你说：麦门的爱，就是藏起来，然后被找到。'},
+  {flag:'final_fullmenu', name:'全菜单吃席的人', text:'最后一顿，你把菜单全上一遍，摆了满满一桌。店员没有催你，整个门店为你静音。你一样吃了一口，像皇帝批阅奏章。吃完你说：值了。这一生没有白来，菜单上没有白点。你的名字后来成了麦门的一个暗号——当有人说"我全都要"，店员会心一笑，因为那是你最后的遗言。'},
+  {flag:'mid_wool', name:'薅到中年的男人', text:'四十二岁，你注册了薅羊毛小号，ID 叫"麦门韦小宝二世"。你在中年人的战场上是体面的中层，在小号里是全群尊敬的党魁。没人知道这两个人是同一个。你说：中年人的快乐，一半是隐藏身份给的，一半是满 50 减 12 给的。'},
+];
+const ATTR_ENDINGS = [
+  // 判定顺序即优先级：人柱力(体重100+) → 股东(钱120+虔信) → 圣僧(虔信健康且不胖不富) → 仙人(钱≤45) → 金盆(健康≤78) → 路人
+  {cond:l=>l.attrs.weight>=100, name:'巨无霸人柱力', text:'体重与钱包的比值达到麦门临界值那年，官方正式册封你为镇店神兽。你的塑像立在得来速车道旁，司机经过都会鸣笛致意。你很满意，因为塑像底座刻着你的名言："加培根，谢谢。"'},
+  {cond:l=>l.attrs.money>=120 && l.attrs.faith>=90, name:'编外股东', text:'你一生的消费总额被财务系统误判为大宗采购，麦当劳年报的脚注里出现了你的名字。股东大会没人认识你，但所有人都知道，没有你就没有 Q3 的业绩。'},
+  {cond:l=>l.attrs.faith>=95 && l.attrs.health>=78 && l.attrs.weight<92 && l.attrs.money<95, name:'麦门圣僧', text:'信仰值登顶的那个凌晨，积分抽奖第十次连跪之后，你忽然顿悟：薯条本无，酱亦为空。你出家了，法号"麦空"。信徒问你何为道，你答："第二份半价。"'},
+  {cond:l=>l.attrs.money<=45, name:'优惠券仙人', text:'钱包见底那天，你的优惠券雷达却修炼大成。满减、积分、第二份半价，任督二脉全通。从此你吃麦当劳只花三折。麦麦省把你写进了内部培训材料，标题是《论一个仙人的自我修养》。'},
+  {cond:l=>l.attrs.health<=78, name:'金盆洗手', text:'健康值见底的那个早晨，你在体检中心顿悟。你戒了，但没完全戒——你成了麦门营养师，专门劝别人"别学我"，然后自己每月偷偷吃一顿巨无霸，称之为田野调查。'},
+  {cond:l=>l.attrs.faith<=45, name:'麦门路人', text:'你平平无奇地吃了一辈子麦当劳，像坐公交车一样自然。墓碑前没有哭声，只有店员每天清晨取餐时的那声"欢迎光临"——你想，这就算悼念了。'},
+];
+const DEFAULT_ENDING = {name:'平凡麦民', text:'你没有成仙，没有封神，没有把任何东西做到极致。你只是认认真真吃了一辈子麦当劳。墓志铭下葬那天，全城门店的收银机同时打出一张小票，上面只有一行字："感谢惠顾，欢迎再来。"'};
+const PREFIXES = [
+  {cond:l=>l.attrs.weight>=100, text:'据说他坐下时，A12 的椅子会发出预警。'},
+  {cond:l=>l.attrs.money<=30, text:'他走后，麦麦省的服务器寂寞了三天。'},
+  {cond:l=>l.attrs.faith>=80, text:'他留下的金句被刻在门店留言板上："第二份半价，是麦门最后的温柔。"'},
+  {cond:l=>l.attrs.health>=80, text:'体检医生看着他的血管报告沉默良久，说："这里面流的是可乐。"'},
+  {cond:l=>l.attrs.money>=90, text:'他的订单页长度，被店员当作本店的计量单位。'},
+  {cond:l=>l.attrs.faith>=60 && l.attrs.faith<80, text:'他的会员等级停在一个尴尬的位置：再吃十顿，就能升级。'},
+  {cond:l=>l.attrs.health>=50 && l.attrs.health<80, text:'他的体检报告每年只有一行字被医生圈出："其他正常，请继续。"'},
+];
+const TOMBS = [
+  '此处长眠一位麦门信徒','TA 去了一个薯条永远酥脆的地方','生前最后一句话：酱，多拿两盒',
+  '他来过，他吃过，他评过理','不要在他的墓前放花，放一个派','他曾把每一个周四都过成节日',
+  '请安息，第二份半价在下辈子继续','墓志铭由本人亲自点单确认',
+  '他的墓志铭由麦麦省大数据自动生成','此处安息着一个抽中过汉堡回车键的人',
+  '他证明了：人可以被消灭，但不能被去酱','请在他墓前放一份大份薯条，谢谢'
+];
+function startLife(){
+  if(!life || !life.talent) return;
+  document.getElementById('talentStep').classList.add('hidden');
+  document.getElementById('endingArea').innerHTML = '';
+  document.getElementById('lifeStep').classList.remove('hidden');
+  renderFlags();
+  renderScene('birth');
+}
+function renderScene(id){
+  const s = SCENES[id];
+  if(!s) return;
+  life.age = Math.max(life.age, s.age);
+  document.getElementById('sceneAge').textContent = life.age + '岁';
+  document.getElementById('sceneTitle').textContent = s.title;
+  const st = document.getElementById('sceneText');
+  st.innerHTML = '';
+  let lines = s.text;
+  if(life.gen > 1 && id === 'birth'){
+    lines = ['旁白:前世记忆涌上心头——你记得金色拱门的灯，记得 A12 的椅子，记得酱要多拿两盒。这一世，带着记忆重开。', ...s.text];
+  }
+  lines.forEach((line, i)=>{
+    const div = document.createElement('div');
+    div.style.animationDelay = (i*0.3)+'s';
+    if(line.startsWith('旁白')){
+      div.className = 'scene-line narr';
+      div.innerHTML = `<div class="avatar">📖</div><div class="bubble">${line.slice(3)}</div>`;
+    } else {
+      const who = line.slice(0, line.indexOf(':'));
+      const emoji = AVATAR[who] || '💬';
+      div.className = 'scene-line';
+      div.innerHTML = `<div class="avatar">${emoji}</div><div class="bubble"><span class="who">${who}</span>${line.slice(who.length+1)}</div>`;
+    }
+    st.appendChild(div);
+  });
+  const cl = document.getElementById('choiceList');
+  cl.innerHTML = '';
+  s.choices.forEach((c, i)=>{
+    const b = document.createElement('button');
+    b.className = 'choice-btn';
+    b.style.animationDelay = (0.5 + i*0.12)+'s';
+    b.innerHTML = `<span>${c.t}</span><span class="c-arrow">›</span>`;
+    b.onclick = ()=>pick(c, b);
+    cl.appendChild(b);
+  });
+}
+function clampAttrs(){
+  const a = life.attrs;
+  a.weight = Math.max(35, Math.min(160, a.weight));
+  a.money = Math.max(0, Math.min(150, a.money));
+  a.faith = Math.max(0, Math.min(100, a.faith));
+  a.health = Math.max(0, Math.min(100, a.health));
+}
+function pick(c, btn){
+  const a = life.attrs;
+  const deltas = [];
+  Object.entries(c.d || {}).forEach(([k, v])=>{
+    if(k === 'money' && v < 0 && life.talent.mod && life.talent.mod.moneySave){
+      v = Math.round(v * (1 - life.talent.mod.moneySave)); // 优惠券雷达：花钱打折
+    }
+    if(k in a){ a[k] += v; }
+    else if(k === 'weight'){ a.weight += v; }
+    if(v) deltas.push([k, v]);
+  });
+  a.weight += 1; deltas.push(['weight', 1]); // 岁数也是肉：每次抉择都在吃
+  clampAttrs();
+  updateHud();
+  floatDeltas(btn, deltas);
+  if(c.flag && !life.flags.has(c.flag)){
+    life.flags.add(c.flag);
+    if(FLAG_LINES[c.flag]) showToast(`✦ 开启剧情线：${FLAG_LINES[c.flag]}`);
+    renderFlags();
+  }
+  document.getElementById('choiceList').style.opacity = '0.4';
+  document.getElementById('choiceList').style.pointerEvents = 'none';
+  setTimeout(()=>{
+    document.getElementById('choiceList').style.opacity = '';
+    document.getElementById('choiceList').style.pointerEvents = '';
+    if(c.next) renderScene(c.next);
+    else finishLife();
+  }, 600);
+}
+function floatDeltas(btn, deltas){
+  const r = btn.getBoundingClientRect();
+  deltas.forEach(([k, v], i)=>{
+    const el = document.createElement('div');
+    el.className = 'delta-float';
+    const label = {weight:'体重', money:'钱包', faith:'信仰', health:'健康'}[k] || k;
+    el.textContent = `${label} ${v > 0 ? '+' : ''}${v}`;
+    el.style.color = v > 0 ? '#8fd18f' : '#ff8f7a';
+    el.style.left = (r.left + r.width - 88) + 'px';
+    el.style.top = (r.top - 8 - i*26) + 'px';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), 1300);
+  });
+}
+function showToast(text){
+  const t = document.createElement('div');
+  t.className = 'galgame-toast';
+  t.textContent = text;
+  document.body.appendChild(t);
+  setTimeout(()=>t.remove(), 2500);
+}
+function renderFlags(){
+  document.getElementById('flagBar').innerHTML =
+    [...life.flags].filter(f=>FLAG_LINES[f]).map(f=>`<span class="flag-chip">${FLAG_LINES[f]}</span>`).join('');
+}
+function updateHud(){
+  const a = life.attrs;
+  [['hWeight', a.weight], ['hMoney', a.money], ['hFaith', a.faith], ['hHealth', a.health]].forEach(([id, v])=>{
+    const el = document.getElementById(id);
+    el.textContent = Math.round(v);
+    el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  });
+}
+function endingNo(){
+  const key = [...life.flags].sort().join('|') + Object.values(life.attrs).map(v=>Math.round(v)).join(',');
+  let h = 0;
+  for(const ch of key) h = (h*31 + ch.charCodeAt(0)) % 998;
+  return h + 1;
+}
+function finishLife(){
+  const a = life.attrs;
+  let ending;
+  // 属性极端优先：一辈子把某件事做到极致，比"做过什么"更适合当人生总结
+  for(const e of ATTR_ENDINGS){ if(e.cond(life)){ ending = e; break; } }
+  if(!ending){ for(const e of FLAG_ENDINGS){ if(life.flags.has(e.flag)){ ending = e; break; } } }
+  if(!ending) ending = DEFAULT_ENDING;
+  const prefixes = PREFIXES.filter(p=>p.cond(life)).map(p=>p.text);
+  const tomb = TOMBS[Math.floor(Math.random()*TOMBS.length)];
+  document.getElementById('lifeStep').classList.add('hidden');
+  document.getElementById('endingArea').innerHTML = `
+    <div class="ending-card serif">
+      <div class="ending-no">结局 #${endingNo()} · 本局解锁剧情线 ${life.flags.size} 条 · 结局池 100+</div>
+      <div class="e-tag">—— 本 世 结 局 ——</div>
+      <div class="e-name">${ending.name}</div>
+      <div class="e-story">${ending.text}${prefixes.length ? '<br><br>◆ ' + prefixes.join('<br>◆ ') : ''}</div>
+      <div class="e-data">享年 ${life.age} 岁 · 天赋【${life.talent.name}】<br>
+        终值：体重 ${Math.round(a.weight)} · 钱包 ${Math.round(a.money)} · 信仰 ${Math.round(a.faith)} · 健康 ${Math.round(a.health)}</div>
+    </div>
+    <div class="tombstone serif">
+      <div class="rip">R.I.P.</div>
+      ${tomb}<br>享年 ${life.age} 岁
+    </div>
+    <p class="reincarnate-note">轮回司提示：死亡不是终点，是第二顿的开始。</p>
+    <div class="btn-row">
+      <button class="btn" onclick="reincarnate()">携天赋转世，换条剧情线</button>
+      <button class="btn ghost" onclick="resetLife()">回大厅晒结局</button>
+    </div>`;
+  document.getElementById('endingArea').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function reincarnate(){
+  document.getElementById('endingArea').innerHTML = '';
+  document.getElementById('lifeStep').classList.remove('hidden');
+  life.age = 0;
+  life.attrs = {weight:50, money:100, faith:30, health:100};
+  life.flags = new Set();
+  renderFlags();
+  updateHud();
+  renderScene('birth');
+}
+function resetLife(){
+  document.getElementById('endingArea').innerHTML = '';
+  document.getElementById('lifeStep').classList.add('hidden');
+  document.getElementById('talentStep').classList.remove('hidden');
+  const btn = document.getElementById('startLifeBtn');
+  btn.disabled = true; btn.style.opacity = .4; btn.textContent = '选 择 一 个 天 赋 入 世';
+  life = null; rollTalents(); go('hall');
+}
+
+/* =========================================================
+ * 粒子氛围层：金色星尘 + 漂浮薯条，鼠标靠近轻微避让
+ * ========================================================= */
+(function(){
+  const reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cv = document.getElementById('particles');
+  const ctx = cv.getContext('2d');
+  if(!CanvasRenderingContext2D.prototype.roundRect){
+    CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h){ this.rect(x,y,w,h); };
+  }
+  let W = 0, H = 0, parts = [];
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const mouse = {x:-9999, y:-9999};
+  function newP(){
+    const fry = Math.random() < 0.12;
+    return {
+      x: Math.random()*W, y: Math.random()*H,
+      r: Math.random()*2.2 + 0.8,
+      len: Math.random()*10 + 8,
+      rot: Math.random()*Math.PI, vr: (Math.random()-.5)*0.012,
+      vy: -(Math.random()*0.35 + 0.12),
+      vx: (Math.random()-.5)*0.16,
+      a: Math.random()*0.5 + 0.15,
+      tw: Math.random()*Math.PI*2, tws: Math.random()*0.03 + 0.008,
+      tone: (()=>{ const r=Math.random(); return r<0.58?'gold':(r<0.85?'red':'cream'); })(),
+      depth: Math.random()*0.7 + 0.3,
+      fry
+    };
+  }
+  function resize(){
+    W = innerWidth; H = innerHeight;
+    cv.width = W*dpr; cv.height = H*dpr;
+    cv.style.width = W+'px'; cv.style.height = H+'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    const n = Math.min(110, Math.max(36, Math.floor(W*H/16000)));
+    parts = Array.from({length:n}, newP);
+  }
+  addEventListener('resize', resize);
+  addEventListener('pointermove', e=>{ mouse.x = e.clientX; mouse.y = e.clientY; }, {passive:true});
+  addEventListener('pointerleave', ()=>{ mouse.x = -9999; mouse.y = -9999; });
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of parts){
+      p.y += p.vy * p.depth * 2;
+      p.x += p.vx + Math.sin(p.tw*0.5)*0.08;
+      p.tw += p.tws; p.rot += p.vr;
+      if(p.y < -24){ p.y = H + 24; p.x = Math.random()*W; }
+      if(p.x < -24) p.x = W + 24; else if(p.x > W + 24) p.x = -24;
+      let ox = 0, oy = 0;
+      const dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx*dx + dy*dy;
+      if(d2 < 12100){
+        const d = Math.sqrt(d2) || 1, f = (1 - d/110) * 16 * p.depth;
+        ox = dx/d*f; oy = dy/d*f;
+      }
+      const alpha = p.a * (0.55 + 0.45*Math.sin(p.tw));
+      const color = p.tone==='gold' ? `rgba(255,199,44,${alpha})`
+        : p.tone==='red' ? `rgba(226,54,38,${alpha})`
+        : `rgba(255,236,200,${alpha*0.75})`;
+      if(p.fry){
+        ctx.save(); ctx.translate(p.x + ox, p.y + oy); ctx.rotate(p.rot);
+        ctx.fillStyle = color;
+        ctx.beginPath(); ctx.roundRect(-1.8, -p.len/2, 3.6, p.len, 1.8); ctx.fill();
+        ctx.restore();
+      } else {
+        ctx.beginPath(); ctx.arc(p.x + ox, p.y + oy, p.r, 0, Math.PI*2);
+        ctx.fillStyle = color; ctx.fill();
+      }
+    }
+  }
+  resize();
+  if(reduceMotion){ draw(); } else { (function tick(){ draw(); requestAnimationFrame(tick); })(); }
+})();
+
+/* 审判庭初始化：加载今日已领券记录 */
+loadClaimed();
+</script>
+</body>
+</html>
