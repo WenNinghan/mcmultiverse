@@ -1,6 +1,6 @@
 /* Galgame 引擎逻辑仿真测试：无浏览器环境下验证场景图与结局系统 */
 const fs = require('fs');
-const path = 'C:/Users/Lenovo/WorkBuddy/2026-10-15-23-43-50/mcmultiverse/index.html';
+const path = require('path').resolve(__dirname, '..', 'index.html');
 const html = fs.readFileSync(path, 'utf8');
 const js = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 
@@ -24,8 +24,10 @@ global.document = {
   createElement(){ return makeEl(); },
   querySelector(){ return makeEl(); },
   querySelectorAll(){ return []; },
+  addEventListener(){},
 };
-global.window = { matchMedia(){ return {matches:false}; }, scrollTo(){} };
+global.window = { __MC_TEST:true, matchMedia(){ return {matches:false}; }, scrollTo(){}, addEventListener(){} };
+global.location={protocol:'https:',origin:'https://example.test',pathname:'/mcmultiverse/',hash:''};
 global.matchMedia = () => ({matches:false});
 global.localStorage = { getItem(){return null}, setItem(){}, removeItem(){} };
 global.fetch = () => new Promise(()=>{});
@@ -36,9 +38,9 @@ if(!global.CanvasRenderingContext2D) global.CanvasRenderingContext2D = function(
 global.CanvasRenderingContext2D.prototype = {};
 
 // ---- 加载脚本并导出内部对象 ----
-const exported = new Function(js + '\nreturn {SCENES, FLAG_ENDINGS, ATTR_ENDINGS, PREFIXES, TOMBS, TALENTS, AVATAR, FLAG_LINES};')();
+const exported = new Function(js + '\nreturn {SCENES, FLAG_ENDINGS, ATTR_ENDINGS, PREFIXES, TOMBS, TALENTS, AVATAR, FLAG_LINES, resolveChoice, selectLifeEnding, TERMINAL_ENDINGS};')();
 
-const {SCENES, FLAG_ENDINGS, ATTR_ENDINGS, PREFIXES, TOMBS, TALENTS, FLAG_LINES} = exported;
+const {SCENES, FLAG_ENDINGS, ATTR_ENDINGS, PREFIXES, TOMBS, TALENTS, FLAG_LINES, resolveChoice, selectLifeEnding, TERMINAL_ENDINGS} = exported;
 let pass = 0, fail = 0;
 const ok = (cond, msg) => { if(cond){ pass++; console.log('  ✓', msg); } else { fail++; console.log('  ✗ FAIL:', msg); } };
 
@@ -75,10 +77,10 @@ ok(PREFIXES.length >= 5, `属性前缀修饰数量: ${PREFIXES.length}`);
 ok(TOMB_LEN() >= 6, `墓志铭数量: ${TOMB_LEN()}`);
 function TOMB_LEN(){ return TOMBS.length; }
 
-console.log('== 4. 结局池规模（组合数） ==');
-const attrCombo = 16; // 4属性各自高低 2^4
-console.log(`  核心结局: ${covered + ATTR_ENDINGS.length + 1} × 属性修饰: ${attrCombo} × 墓志铭: ${TOMB_LEN()} = 组合数 ${(covered + ATTR_ENDINGS.length + 1) * attrCombo * TOMB_LEN()}`);
-ok((covered + ATTR_ENDINGS.length + 1) * attrCombo > 100, '结局组合数超过100，README"上百种"成立');
+console.log('== 4. 稳定结局ID ==');
+const endingIds = [...FLAG_ENDINGS,...ATTR_ENDINGS,...TERMINAL_ENDINGS].map(e=>e.id);
+ok(new Set(endingIds).size === endingIds.length, '所有主结局/终幕ID唯一，文案修饰不计结局');
+ok(TERMINAL_ENDINGS.length >= 8, `专属终幕选项结局 ${TERMINAL_ENDINGS.length} 项`);
 
 console.log('== 5. 结局文本质量 ==');
 FLAG_ENDINGS.concat(ATTR_ENDINGS).forEach(e => {
@@ -93,12 +95,7 @@ function playout(bias){
   let id = 'birth', step = 0;
   const attrs = {weight:50, money:100, faith:30, health:100};
   const flags = new Set();
-  const clamp = () => {
-    attrs.weight = Math.max(35, Math.min(160, attrs.weight));
-    attrs.money = Math.max(0, Math.min(150, attrs.money));
-    attrs.faith = Math.max(0, Math.min(100, attrs.faith));
-    attrs.health = Math.max(0, Math.min(100, attrs.health));
-  };
+  let state = {attrs,flags,talent:{mod:{}},history:[],sceneId:id};
   let age = 0, guard = 0;
   while(id && guard++ < 200){
     const s = SCENES[id];
@@ -117,19 +114,14 @@ function playout(bias){
     } else {
       c = s.choices[Math.floor(Math.random() * s.choices.length)];
     }
-    Object.entries(c.d || {}).forEach(([k, v]) => { if(k in attrs) attrs[k] += v; else attrs.weight += v; });
-    attrs.weight += 1;
-    clamp();
-    if(c.flag) flags.add(c.flag);
+    const next = resolveChoice({...state,sceneId:id},c);
+    state=next;
+    Object.assign(attrs,next.attrs);next.flags.forEach(f=>flags.add(f));
     id = c.next;
   }
-  return {age, attrs, flags, guard};
+  return {...state,age,guard};
 }
-function endingOf(r){
-  return ATTR_ENDINGS.find(e => e.cond({attrs:r.attrs}))
-      || FLAG_ENDINGS.find(e => r.flags.has(e.flag))
-      || {name:'DEFAULT'};
-}
+function endingOf(r){ return selectLifeEnding(r); }
 let badEnding = 0, badAttrs = 0;
 const endingCount = {};
 for(let i = 0; i < 500; i++){
@@ -144,14 +136,15 @@ ok(badAttrs === 0, `500 局属性全部在合法范围（异常 ${badAttrs} 局�
 console.log('  随机局结局分布:', Object.entries(endingCount).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${k}×${v}`).join(' | '));
 ok(Object.keys(endingCount).length >= 2, `随机局触达结局种类: ${Object.keys(endingCount).length}`);
 
-// 定向流派：每种玩法都应走向它的招牌结局
-const eat = endingOf(playout('eat'));
+// 独立属性阈值仍可调用真实结局选择器验证；终幕优先级另有回归。
+function attrEnding(r){ return selectLifeEnding({attrs:r.attrs,flags:new Set(),history:[]}); }
+const eat = attrEnding(playout('eat'));
 ok(eat.name === '巨无霸人柱力', `大胃王流 → 「${eat.name}」`);
-const save = endingOf(playout('money'));
+const save = attrEnding(playout('money'));
 ok(save.name === '编外股东', `省钱流 → 「${save.name}」`);
-const faith = endingOf(playout('faith'));
+const faith = attrEnding(playout('faith'));
 ok(faith.name === '麦门圣僧', `虔信流 → 「${faith.name}」`);
-const sick = endingOf(playout('sick'));
+const sick = attrEnding(playout('sick'));
 ok(sick.name === '金盆洗手', `作死流 → 「${sick.name}」`);
 
 console.log(`\n结果: ${pass} 通过 / ${fail} 失败`);

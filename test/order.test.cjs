@@ -1,0 +1,62 @@
+/* 实际生产函数回归：仅 Node 内置模块，无依赖、网络或文件写入。 */
+const fs=require('fs'),path=require('path'),assert=require('assert');
+const html=fs.readFileSync(path.resolve(__dirname,'..','index.html'),'utf8');
+const js=html.match(/<script>([\s\S]*?)<\/script>/)[1];
+const elements=new Map(),storage=new Map(),timers=[];
+function el(){return {textContent:'',innerHTML:'',style:{},dataset:{},children:[],classList:{add(){},remove(){},toggle(){},contains(){return false;}},appendChild(x){this.children.push(x)},insertBefore(x,before){const i=this.children.indexOf(before);this.children.splice(i<0?this.children.length:i,0,x)},querySelector(){return el()},querySelectorAll(){return []},scrollIntoView(){},getBoundingClientRect(){return {left:0,top:0,width:10}},remove(){this.removed=true},getContext(){return {setTransform(){},clearRect(){},beginPath(){},arc(){},fill(){},save(){},restore(){},translate(){},rotate(){},roundRect(){},fillRect(){}}}};}
+global.document={getElementById(id){if(!elements.has(id))elements.set(id,el());return elements.get(id)},createElement:el,querySelector(selector){return selector==='#courtLog .text-btn'?elements.get('courtLog')?.children.find(x=>x.className==='text-btn'&&!x.removed)||null:null},querySelectorAll(){return []},addEventListener(){},body:el()};
+global.window={__MC_TEST:true,scrollTo(){},matchMedia(){return {matches:true}},addEventListener(){}};global.location={protocol:'https:',origin:'https://example.test',pathname:'/mcmultiverse/',hash:''};global.matchMedia=window.matchMedia;
+global.localStorage={getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)};
+global.fetch=()=>new Promise(()=>{});global.requestAnimationFrame=()=>{};global.addEventListener=()=>{};global.innerWidth=390;global.innerHeight=844;
+global.CanvasRenderingContext2D=function(){};
+global.setTimeout=fn=>{timers.push(fn);return timers.length};
+const api=new Function(js+`\nreturn {DATA,quoteOrder,calculateIdeal,validateSnapshot,applySnapshot,localDateKey,dataModeLabel,resolveChoice,selectLifeEnding,TERMINAL_ENDINGS,drawSign,defyFate,savedSign,TALENTS,SCENES,finishLife,reincarnate,getLife:()=>life,setLife:x=>life=x,getLastLife:()=>lastLife,dailyCoupons,typeLines,setCart:x=>cart=x,getCart:()=>cart,cartCalc};`)();
+let passes=0;function check(name,fn){fn();passes++;console.log('✓ '+name)}
+const coupons=()=>[...api.DATA.itemCoupons.map(c=>({...c,type:'item'})),...api.DATA.fullCoupons.map(c=>({...c,type:'full'}))];
+const q=(order,selected=coupons())=>api.quoteOrder(order,api.DATA.menu,selected,{date:'2026-10-16'});
+check('2份薯饼15→9.9，余数原价',()=>{assert.equal(q({'脆薯饼':2}).finalCents,990);assert.equal(q({'脆薯饼':3},coupons().filter(c=>c.id==='hashbrown99')).finalCents,1740)});
+check('小薯不误套拼餐券',()=>assert.equal(q({'小薯条':1}).finalCents,1100));
+check('鸡块不误套鸡盒券',()=>assert.equal(q({'麦乐鸡(5块)':1}).finalCents,1200));
+check('买赠奇偶数量',()=>{for(const n of [1,2,3,4,5])assert.equal(q({'麦乐鸡(5块)':n},coupons().filter(c=>c.id==='nuggetbogo')).finalCents,Math.ceil(n/2)*1200)});
+check('早餐完整两件才适用',()=>{assert.equal(q({'猪柳蛋麦满分':1}).finalCents,1400);assert.equal(q({'猪柳蛋麦满分':1,'中杯鲜煮咖啡':1}).finalCents,990)});
+check('多券择优与输入顺序无关',()=>{const list=[{id:'a',name:'A',type:'item',rule:'unit',target:'大薯条',priceCents:900},{id:'b',name:'B',type:'item',rule:'unit',target:'大薯条',priceCents:800}];assert.equal(q({'大薯条':2},list).finalCents,1600);assert.deepEqual(q({'大薯条':2},list),q({'大薯条':2},list.reverse()))});
+check('涨价券忽略',()=>assert.equal(q({'小薯条':1},[{id:'bad',name:'坏券',type:'item',rule:'unit',target:'小薯条',priceCents:1590}]).finalCents,1100));
+check('整数分0.1+0.2精确',()=>{const r=api.quoteOrder({a:1,b:1},[{name:'a',price:.1},{name:'b',price:.2}],[]);assert.equal(r.finalCents,30);assert.equal(r.final,.3)});
+check('满减叠加与门槛按券后金额',()=>{const r=q({'大薯条':4});assert.equal(r.afterItemCents,3960);assert.equal(r.fullOffCents,600);assert.equal(r.finalCents,3360)});
+check('允许少用单品优惠以越过满减门槛，求真实全局最小',()=>{const menu=[{name:'x',price:10}],cs=[{id:'unit',name:'单品',type:'item',rule:'unit',target:'x',priceCents:900},{id:'full',name:'满减',type:'full',min:19,off:5,stackWithItem:true,thresholdBasis:'afterItem'}];assert.equal(api.quoteOrder({x:2},menu,cs).finalCents,1400)});
+check('禁止叠加满减按原价独立核算',()=>{const cs=coupons().map(c=>c.type==='full'?{...c,stackWithItem:false}:c);assert.equal(q({'大薯条':4},cs).finalCents,3960)});
+check('过期券不参与',()=>assert.equal(q({'大薯条':1},[{id:'expired',name:'过期',type:'item',rule:'unit',target:'大薯条',priceCents:1,endsAt:'2026-10-15'}]).finalCents,1500));
+check('无效数量/SKU拒绝',()=>{for(const order of [{bad:1},{'大薯条':-1},{'大薯条':1.5}])assert.throws(()=>q(order))});
+check('报价不修改订单菜单券',()=>{const order={'大薯条':3},menu=JSON.parse(JSON.stringify(api.DATA.menu)),cs=coupons();const before=JSON.stringify({order,menu,cs});api.quoteOrder(order,menu,cs);assert.equal(JSON.stringify({order,menu,cs}),before)});
+check('凑单只在真实实付更低时给建议和证据',()=>{const menu=[{name:'主食',price:38},{name:'配菜',price:2}],cs=[{id:'full',name:'满40减10',type:'full',min:40,off:10,stackWithItem:true,thresholdBasis:'afterItem'}];const r=api.calculateIdeal({'主食':1},menu,cs);assert.equal(r.finalCents,3800);assert.equal(r.upsell.quote.finalCents,3000);assert.equal(r.upsell.savingCents,800);assert.ok(r.upsell.evidence.length);assert.equal(api.calculateIdeal({'配菜':1},menu,cs).upsell,null)});
+const base=()=>({attrs:{weight:50,money:100,faith:30,health:80},flags:new Set(),talent:{mod:{}},history:[],sceneId:'birth'});
+check('钱包减耗百分比',()=>{const s=base();s.talent.mod.moneySave=.3;assert.equal(api.resolveChoice(s,{t:'a',d:{money:-10},next:'x'}).attrs.money,93);assert.equal(s.attrs.money,100)});
+check('体重正增长倍率与被动增长倍率，减重不放大',()=>{const s=base();s.talent.mod.weightGain=1.5;assert.equal(api.resolveChoice(s,{t:'a',d:{weight:2},next:'x'}).attrs.weight,54.5);assert.equal(api.resolveChoice(s,{t:'a',d:{weight:-2},next:'x'}).attrs.weight,49.5)});
+check('信仰附加/减耗与健康附加生效',()=>{const s=base();s.talent.mod={faithBonus:2,faithDrain:1,healthBonus:1};const r=api.resolveChoice(s,{t:'a',next:'x'});assert.equal(r.attrs.faith,31);assert.equal(r.attrs.health,81)});
+check('所有现有mod都有实际消费路径',()=>{const keys=new Set(api.TALENTS.flatMap(t=>Object.keys(t.mod)));assert.deepEqual([...keys].sort(),['faithBonus','faithDrain','healthBonus','moneySave','weightGain'].sort())});
+check('终幕结局优先早期旗标及极端属性，稳定ID',()=>{const s=base();s.sceneId='staff_final';s.attrs.weight=160;s.flags.add('shy');const c=api.SCENES.staff_final.choices[0];const r=api.resolveChoice(s,c);assert.ok(api.selectLifeEnding(r).id.startsWith('terminal-staff_final-'));assert.equal(api.selectLifeEnding(r).id,api.selectLifeEnding(r).id)});
+check('八条终幕都有明确结局',()=>{for(const scene of ['staff_final','study_final','gym_final','crazy_final','wool_final','oracle_final','gacha_final','art_final']){const s=base();s.sceneId=scene;assert.ok(api.selectLifeEnding(api.resolveChoice(s,api.SCENES[scene].choices[0])).id.startsWith('terminal-'+scene))}});
+check('真实finishLife→转世代数+1，保留结局记忆和天赋',()=>{const s=base();s.sceneId='staff_final';s.gen=1;s.age=80;s.talent={name:'测试天赋',mod:{}};api.setLife(api.resolveChoice(s,api.SCENES.staff_final.choices[0]));api.finishLife();const last=api.getLastLife();api.reincarnate();assert.equal(api.getLife().gen,2);assert.equal(api.getLife().attrs.weight,50);assert.equal(api.getLife().flags.size,0);assert.equal(api.getLife().talent.name,'测试天赋');assert.equal(api.getLastLife().id,last.id);assert.ok(elements.get('sceneText').children.some(e=>e.innerHTML.includes(last.name)))});
+check('本地日期保持凌晨当天',()=>assert.equal(api.localDateKey(new Date(2026,9,16,0,15)),'2026-10-16'));
+check('每日一签与快速双击锁，娱乐改签不覆盖存签',()=>{api.drawSign();api.drawSign();let guard=0;while(timers.length&&guard++<50)timers.shift()();const first=api.savedSign();assert.ok(first);const before=JSON.stringify(first);api.drawSign();api.defyFate();assert.equal(JSON.stringify(api.savedSign()),before)});
+const example=JSON.parse(fs.readFileSync(path.resolve(__dirname,'..','data','mcd-real-data.example.json'),'utf8'));
+check('公开示例可通过完整schema校验',()=>assert.deepEqual(api.validateSnapshot(example),{ok:true}));
+check('无效快照整体拒绝不污染演示',()=>{const old=JSON.stringify(api.DATA.menu);for(const edit of [x=>delete x.itemCoupons,x=>x.menu[0].cat='missing',x=>x.menu[0].img='https://bad/x.png',x=>x.fullCoupons[0].id=x.itemCoupons[0].id,x=>x.menu[0].price='24.5',x=>x.itemCoupons[0].name='<img>']){const d=JSON.parse(JSON.stringify(example));edit(d);assert.equal(api.applySnapshot(d).ok,false);assert.equal(JSON.stringify(api.DATA.menu),old)}});
+check('合格快照切换有来源日期且明确非实时',()=>{assert.equal(api.applySnapshot(example).ok,true);assert.ok(api.dataModeLabel().includes('非实时'));assert.equal(api.DATA.menu[0].cat,'burger');assert.ok(elements.get('globalDataMode').textContent.includes('非实时'))});
+check('快照切换过滤旧SKU和无效数量，已渲染购物车仍能报价',()=>{
+  api.setCart({'麦香鸡':1,'巨无霸':1,'大薯条':-1});
+  document.getElementById('menuGrid').children.push(el());
+  assert.doesNotThrow(()=>assert.equal(api.applySnapshot(example).ok,true));
+  assert.deepEqual(api.getCart(),{'巨无霸':1});
+  assert.equal(api.cartCalc().finalCents,2450);
+});
+check('离开庭审完成待判决恰好一次，重复取消/遗留跳过不重复',()=>{
+  const match=window.matchMedia;window.matchMedia=()=>({matches:false});let calls=0;
+  api.typeLines([{cls:'judge',role:'法官',text:'第一句'},{cls:'judge',role:'法官',text:'第二句'}],()=>calls++);
+  const skip=document.querySelector('#courtLog .text-btn');assert.ok(skip);assert.equal(calls,0);
+  window.cancelTrial();assert.equal(calls,1);assert.equal(skip.removed,true);
+  window.cancelTrial();assert.equal(calls,1);
+  skip.onclick();assert.equal(calls,1);
+  window.matchMedia=match;
+});
+console.log(`\n结果: ${passes} 通过 / 0 失败`);

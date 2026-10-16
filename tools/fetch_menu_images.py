@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """抓取麦当劳中国官网各分类菜单页，提取「产品名 -> 官方产品图 URL」映射。
-产物: C:/Users/Lenovo/WorkBuddy/2026-10-15-23-43-50/mcmultiverse/tools/menu_images_raw.json
+产物: tools/menu_images_raw.json
 """
 import re, json, os, urllib.request, sys, time
 

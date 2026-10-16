@@ -1,14 +1,45 @@
 {
-  "_说明": "本文件为真实数据格式示例。实际使用时，在 WorkBuddy 中配置 mcd-mcp 连接器后，调用 query-meals / query-store-coupons 等 Tool，将返回的餐品与价格整理为本格式，另存为 data/mcd-real-data.json 即可被页面自动加载。注意：仅可包含公开商品数据，禁止包含 Token、个人信息、订单信息。",
-  "_来源Tool": ["query-meals", "query-store-coupons", "campaign-calendar"],
-  "_导出时间": "YYYY-MM-DD",
+  "schemaVersion": 1,
+  "mode": "snapshot",
+  "source": "格式演示，非官方导出；请用已核验的公开商品快照替换",
+  "exportedAt": "2026-10-16T00:00:00+08:00",
   "menu": [
-    {"name": "巨无霸", "price": 25.5, "emoji": "🍔"},
-    {"name": "双层吉士堡", "price": 22.0, "emoji": "🍔"},
-    {"name": "麦辣鸡腿堡", "price": 19.5, "emoji": "🌶️"}
+    {
+      "name": "巨无霸",
+      "price": 24.5,
+      "cat": "burger",
+      "emoji": "🍔",
+      "img": "assets/menu/巨无霸.png",
+      "desc": "示例商品，不代表实时门店价"
+    },
+    {
+      "name": "大薯条",
+      "price": 15,
+      "cat": "snack",
+      "emoji": "🍟",
+      "img": "assets/menu/薯条.png",
+      "desc": "示例商品"
+    }
   ],
-  "coupons": [
-    {"name": "麦麦省·满30减5", "min": 30, "off": 5},
-    {"name": "麦麦省·满50减12", "min": 50, "off": 12}
+  "itemCoupons": [
+    {
+      "id": "example-fries",
+      "name": "示例·大薯条9.9",
+      "rule": "unit",
+      "target": "大薯条",
+      "priceCents": 990,
+      "demo": true
+    }
+  ],
+  "fullCoupons": [
+    {
+      "id": "example-full",
+      "name": "示例·满39减6",
+      "min": 39,
+      "off": 6,
+      "stackWithItem": true,
+      "thresholdBasis": "afterItem",
+      "demo": true
+    }
   ]
 }
