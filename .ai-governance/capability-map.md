@@ -46,3 +46,13 @@
 | 确定性短局与链接 | index.html: window.McJourney | journey 15/0 |
 | Canvas小票与档案 | index.html: saveReceipt / registerLifeEnding / showJourneyCollection | 实际PNG下载与浏览器恢复 |
 | 结算键盘与庭审退出 | index.html: openSettle包装 / cancelTrial | 焦点进入弹层；回调恰好完成一次回归 |
+
+## 早八因果局（2026-10-16）
+| 能力 | 实际入口 | 复用边界 |
+|---|---|---|
+| 四资源与交通因果 | assets/morning-engine.js: McMorning.createEngine(quoteOrder) | 复用生产整数分报价；等待/饱腹/关系/交通均为独立虚构规则 |
+| 仅改单份与断点 | assets/morning-engine.js: compare | 锁定全部非订单输入；预算或原交通失效时停止，不偷偷换路 |
+| 严格新版本复玩 | assets/morning-engine.js: encode/decode | #am=1，与旧#mc=1隔离，冻结快照、日期与选择 |
+| 早八现场与独立存档 | assets/morning-ui.js / morning.css | 原生DOM；独立浏览器收藏，保留旧三殿与短局 |
+| 引擎验收 | test/morning.test.cjs | 实际生产quoteOrder；20项通过，3312组合、8结局可达；UI/线上验收另见归档 |
+| 进行中恢复 | assets/morning-engine.js: restore / morning-ui.js: lastGameStage | 校验版本/快照/白名单，档案视图不覆盖游戏阶段 |

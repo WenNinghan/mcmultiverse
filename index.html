@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#1e0c0e">
-<meta name="description" content="抽取处境，在预算下点单，让审判成为平行人生的起点。三座大殿，一张订单，三种命运。零依赖静态创意游戏。">
+<meta name="description" content="离早八18分钟，校车6分钟后发车，你只有18元。点单、分餐、赶车，改一份早餐对比两条时间线。零依赖静态创意游戏。">
 <meta property="og:title" content="麦门宇宙 · McMultiverse">
-<meta property="og:description" content="神谕阁 · 审判庭 · 轮回司：怀着仪式感吃麦当劳。">
+<meta property="og:description" content="你省下了早餐钱，会不会错过早八？改一份订单，看两条时间线在哪里分岔。">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
 <title>麦门宇宙 · 一张订单，三种命运</title>
@@ -60,13 +60,18 @@
 .news-archive{width:100%;font-size:12px;color:var(--muted)}.news-archive summary{cursor:pointer;min-height:44px;padding:10px 12px;background:#eeefdf;border:1px solid #c4ccb8;border-radius:6px}.news-archive>p{margin:12px}.news-cards{display:flex;gap:12px;overflow:auto;padding:8px 0}.news-cards .news-card{flex:0 0 85%}
 .mi-img{overflow:hidden}.mi-img img{position:absolute;inset:0;min-height:0;max-height:100%;height:100%;width:100%;object-fit:contain}.court-sidebar{display:flex;flex-direction:column;gap:15px}.court-sidebar .cart-bar{order:-1;margin-top:0}
 </style>
+<link rel="stylesheet" href="assets/morning.css">
+<style>
+.am-entry{display:grid;grid-template-columns:1.08fr 1fr;gap:40px;background:#193f37;color:#fff8de;border:1px solid #193f37;border-radius:14px;padding:42px 40px;margin:32px 0;overflow:hidden;position:relative}.am-entry-kicker{font-size:12px;letter-spacing:2px;color:#e8be4b}.am-entry h1{font-size:clamp(38px,4.2vw,60px);line-height:1.2;letter-spacing:-2px;margin:24px 0}.am-entry h1 em{font-style:normal;color:#ffce43}.am-entry p{color:#e2e6d6;font-size:15px;line-height:1.9}.am-entry .hero-cta{background:#ffce43;color:#193f37;border-color:#ffce43;box-shadow:4px 4px 0 #092920;margin-top:24px}.am-entry .am-entry-meta{font-size:12px;color:#c6cfbd;margin-top:16px}.am-entry-links{display:flex;flex-wrap:wrap;gap:16px}.am-entry-links button{background:none;border:0;color:#fff4cc;text-decoration:underline;text-underline-offset:4px;padding:10px 0;min-height:44px;font-size:13px}.am-entry-scene{position:relative;min-height:360px;padding:0 8px}.am-entry-clock{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #517267;padding:8px 0 13px}.am-entry-clock b{font:700 48px/1.2 ui-monospace,monospace;color:#ffce43;letter-spacing:-3px}.am-entry-clock span{font-size:12px;color:#e0e6d7}.am-entry-countdown{font-size:12px;background:#cf3927;color:#fffbe9;padding:7px 11px;display:inline-block;transform:rotate(-3deg);margin-top:13px}.am-entry-food{width:240px;height:220px;object-fit:contain;position:absolute;bottom:0;left:-6px;filter:drop-shadow(0 18px 12px #0005);transform:rotate(-8deg)}.am-entry-chat{position:absolute;right:0;top:116px;width:216px;background:#fff8e7;color:#193f37;padding:18px;border-radius:13px 13px 0 13px;box-shadow:5px 6px 0 #082b24;transform:rotate(4deg)}.am-entry-chat small{font-size:11px;color:#6c7967}.am-entry-chat p{font-size:17px;font-weight:700;color:#193f37;margin-top:9px}.am-entry-ticket{position:absolute;right:12px;bottom:3px;width:150px;border-top:1px dashed #193f37;background:#e9ebd6;color:#193f37;padding:13px 15px;font-size:12px;transform:rotate(-4deg)}.am-entry-ticket b{font-size:22px;display:block}.am-entry-ticket span{font-size:11px}.am-entry-scene:after{content:'';position:absolute;bottom:-9px;left:0;right:0;height:8px;background:repeating-linear-gradient(90deg,#f6c33c 0 32px,#c93425 32px 64px);border-radius:2px}
+@media(max-width:850px){.am-entry{gap:24px;padding:30px 24px}.am-entry-chat{width:185px;right:-4px}.am-entry-food{width:200px;height:190px}.am-entry-ticket{width:136px;right:0}.am-entry-clock b{font-size:41px}.am-entry h1{font-size:42px}}
+@media(max-width:650px){.am-entry{grid-template-columns:1fr;margin-top:20px;padding:25px 22px;gap:15px}.am-entry h1{font-size:41px;margin:17px 0}.am-entry-scene{min-height:310px}.am-entry-clock b{font-size:43px}.am-entry-chat{width:190px;top:90px}.am-entry-food{width:205px;height:185px}.am-entry .hero-cta{width:100%;justify-content:space-between}.am-entry-ticket{bottom:5px}.am-entry .am-entry-meta{margin-top:12px}}
+</style>
 </head>
 <body>
 <header class="site-header"><button class="brand" onclick="go('hall')" aria-label="麦门宇宙首页"><span class="brand-mark" aria-hidden="true">m</span><span class="brand-name">麦门宇宙<span class="brand-sub">McMULTIVERSE</span></span></button><nav class="site-nav" aria-label="主导航"><button class="text-btn home-link" onclick="go('hall')">三座大殿</button><button class="text-btn" onclick="showJourneyCollection()">宇宙档案</button><span id="globalDataMode" class="data-mode" data-mode>演示数据</span></nav></header>
 <main>
 <section id="hall" class="wrap">
-  <div class="hero"><div><div class="eyebrow">欢迎进入 1024 号宇宙</div><h1>这一单，通往<br><em>哪种人生？</em></h1><p class="hero-intro">一份预算，一张神谕，一次不太容易的选择。<br>点餐、受审、走进平行人生。<br>每个宇宙，都从「今天吃什么」开始。</p><button class="hero-cta" onclick="startJourney()">领取我的命运单 <span aria-hidden="true">↗</span></button><p class="hero-meta">一局约 3–5 分钟 · 你的选择会留下回响</p></div>
-  <div class="hero-art" aria-label="凌晨的提交键命运单预览"><div class="hero-orbit"></div><span class="hero-star" aria-hidden="true">✳</span><img class="hero-food" src="assets/menu/巨无霸.png" alt="巨无霸餐品图"><div class="hero-sticker">一张订单，三种命运 ↗</div><article class="hero-receipt"><p class="receipt-top">McMULTIVERSE · 今日任务</p><h2 class="receipt-title">凌晨的提交键</h2><p class="receipt-no">UNIVERSE / 001024</p><div class="receipt-rule"></div><p class="receipt-copy"><b>01:24 · A12 号座</b><br>终稿还差一页，<br>先给自己留一口热的。</p><p class="receipt-budget"><span>你的情景预算</span><b>¥28.00</b></p><p class="receipt-top">演示任务 · 一个人 · 有限的预算</p><div class="receipt-rule"></div><p class="receipt-question">现在按下提交，<br>还是给明天留一个注释？</p><div class="barcode" aria-hidden="true"></div><span class="receipt-stamp">待你落笔</span></article></div></div>
+  <div class="am-entry"><div><div class="am-entry-kicker">可玩新章 / 六分钟后的校车</div><h1>早餐、早八、饭搭子。<br><em>这一单，来得及吗？</em></h1><p>你只有 18 元。离上课还有 18 分钟。<br>便宜一点、吃饱一点，还是为朋友留一半？<br>你点的每一样，都在改变这个早晨。</p><button class="hero-cta" onclick="startMorning()">开始这场早八 <span aria-hidden="true">↗</span></button><p class="am-entry-meta">约 3 分钟 · 点单影响钱、时间、饱腹与关系<br>结局之后，换一份餐品，看另一条时间线。</p><div class="am-entry-links"><button onclick="resumeMorning()">继续上次早八</button><button onclick="startJourney()">探索其他命运单 →</button></div></div><div class="am-entry-scene" aria-label="07:42的门店，校车六分钟后发车，朋友发来早餐请求"><div class="am-entry-clock"><b>07:42</b><span>门店取餐台<br>08:00 / 早八</span></div><span class="am-entry-countdown">校车还有 6 分钟发车</span><img class="am-entry-food" src="assets/menu/猪柳蛋麦满分.png" alt="猪柳蛋麦满分"><div class="am-entry-chat"><small>饭搭子 · 刚刚</small><p>“帮我带一份，<br>我昨晚没吃。”</p></div><div class="am-entry-ticket">今日可支配<b>¥18.00</b><span>这一单，后果自负。</span></div></div></div>
   <div class="hall-section-head"><h2>三座大殿，同一个你。</h2><p>也可以选择一座大殿，自由探索</p></div>
   <div class="temple-cards"><button class="temple-card" onclick="go('oracle')"><small>01 / THE ORACLE</small><span class="temple-icon" aria-hidden="true">⚄</span><div class="temple-info"><h3>神谕阁</h3><p>每日抽一签，给纠结一个出口。<br>今天的难题，由你来解。</p></div><span class="temple-go" aria-hidden="true">↗</span></button><button class="temple-card" onclick="go('court')"><small>02 / THE VERDICT</small><span class="temple-icon" aria-hidden="true">⚖</span><div class="temple-info"><h3>审判庭</h3><p>把账单摊开，看看另一种可能。<br>省下了什么，又放弃了什么？</p></div><span class="temple-go" aria-hidden="true">→</span></button><button class="temple-card" onclick="go('life')"><small>03 / THE MULTIVERSE</small><span class="temple-icon" aria-hidden="true">∞</span><div class="temple-info"><h3>轮回司</h3><p>选一种天赋，走进完整人生。<br>同一根薯条，蘸出八条路。</p></div><span class="temple-go" aria-hidden="true">→</span></button></div>
   <p class="hall-foot">抽签 → 点单 → 受审 → 人生回响 <span aria-hidden="true"> · </span><button class="text-btn" onclick="showJourneyCollection()">翻开你的宇宙档案 ↗</button></p>
@@ -2047,6 +2052,7 @@ updateDataMode();
   }
   function createSeed(){ if(typeof crypto!=='undefined' && crypto.getRandomValues){ const a=new Uint32Array(1); crypto.getRandomValues(a); return a[0]||1; } return (Date.now()>>>0)||1; }
   function startJourney(id){
+    if(id==='morning' && typeof window.startMorning==='function'){window.startMorning();return;}
     showingCollection=false; openSection();
     if(id){ try{ current=makeJourney(id,createSeed(),captureData()); category='main'; persist(); renderJourney(); }catch(e){ renderSelection(e.message); } }
     else renderSelection();
@@ -2126,6 +2132,12 @@ updateDataMode();
     const collection=readCollection(),shorts=J_ENDINGS.filter(e=>collection.entries[e.id]),longs=Object.values(collection.entries).filter(e=>e.kind==='long');
     document.getElementById('journeyPanel').innerHTML='<header class="j-heading"><span class="j-kicker">THE ARCHIVE / 宇宙档案</span><h2 class="serif">你来过的宇宙，<br>都留着位置。</h2><p>短篇已发现 '+shorts.length+' / '+J_ENDINGS.length+' · 完整人生已归档 '+longs.length+'。主结局有稳定ID，修饰与墓志铭不凑成新结局。</p></header><div class="j-collection">'+J_ENDINGS.map(e=>'<article class="j-collection-card '+(collection.entries[e.id]?'unlocked':'locked')+'"><span class="j-kicker">'+escape(scenarioOf(e.scenario).name)+'</span><strong>'+escape(collection.entries[e.id]?e.name:'尚未抵达')+'</strong><small>'+escape(e.id)+'</small></article>').join('')+'</div>'+(longs.length?'<h3 class="serif j-archive-title">完整人生留下的档案</h3><div class="j-collection">'+longs.map(e=>'<article class="j-collection-card unlocked"><strong>'+escape(e.name)+'</strong><small>'+escape(e.id)+' · '+escape(e.date)+'</small></article>').join('')+'</div>':'')+'<div class="j-end-actions"><button class="btn red" onclick="startJourney()">领取新的命运单</button>'+(current?'<button class="btn ghost" onclick="resumeJourney()">回到上次一局</button>':'')+'</div><p class="j-source">档案只存在当前浏览器。清除站点数据会移除收藏；可先下载喜欢的小票。</p>';
     notify('');
+    if(typeof window.showMorningCollection==='function'){
+      const breakfastArchive=document.createElement('button');
+      breakfastArchive.className='btn ghost';breakfastArchive.textContent='新章 · 打开早八档案 →';
+      breakfastArchive.style.marginBottom='24px';breakfastArchive.onclick=window.showMorningCollection;
+      document.getElementById('journeyPanel').prepend(breakfastArchive);
+    }
   }
   function journeyReceipt(state){
     const r=resolveJourney(state,state.pivot),s=scenarioOf(state.scenarioId);
@@ -2198,7 +2210,7 @@ updateDataMode();
     window.addEventListener('hashchange',replayFromLocation);
   }
   Object.assign(window,{startJourney,resumeJourney,showJourneyCollection,journeyStep,journeyCategory,journeyQty,journeyClaim,journeyOpenTrial,journeyDecide,journeyChoose,journeyFinish,journeyFlip,journeyReturnResult,saveJourneyReceipt,copyJourneyText,copyJourneyLink,registerLifeEnding,shareLifeReceipt});
-  window.McJourney={VERSION,SCENARIOS,ENDINGS:J_ENDINGS,makeJourney,resolveJourney,planJourney,makeFragments,getJourneyQuote,encodeJourney,decodeJourney,validateJourneyGoal,signature,receiptText,journeyReceipt};
+  window.McJourney={VERSION,SCENARIOS,ENDINGS:J_ENDINGS,makeJourney,resolveJourney,planJourney,makeFragments,getJourneyQuote,encodeJourney,decodeJourney,validateJourneyGoal,signature,receiptText,journeyReceipt,captureData,saveReceipt};
   if(typeof document!=='undefined' && !window.__MC_TEST){ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initJourney);else initJourney(); }
 })();
 /* MC_JOURNEY_END */
@@ -2241,5 +2253,7 @@ window.cancelTrial=function(){clearTimeout(trialTimer);const complete=pendingTri
 
 updateDataMode();
 </script>
+<script src="assets/morning-engine.js"></script>
+<script src="assets/morning-ui.js"></script>
 </body>
 </html>
