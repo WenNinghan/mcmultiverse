@@ -32,3 +32,9 @@
 本轮涉及文件：`deploy-start.mjs`（新增）、`server/triad-server.mjs`（公网边界）、`test/triad-server.test.mjs`（+5 项公网测试）、`.gitignore`、`README.md`（线上部署章节）、`WORKBUDDY_HANDOFF.txt`、`tools/online-smoke.mjs`。提交 `383706e feat: 三殿V3上线——同源部署、公网边界与线上冒烟`。
 
 （后续对话记录请从 WorkBuddy 导出后继续追加）
+
+## 2026-10-17 晚 · 工作台改造（commit 9c7c144）
+- 用户反馈"三种玩法找不到切换入口"：V3 把三殿做成硬锁线性流程，点锁住的殿只弹 toast 弹回。
+- 改造：index.html 增加 .workbench/.wb-rail 左侧常驻切换栏（工作台首页/神谕阁/审判庭/轮回司/判决书 + 门店与凭证入口）；enter() 去掉硬锁；缺前置条件时殿内显示引导 gate（"还差一步"+跳转按钮）而不是弹回。
+- ≤1000px 时切换栏变横向条。测试 109/109；本机浏览器全流程（盲选→揭价 ¥46.50→换餐→盖章）与手机 390px 均通过。
+- 线上已重新发布（https://mcmultiverse-triad.app.workbuddy.host/），前端工作台已生效；但部署沙箱当前 /api/health 返回 fetch failed（连不上 mcp.mcd.cn），门店暂时取不到，页面有"重新连接"按钮。上一轮同沙箱可连通，疑似沙箱出口或 MCP 临时问题，待重试。
