@@ -4,6 +4,7 @@ import {createQuoteCoordinator} from './triad-flow.mjs';
 import {renderVerdictPng,buildShareText} from './triad-share.mjs';
 
 const app=document.querySelector('#app');
+const rail=document.querySelector('#rail');
 const storeDialog=document.querySelector('#storeDialog');
 const evidenceDialog=document.querySelector('#evidenceDialog');
 let session=null,view='home',round='main',busy=false,failure='',health=null,verdict=null;
@@ -22,6 +23,35 @@ const picture=(x,cls='',decorative=false)=>`<img src="${esc(imageUrl(x))}" alt="
 const originalItems=()=>getOriginalIds(session).map(item);
 const feeLabels={deliveryCents:'配送费',packingCents:'打包费',tablewareCents:'餐具费'};
 const feeNote=q=>Object.entries(feeLabels).filter(([k])=>q.fees?.[k]>0).map(([k,label])=>`${label} ${money(q.fees[k])}`).join('、');
+const HALLS=[{key:'oracle',no:'01',name:'神谕阁',tag:'先盲选'},{key:'court',no:'02',name:'审判庭',tag:'再揭价'},{key:'rebirth',no:'03',name:'轮回司',tag:'只换一份'},{key:'verdict',no:'04',name:'判决书',tag:'盖完章'}];
+function hallState(key){
+  if(!session)return {state:'待连接',tone:'idle'};
+  if(key==='oracle'){
+    if(session.originalQuote)return {state:'盲选已封存',tone:'done'};
+    if(session.selection.mainId)return {state:'该选配餐',tone:'live'};
+    return {state:'可以开始',tone:'live'};
+  }
+  if(key==='court'){
+    if(!session.selection.sideId)return {state:'还差：选两份',tone:'idle'};
+    return session.originalQuote?{state:'已揭价',tone:'done'}:{state:'可以揭价',tone:'live'};
+  }
+  if(key==='rebirth'){
+    if(!session.selection.sideId)return {state:'还差：选两份',tone:'idle'};
+    if(!session.originalQuote)return {state:'还差：先揭价',tone:'idle'};
+    if(verdict)return {state:'已盖章',tone:'done'};
+    return session.comparison?{state:'两盘已查好',tone:'live'}:{state:'可以试换',tone:'live'};
+  }
+  if(!verdict)return {state:'还没盖章',tone:'idle'};
+  return {state:verdict.decision==='keep'?'选了 A 原盘':'选了 B 新盘',tone:'done'};
+}
+function renderRail(){
+  if(!rail)return;
+  const active=view==='verdict'?'verdict':view,store=session?.context.store;
+  rail.innerHTML=`<div class="rail-head"><span class="eyebrow">WORKBENCH / 玩法</span><button class="rail-home ${view==='home'?'active':''}" data-action="home"><b aria-hidden="true">⌂</b><span>工作台首页</span></button></div><nav class="rail-list" aria-label="三殿与判决书">${HALLS.map(h=>{const s=hallState(h.key);return `<button class="rail-item ${active===h.key?'active':''} tone-${s.tone}" data-action="enter" data-view="${h.key}" ${active===h.key?'aria-current="page"':''}><i class="rail-no">${h.no}</i><span class="rail-name">${h.name}<small>${h.tag}</small></span><em class="rail-state">${esc(s.state)}</em></button>`;}).join('')}</nav><div class="rail-foot"><p class="rail-store"><b>当前门店</b>${store?esc(store.name):'正在连接真实门店…'}</p><button class="rail-mini" data-action="open-store">换一间餐厅</button><button class="rail-mini" data-action="evidence">这次 MCP 调用</button><p class="rail-tip">三殿随时可跳。缺前置条件时，殿内会告诉你差哪一步。</p></div>`;
+}
+function gate(kicker,title,text,target,label){
+  return `<div class="hall-gate"><span class="eyebrow">${esc(kicker)}</span><h2>${esc(title)}</h2><p>${esc(text)}</p><button class="primary-button" data-action="enter" data-view="${target}">${esc(label)}</button></div>`;
+}
 let toastTimer;
 function toast(message){const el=document.querySelector('#toast');el.textContent=message;el.classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('visible'),3700);}
 
@@ -51,7 +81,7 @@ function home(){
   const main=session?.context.mainOptions[0]||{image:'assets/menu/巨无霸.png',name:'主食素材'};
   const sides=session?.context.sideOptions||[{image:'assets/menu/薯条.png',name:'配餐素材'},{image:'assets/menu/玉米杯.png',name:'配餐素材'}];
   const courtReady=!!session?.selection.sideId,rebirthReady=!!session?.originalQuote;
-  return '<section class="home home-v2 home-v3"><div class="hero"><div class="hero-copy"><span class="eyebrow">McMULTIVERSE / THE TASTE IS YOURS</span><h1>这一口，<br><em>我判了。</em></h1><p class="hero-promise">先凭食欲选，再揭开真实价格。<br><b>只换一份配餐，你会改主意吗？</b></p><p class="hero-rule">主食与配餐各选一份，另配固定饮品。<br>比较三份单点总价。</p></div><div class="hero-art" role="img" aria-label="餐盘、黄色判章和小票的艺术静物"></div><div class="hero-note">先凭食欲<br>后看价格</div></div><div class="hall-heading"><span>神谕阁 → 审判庭 → 轮回司</span><small>选一盘 · 翻价签 · 给偏爱盖章</small></div><div class="temples"><button class="temple-card oracle entry-start" data-action="enter" data-view="oracle"><span class="card-top">神谕阁 <i class="card-number">01</i></span><h2>先盲选。</h2><p class="caption">主食、配餐，各选一份。</p><div class="card-scene" aria-hidden="true">'+picture(main,'',true)+picture(sides[0],'',true)+'</div><span class="card-end"><span class="start-pill">'+(session?.originalQuote?'回看本局盲选':'从这里开始')+'</span><span class="arrow-circle">↗</span></span></button><button class="temple-card court" data-action="enter" data-view="court" data-locked="'+!courtReady+'"><span class="card-top">审判庭 <i class="card-number">02</i></span><h2>再揭价。</h2><p class="caption">猜个价，或直接翻开。</p><div class="card-scene" aria-hidden="true"><div class="price-prop"><span>THE PRICE</span><b>¥ ? . ?</b></div><div class="mini-stamp">有据</div></div><span class="card-end"><span>'+(courtReady?'选好了 · 去揭价':'选好两份后开放')+'</span><span class="arrow-circle">'+(courtReady?'↗':'·')+'</span></span></button><button class="temple-card rebirth" data-action="enter" data-view="rebirth" data-locked="'+!rebirthReady+'"><span class="card-top">轮回司 <i class="card-number">03</i></span><h2>只换一份。</h2><p class="caption">换配餐、比价格，再站队。</p><div class="card-scene" aria-hidden="true">'+picture(sides[0],'',true)+'<span class="swap-prop">↝</span>'+picture(sides.at(-1),'',true)+'</div><span class="card-end"><span>'+(rebirthReady?'揭价了 · 去试换':'原盘揭价后开放')+'</span><span class="arrow-circle">'+(rebirthReady?'↗':'·')+'</span></span></button></div><div class="home-bottom"><p>'+(session?'本局固定 '+esc(session.context.drink.name)+' · 到店取餐 · 同门店各一份':'正在取回真实菜单，马上就能开始。')+'</p>'+(session?.selection.sideId?'<button class="resume-button" data-action="continue">接着刚才那一盘 →</button>':'')+'</div>'+(failure?'<div class="inline-error">'+esc(failure)+' <button class="resume-button" data-action="retry-init">重新连接</button></div>':'')+'</section>';
+  return '<section class="home home-v2 home-v3"><div class="hero"><div class="hero-copy"><span class="eyebrow">McMULTIVERSE / THE TASTE IS YOURS</span><h1>这一口，<br><em>我判了。</em></h1><p class="hero-promise">先凭食欲选，再揭开真实价格。<br><b>只换一份配餐，你会改主意吗？</b></p><p class="hero-rule">主食与配餐各选一份，另配固定饮品。<br>比较三份单点总价。</p></div><div class="hero-art" role="img" aria-label="餐盘、黄色判章和小票的艺术静物"></div><div class="hero-note">先凭食欲<br>后看价格</div></div><div class="hall-heading"><span>神谕阁 → 审判庭 → 轮回司</span><small>选一盘 · 翻价签 · 给偏爱盖章 · 左侧切换栏随时跳</small></div><div class="temples"><button class="temple-card oracle entry-start" data-action="enter" data-view="oracle"><span class="card-top">神谕阁 <i class="card-number">01</i></span><h2>先盲选。</h2><p class="caption">主食、配餐，各选一份。</p><div class="card-scene" aria-hidden="true">'+picture(main,'',true)+picture(sides[0],'',true)+'</div><span class="card-end"><span class="start-pill">'+(session?.originalQuote?'回看本局盲选':'从这里开始')+'</span><span class="arrow-circle">↗</span></span></button><button class="temple-card court" data-action="enter" data-view="court" data-locked="'+!courtReady+'"><span class="card-top">审判庭 <i class="card-number">02</i></span><h2>再揭价。</h2><p class="caption">猜个价，或直接翻开。</p><div class="card-scene" aria-hidden="true"><div class="price-prop"><span>THE PRICE</span><b>¥ ? . ?</b></div><div class="mini-stamp">有据</div></div><span class="card-end"><span>'+(courtReady?'选好了 · 去揭价':'还差两份 · 也能进')+'</span><span class="arrow-circle">'+(courtReady?'↗':'·')+'</span></span></button><button class="temple-card rebirth" data-action="enter" data-view="rebirth" data-locked="'+!rebirthReady+'"><span class="card-top">轮回司 <i class="card-number">03</i></span><h2>只换一份。</h2><p class="caption">换配餐、比价格，再站队。</p><div class="card-scene" aria-hidden="true">'+picture(sides[0],'',true)+'<span class="swap-prop">↝</span>'+picture(sides.at(-1),'',true)+'</div><span class="card-end"><span>'+(rebirthReady?'揭价了 · 去试换':'还差揭价 · 也能进')+'</span><span class="arrow-circle">'+(rebirthReady?'↗':'·')+'</span></span></button></div><div class="home-bottom"><p>'+(session?'本局固定 '+esc(session.context.drink.name)+' · 到店取餐 · 同门店各一份':'正在取回真实菜单，马上就能开始。')+'</p>'+(session?.selection.sideId?'<button class="resume-button" data-action="continue">接着刚才那一盘 →</button>':'')+'</div>'+(failure?'<div class="inline-error">'+esc(failure)+' <button class="resume-button" data-action="retry-init">重新连接</button></div>':'')+'</section>';
 }
 function waiting(){return `<div class="loading-panel"><div class="spinner" aria-hidden="true"></div><h2>下一对餐品，马上就位。</h2><p>正在查询真实可售菜单和默认规格。<br>你的上一局会保留到新菜单成功返回。</p></div>`;}
 function oracle(){
@@ -71,7 +101,8 @@ function estimateResult(){
 }
 function quoteLines(q){return getOriginalIds(session).map(id=>{const row=q.items.find(x=>x.id===id);return `<div class="price-line"><span>${esc(item(id).name)}${item(id).customized?'【可特调】':''} × 1</span><span>${row?.subtotalCents!==undefined?money(row.subtotalCents):'已计入总额'}</span></div>`;}).join('')+Object.entries(feeLabels).filter(([k])=>q.fees?.[k]>0).map(([k,label])=>`<div class="price-line"><span>${label}</span><span>${money(q.fees[k])}</span></div>`).join('');}
 function court(){
-  if(!session?.selection.sideId)return oracle();
+  if(!session)return waiting();
+  if(!session.selection.sideId)return heading('02 / THE REVEAL','审判庭在等一盘餐。','价格要落在具体的餐品上，先回神谕阁挑两份。')+gate('还差一步','没有餐盘，就没有价签。','审判庭负责翻开真实报价。去神谕阁选一份主食、一份配餐，回来立刻能揭价。','oracle','去神谕阁选两份 →');
   const q=session.originalQuote;
   return heading('02 / THE REVEAL',q?'价格揭晓，直觉接招。':'这盘，你猜多少钱？','主食＋配餐＋固定饮品，三份单点。')+'<div class="tray-layout">'+mealTray(originalItems())+'<div class="ticket"><span class="eyebrow">THE PRICE / 三份单点整盘总价</span>'+(!q?estimateControls()+'<button class="price-mask" data-action="reveal" '+(busy?'disabled':'')+'><span>'+(busy?'正在揭开真实价格…':'翻开真实价格')+'</span><b aria-hidden="true">↻</b></button>'+(!estimateFrozen?'<button class="skip-guess" data-action="skip-reveal">跳过估价，直接揭价 →</button>':'')+'<p class="source-note">所选门店 · 到店取餐 · 默认规格</p>':'<div class="price-block '+(revealFresh?'just-revealed':'')+'"><small>真实整盘总价</small><strong><i>¥</i>'+(q.totalCents/100).toFixed(2)+'</strong></div>'+estimateResult()+'<button class="primary-button next-swap" data-action="try-swap">试换一份，看差价 <span aria-hidden="true">↗</span></button><p class="next-hint">主食和饮品留着，最后再选 A 或 B。</p><details class="fact-details"><summary>餐品明细与真实报价依据</summary>'+quoteLines(q)+'<p>'+esc(session.context.store.name)+' · '+esc(time(q.quotedAt))+'<br>MCP / calculate-price · 默认规格 · 未使用私人券 · 历史报价，非订单。</p></details>')+'</div></div>'+(failure?'<div class="inline-error">'+esc(failure)+' <button class="resume-button" data-action="reveal">保留选择，重试算价</button></div>':'');
 }
@@ -91,8 +122,15 @@ function reasonWorkbench(){
   return `<div class="final-workbench"><span class="reason-label">${decision==='keep'?'给 A 原盘':'给 B 新盘'}，一句判词。</span><p class="reason-preview" id="reasonPreview">${esc(reasonDraft.text)}</p><button class="edit-reason" data-action="edit-reason">${reasonEditing?'收起编辑':'自己写一句 ✎'}</button><p class="handwritten-note ${handwritten?'':'hidden'}">手写判词已保留。${handwriteNotice?'你刚改了选择，请自行确认文字是否仍合适。':''}</p><div class="reason-editor ${reasonEditing?'':'hidden'}"><label for="myReason">你的原文会保留，改判也不会自动改写。</label><input id="myReason" class="custom-reason" maxlength="80" value="${esc(reasonDraft.text)}" aria-label="我的手写判词，最多80字"></div><details class="reason-suggestions"><summary>${handwritten?'主动换成一条推荐判词':'看看其他推荐判词'}</summary>${handwritten?'<p>点击下面的推荐句，会替换你当前的手写文字。</p>':''}<div class="reason-options">${reasonOptions(decisionDetails()).map((x,i)=>`<button class="reason-chip" data-action="reason" data-index="${i}">${esc(x)}</button>`).join('')}</div></details><button class="primary-button stamp-button" data-action="stamp"><span class="stamp-button-symbol" aria-hidden="true">判</span>给 ${decision==='keep'?'A 原盘':'B 新盘'} 盖章 <span aria-hidden="true">↓</span></button></div>`;
 }
 function rebirth(){
+  if(!session)return waiting();
+  if(!session.selection.sideId)return heading('03 / THE REWRITE','轮回司在等你的第一盘。','要换一份，总得先有一份可以换。')+gate('还差一步','先有原盘，才谈得上改判。','回神谕阁选一份主食和一份配餐，再来这里换掉其中一份。','oracle','去神谕阁选两份 →');
+  if(!session.originalQuote)return heading('03 / THE REWRITE','先知道原价，才算得出差价。','换一份之后贵了多少，得先有原盘价格做参照。')+gate('还差一步','原盘价格还没揭开。','回审判庭翻开真实报价，再回来试换配餐。','court','去审判庭揭价 →');
   const original=originalItems(),hasSwap=!!session.replacementSideId;
   return heading('03 / THE REWRITE','放入一份，再选你的答案。','只换配餐。放入后自动查价，A 或 B 由你决定。')+'<div class="swap-workbench"><div><p class="swap-label">'+(hasSwap?'你亲手换过的餐盘':'原盘留在这里，等你试换')+'</p>'+mealTray(original,{swappable:true})+'</div><aside class="candidate-panel"><p class="swap-label">'+(hasSwap?'还可以试另一份':'选一份放进餐盘')+'</p><div class="candidate-list">'+session.context.sideOptions.filter(x=>x.id!==session.selection.sideId).map(x=>'<button class="candidate '+(x.id===session.replacementSideId?'selected':'')+' '+(!hasSwap&&x.id===previewSideId?'recommended':'')+'" data-action="swap-side" data-id="'+esc(x.id)+'" draggable="true" aria-pressed="'+(x.id===session.replacementSideId)+'" '+(busy?'disabled':'')+'>'+picture(x)+'<span>'+esc(x.name)+'</span><small>'+(x.id===session.replacementSideId?'✓ 已入盘':!hasSwap&&x.id===previewSideId?'推荐 · 点我试换':'点选或拖入')+'</small></button>').join('')+'</div><div class="auto-quote-status" role="status">'+(quoting?'<span class="mini-spinner" aria-hidden="true"></span>正在查询这两盘的真实价格…':session.comparison?'✓ 两盘已查好，往下选 A 或 B。':hasSwap?'已换入；报价待重试。':'放入一份，即会自动查价。')+'</div><p class="candidate-hint">A 原盘一直保留，最后仍可以选回来。</p></aside></div>'+(failure?'<div class="inline-error">'+esc(failure)+' <button class="resume-button" data-action="compare">保留配餐，重试查价</button></div>':'')+(session.comparison?compareView()+reasonWorkbench():'');
+}
+function verdictGate(){
+  if(!session)return waiting();
+  return heading('04 / THE VERDICT','判决书还没盖章。','偏爱要先站队，判词才会生成。')+gate('还差一步','先在轮回司选 A 或 B。','两盘查好价之后，选一盘、写一句判词，盖章完毕这里就是你的判决书。','rebirth','回轮回司选一盘 →');
 }
 function verdictView(){
   const v=verdict,m=verdictPresentation(v),chosen=v.decision==='keep'?v.original:v.replacement,goal=replayGoal(v);
@@ -100,8 +138,8 @@ function verdictView(){
 }
 let loadingRound=false;
 function render(focus=false){
-  updateStore();
-  const content=view==='home'?'':loadingRound?waiting():view==='oracle'?oracle():view==='court'?court():view==='rebirth'?rebirth():verdictView();
+  updateStore();renderRail();
+  const content=view==='home'?'':loadingRound?waiting():view==='oracle'?oracle():view==='court'?court():view==='rebirth'?rebirth():view==='verdict'&&!verdict?verdictGate():verdictView();
   app.innerHTML=view==='home'?home():`<section class="stage stage-v2 stage-v3 ${view==='verdict'?'result-stage':''}">${nav(view==='verdict'?'rebirth':view)}${view==='verdict'&&failure?`<div class="inline-error">${esc(failure)}</div>`:''}${content}</section>`;
   swapMotion=null;revealFresh=false;bindDrag();
   if(focus){window.scrollTo({top:0,behavior:'instant'});app.querySelector('h1')?.focus({preventScroll:true});}
@@ -110,11 +148,9 @@ function enter(next){
   if(busy)return;
   failure='';
   if(!session){toast('真实菜单还在准备，连接完成后就能开始。');return;}
-  if(next==='court'&&!session.selection.sideId){toast('先在神谕阁选好主食和配餐，审判庭才有餐盘可以揭价。');if(view==='home'){app.querySelector('.entry-start')?.classList.add('entry-nudge');return;}next='oracle';}
-  if(next==='rebirth'&&!session.originalQuote){toast(session.selection.sideId?'先在审判庭揭开原盘价格，再来试换。':'先从神谕阁选两份，轮回司会接住这盘选择。');if(view==='home'){app.querySelector('.entry-start')?.classList.add('entry-nudge');return;}next=session.selection.sideId?'court':'oracle';}
   view=next;
   if(next==='oracle'&&!session.originalQuote)round=session.selection.mainId?'side':'main';
-  if(next==='rebirth'&&!previewSideId)previewSideId=session.context.sideOptions.find(x=>x.id!==session.selection.sideId).id;
+  if(next==='rebirth'&&!previewSideId&&session.selection.sideId)previewSideId=(session.context.sideOptions.find(x=>x.id!==session.selection.sideId)||{}).id||null;
   render(true);
 }
 function parseGuess(raw){
