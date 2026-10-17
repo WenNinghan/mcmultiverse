@@ -1,0 +1,88 @@
+我对麦门宇宙做了一轮界面和交互微调，已经整理成独立的 V3 副本。请接着这个版本在 WorkBuddy 中完成部署，不要从旧版首页重新开始。
+
+最新项目：
+G:\WorkBuddy\2026-10-15-23-43-50\mcmultiverse-triad-v3-20261017
+
+保留版：
+G:\WorkBuddy\2026-10-15-23-43-50\mcmultiverse-triad-v2-20261017
+原 V2 仍用 8781，本次 V3 用 8782；生产目录 mcmultiverse 和当前 GitHub Pages 尚未替换。
+
+现在的体验：
+1. 首页仍然是神谕阁、审判庭、轮回司。主食和配餐各盲选一份，另配固定饮品，比较三份单点总价。
+2. 估价可输入也可跳过，没有预设金额；首次真实报价开始查询前封存猜价，揭价后突出低估/高估/猜中的反馈。
+3. 轮回司只有玩家点选、拖入或键盘放入配餐后才改单，并自动分别查 A 原盘、B 新盘。快速连续改单只允许最新任务回写，旧响应/旧失败不能覆盖新盘。
+4. 自动查价不自动选盘；必须玩家亲自选 A/B 才出现可盖章的判词。主食、固定饮品和数量始终不变，只换一份配餐。
+5. 默认判词按真实决定和差额生成；手写判词在换候选、改选 A/B、返回和分享时逐字原样保留，含首尾空格。只有主动选推荐句或显式新开一局才替换/重置。
+6. 结尾首屏先给个人判决和获选配餐。手机底部固定“分享高清判决”和“再判一盘”，完整 A/B 报价依据放在可展开区域。
+7. 分享 PNG 宽1400、高度自适应，突出个人态度、两份配餐、整盘总价和朋友的问题；原判词、门店、查询时间、费用和独立时价变化仍完整保留。
+8. 手机关键说明已放大；复玩目标引用上局真实猜价偏差或真实选择，新局优先未见的官方可售餐品，不伪造新菜、折扣或投票。
+
+关键文件：
+index.html 当前加载 assets/triad-v3-ui.js。
+assets/triad-core.mjs 保留冻结订单、整数分、只改单份与公开快照校验。
+assets/triad-flow.mjs 是自动报价协调器。
+assets/triad-experience.mjs 是网页、PNG、分享文字共用的表达模型。
+assets/triad-share.mjs 负责真实图片导出和分享文字。
+assets/triad.css 是现有美术；请保持奶油纸色、森林绿、黄色判章与真实餐品风格。
+server/triad-server.mjs、mcp-client.mjs、menu-adapter.mjs 是现有本机 MCP 桥接；当前没有改成公网服务。
+README.md、MCP_INTEGRATION.md 和 docs/历史档案/任务归档/2026-10-17_三殿V3验收.md 有完整说明。
+
+本机启动（PowerShell）：
+Set-Location 'G:\WorkBuddy\2026-10-15-23-43-50\mcmultiverse-triad-v3-20261017'
+$env:TRIAD_PORT='8782'
+node server/triad-server.mjs
+打开 http://127.0.0.1:8782/index.html
+
+测试命令：
+node --test test/triad.test.mjs test/triad-experience.test.mjs test/triad-flow.test.mjs test/triad-share.test.mjs test/triad-server.test.mjs
+本轮实际结果为104通过、0失败。已实际完成桌面和手机两局、自动查价/连续改单/失败重试、A/B无默认选择、手写保留、复玩及真实PNG下载检查。A原盘46.50→B玉米46.00，另一次A46.00→B鸡翅47.00；这些仅是查询时刻的历史价格。
+
+请接着完成部署：
+- 先阅读现有集成说明，保留现有只读5工具、单份锁和严格整数分校验。
+- 官方 MCP 地址 https://mcp.mcd.cn；只查询门店、菜单、单品详情、门店券信息和 calculate-price，不领券、不下单、不支付。
+- 凭证在项目外 G:\WorkBuddy\secrets\mcmultiverse-mcp.env，仅由服务端读取。不要在对话、日志、网页、GitHub、PNG中输出或提交实际Token。
+- 当前 API 使用同源 /api/health、/api/stores、/api/context、/api/quote 和 /api/menu-image/:sessionId/:itemId。公网部署需提供受保护的服务端；现有服务只允许本机Host并监听127.0.0.1，不能直接认为已可公网访问。
+- GitHub Pages 本身不能运行Node桥接。请在你可用的部署环境完成服务端接入，再安排前端访问与同源/跨域边界；不要先发布一个菜单/查价接口失效的首页。
+- 若前端仍放Pages、API独立部署，接口地址适配必须覆盖查询、菜单图片代理和PNG图片加载，不能只改fetch报价地址。以实际部署环境完成访问约束后，再做公开URL验收。
+- 继续使用现有公开仓库 https://github.com/WenNinghan/mcmultiverse；仓库创建时间2026-10-16，符合既有日期约束。中文PNG名称必须保留，用git命令行提交推送，不用网页拖拽上传。
+- 旧模式文件保留归档，当前首页不用人生模拟或剧情。不要自动改手写判词、替玩家选A/B或修改非配餐商品。
+- 上线后用真实公开URL重新从盲选玩到分享，检查新餐品复玩、手机入口、PNG、无凭证泄露；再更新实际部署说明与本轮真实WorkBuddy对话记录，并汇报URL和commit。
+
+本次已完成本机版本，未执行git commit/push，也未更新GitHub Pages。下一步是WorkBuddy中的实际部署与线上验收。
+
+========================================
+2026-10-17 WorkBuddy 线上部署结果（本轮实际完成）
+========================================
+
+公开入口：https://mcmultiverse-triad.app.workbuddy.host/
+部署形态：WorkBuddy 应用发布（整站同源）。同一个 Node 服务提供静态页面与 /api/*，
+前端零改动；不存在「首页可开但查价失效」的中间态。启动命令 node deploy-start.mjs，
+监听部署平台注入的 PORT 并绑定 0.0.0.0。
+
+凭证处理：
+- 部署副本目录 mcmultiverse-triad-v3-online（Git 仓库之外）内含 deploy-secret.env，
+  由服务端启动器读入进程环境变量；.gitignore 显式排除 deploy-secret.env / deploy/。
+- Token 未出现在命令行、日志、网页、API 响应、PNG、Git 历史与对话中；错误信息经 publicMessage 脱敏。
+
+服务端公网化（默认本机行为不变，本机仍监听 127.0.0.1）：
+- 新增 access 配置：publicMode、allowedHosts、allowedOrigins、trustProxy、
+  rateLimit（公网默认 180 次/分钟/IP）、maxSessionsPerIp（公网默认 8 局/IP）。
+- 始终拒绝 Sec-Fetch-Site: cross-site；显式配置白名单后按白名单严格校验。
+- 反代改写 Host 且不透传 x-forwarded-host 时，未配置白名单则不做 Origin 等值匹配。
+
+测试：109 项通过、0 项失败（104 项业务契约 + 5 项公网边界）。
+
+线上冒烟（tools/online-smoke.mjs）：14/14 全过。
+- /api/health 连通（5 个只读工具）；门店搜索 5 家；开局主食 2 / 配餐 3；
+  calculate-price 真实整盘 ¥48.50（巨无霸＋中薯条＋小杯鲜萃咖啡，2026-10-17 16:4x 查询时刻历史价）；
+  中文文件名餐品图（巨无霸/中薯条/小杯鲜萃咖啡.png）线上 HTTP 200；
+  四个 API 与 health 响应均无凭证泄漏；context 不预先泄露价格。
+
+真实浏览器全流程（agent-browser，公开 URL）：
+- 桌面：选门店（上海黄浦华旭国际大厦餐厅）→ 盲选 → 揭价 ¥43.50 → 轮回司换入中薯条 →
+  自动查价「✓ 两盘已查好」→ 亲手选 B → 盖章「改判成立 · 多 ¥5.00，我选中薯条。」→
+  下载 PNG 落盘（这一口判决书-v3-2026-10-17.png，约 324KB）。
+- 手机 390×844：同流程通关，判决页底部固定「分享高清判决 ↓」「再判一盘 ↗」等入口齐全。
+- 本局 A 脆薯饼 ¥43.50 / B 中薯条 ¥48.50；均为查询时刻的历史价格。
+
+仍未改变：官方 MCP 只读 5 工具、单份锁、整数分校验；不领券、不下单、不支付。

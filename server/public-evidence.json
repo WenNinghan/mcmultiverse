@@ -1,0 +1,305 @@
+{
+  "description": "实际官方 MCP 只读调用的公开脱敏摘要。没有创建订单、领券、绑定券或支付。报价仅反映各次调用时刻的门店到店自取价格，不是消费凭证。",
+  "verifiedAt": "2026-10-17T02:34:23.163Z",
+  "handshake": {
+    "connected": true,
+    "server": "mcd-mcp",
+    "tools": [
+      "query-nearby-stores",
+      "query-meals",
+      "query-meal-detail",
+      "query-store-coupons",
+      "calculate-price"
+    ]
+  },
+  "store": {
+    "code": "1450713",
+    "name": "麦当劳上海黄浦华旭国际大厦餐厅",
+    "address": "南京东路街道西藏中路336号"
+  },
+  "context": {
+    "mainOptions": [
+      {
+        "id": "1440",
+        "name": "麦辣鸡腿汉堡",
+        "image": "assets/menu/麦辣鸡腿汉堡.png",
+        "category": "main",
+        "customized": true
+      },
+      {
+        "id": "521731",
+        "name": "枫糖风味厚松饼猪柳堡",
+        "image": "https://menu-img.mcd.cn/pcm/prod/menu/20261008/product/MS_521731_600.png",
+        "category": "main",
+        "customized": true
+      }
+    ],
+    "sideOptions": [
+      {
+        "id": "4810",
+        "name": "中薯条",
+        "image": "assets/menu/薯条.png",
+        "category": "side",
+        "customized": false
+      },
+      {
+        "id": "521741",
+        "name": "脆薯饼",
+        "image": "assets/menu/脆薯饼.png",
+        "category": "side",
+        "customized": false
+      },
+      {
+        "id": "4437",
+        "name": "小杯玉米杯",
+        "image": "assets/menu/玉米杯.png",
+        "category": "side",
+        "customized": false
+      }
+    ],
+    "drink": {
+      "id": "520689",
+      "name": "小杯鲜萃咖啡",
+      "image": "assets/menu/鲜萃咖啡.png",
+      "category": "drink",
+      "customized": true
+    },
+    "offerCount": 0,
+    "source": {
+      "kind": "mcp",
+      "fetchedAt": "2026-10-17T02:34:21.635Z"
+    }
+  },
+  "quotes": [
+    {
+      "quoteId": "6a082358-5570-4882-8bf9-f423184e7c81",
+      "items": [
+        {
+          "id": "1440",
+          "name": "麦辣鸡腿汉堡",
+          "quantity": 1,
+          "subtotalCents": 2250
+        },
+        {
+          "id": "4810",
+          "name": "中薯条",
+          "quantity": 1,
+          "subtotalCents": 1350
+        },
+        {
+          "id": "520689",
+          "name": "小杯鲜萃咖啡",
+          "quantity": 1,
+          "subtotalCents": 950
+        }
+      ],
+      "totalCents": 4550,
+      "store": {
+        "code": "1450713",
+        "name": "麦当劳上海黄浦华旭国际大厦餐厅"
+      },
+      "quotedAt": "2026-10-17T02:34:22.072Z",
+      "source": {
+        "kind": "mcp",
+        "tool": "calculate-price"
+      },
+      "fees": {},
+      "originalCents": 4550,
+      "discountCents": 0
+    },
+    {
+      "quoteId": "3b5abc1a-dc91-443b-a647-ac7d3728af84",
+      "items": [
+        {
+          "id": "1440",
+          "name": "麦辣鸡腿汉堡",
+          "quantity": 1,
+          "subtotalCents": 2250
+        },
+        {
+          "id": "521741",
+          "name": "脆薯饼",
+          "quantity": 1,
+          "subtotalCents": 850
+        },
+        {
+          "id": "520689",
+          "name": "小杯鲜萃咖啡",
+          "quantity": 1,
+          "subtotalCents": 950
+        }
+      ],
+      "totalCents": 4050,
+      "store": {
+        "code": "1450713",
+        "name": "麦当劳上海黄浦华旭国际大厦餐厅"
+      },
+      "quotedAt": "2026-10-17T02:34:22.489Z",
+      "source": {
+        "kind": "mcp",
+        "tool": "calculate-price"
+      },
+      "fees": {},
+      "originalCents": 4050,
+      "discountCents": 0
+    },
+    {
+      "quoteId": "4135b20b-69cb-449c-aba0-144d30250576",
+      "items": [
+        {
+          "id": "1440",
+          "name": "麦辣鸡腿汉堡",
+          "quantity": 1,
+          "subtotalCents": 2250
+        },
+        {
+          "id": "4437",
+          "name": "小杯玉米杯",
+          "quantity": 1,
+          "subtotalCents": 1300
+        },
+        {
+          "id": "520689",
+          "name": "小杯鲜萃咖啡",
+          "quantity": 1,
+          "subtotalCents": 950
+        }
+      ],
+      "totalCents": 4500,
+      "store": {
+        "code": "1450713",
+        "name": "麦当劳上海黄浦华旭国际大厦餐厅"
+      },
+      "quotedAt": "2026-10-17T02:34:23.163Z",
+      "source": {
+        "kind": "mcp",
+        "tool": "calculate-price"
+      },
+      "fees": {},
+      "originalCents": 4500,
+      "discountCents": 0
+    }
+  ],
+  "calls": [
+    {
+      "tool": "query-nearby-stores",
+      "startedAt": "2026-10-17T02:34:17.218Z",
+      "completedAt": "2026-10-17T02:34:17.804Z",
+      "storeCode": null,
+      "itemCodes": [],
+      "success": true
+    },
+    {
+      "tool": "query-meals",
+      "startedAt": "2026-10-17T02:34:17.804Z",
+      "completedAt": "2026-10-17T02:34:18.670Z",
+      "storeCode": "1450713",
+      "itemCodes": [],
+      "success": true
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T02:34:18.682Z",
+      "completedAt": "2026-10-17T02:34:19.107Z",
+      "storeCode": "1450713",
+      "itemCodes": [
+        "1440"
+      ],
+      "success": true
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T02:34:19.107Z",
+      "completedAt": "2026-10-17T02:34:19.483Z",
+      "storeCode": "1450713",
+      "itemCodes": [
+        "521731"
+      ],
+      "success": true
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T02:34:18.682Z",
+      "completedAt": "2026-10-17T02:34:19.794Z",
+      "storeCode": "1450713",
+      "itemCodes": [
+        "4810"
+      ],
+      "success": true
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T02:34:18.682Z",
+      "completedAt": "2026-10-17T02:34:20.084Z",
+      "storeCode": "1450713",
+      "itemCodes": [
+        "520689"
+      ],
+      "success": true
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T02:34:19.794Z",
+      "completedAt": "2026-10-17T02:34:20.173Z",
+      "storeCode": "1450713",
+      "itemCodes": [
+        "521741"
+      ],
+      "success": true
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T02:34:20.173Z",
+      "completedAt": "2026-10-17T02:34:20.554Z",
+      "storeCode": "1450713",
+      "itemCodes": [
+        "4437"
+      ],
+      "success": true
+    },
+    {
+      "tool": "query-store-coupons",
+      "startedAt": "2026-10-17T02:34:18.682Z",
+      "completedAt": "2026-10-17T02:34:21.634Z",
+      "storeCode": "1450713",
+      "itemCodes": [],
+      "success": true
+    },
+    {
+      "tool": "calculate-price",
+      "startedAt": "2026-10-17T02:34:21.635Z",
+      "completedAt": "2026-10-17T02:34:22.071Z",
+      "storeCode": "1450713",
+      "itemCodes": [
+        "1440",
+        "4810",
+        "520689"
+      ],
+      "success": true
+    },
+    {
+      "tool": "calculate-price",
+      "startedAt": "2026-10-17T02:34:22.072Z",
+      "completedAt": "2026-10-17T02:34:22.489Z",
+      "storeCode": "1450713",
+      "itemCodes": [
+        "1440",
+        "521741",
+        "520689"
+      ],
+      "success": true
+    },
+    {
+      "tool": "calculate-price",
+      "startedAt": "2026-10-17T02:34:22.489Z",
+      "completedAt": "2026-10-17T02:34:23.163Z",
+      "storeCode": "1450713",
+      "itemCodes": [
+        "1440",
+        "4437",
+        "520689"
+      ],
+      "success": true
+    }
+  ]
+}

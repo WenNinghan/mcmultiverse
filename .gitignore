@@ -18,3 +18,15 @@ __pycache__/
 # 编辑器
 .vscode/
 .idea/
+
+# Local MCP credentials and runtime data
+.env
+.env.*
+*.local.json
+*.local.env
+.local/
+
+# 部署副本中的 MCP 凭证（只存在于部署目录，任何情况下都不提交、不打印）
+deploy-secret.env
+deploy/
+*.secret.env

@@ -1,0 +1,494 @@
+{
+  "description": "实际官方 MCP 只读复玩验证的公开摘要。两次独立 session，第二局排除首局主食/配餐，逐项详情核验。报价为调用时刻三份单点，到店自取，没有下单、领券、支付或使用账户历史；不含 Token、券码及账户数据。",
+  "verifiedAt": "2026-10-17T03:40:11.387Z",
+  "handshake": {
+    "connected": true,
+    "tools": [
+      "query-nearby-stores",
+      "query-meals",
+      "query-meal-detail",
+      "query-store-coupons",
+      "calculate-price"
+    ],
+    "checkedAt": "2026-10-17T03:40:02.595Z",
+    "server": "mcd-mcp"
+  },
+  "store": {
+    "code": "1450713",
+    "name": "麦当劳上海黄浦华旭国际大厦餐厅"
+  },
+  "independentSessions": true,
+  "rounds": [
+    {
+      "mainOptions": [
+        {
+          "id": "1100",
+          "name": "巨无霸",
+          "image": "assets/menu/巨无霸.png",
+          "category": "main",
+          "customized": true
+        },
+        {
+          "id": "1406",
+          "name": "板烧鸡腿堡",
+          "image": "assets/menu/板烧鸡腿堡.png",
+          "category": "main",
+          "customized": true
+        }
+      ],
+      "sideOptions": [
+        {
+          "id": "4810",
+          "name": "中薯条",
+          "image": "assets/menu/薯条.png",
+          "category": "side",
+          "customized": false
+        },
+        {
+          "id": "521741",
+          "name": "脆薯饼",
+          "image": "assets/menu/脆薯饼.png",
+          "category": "side",
+          "customized": false
+        },
+        {
+          "id": "4437",
+          "name": "小杯玉米杯",
+          "image": "assets/menu/玉米杯.png",
+          "category": "side",
+          "customized": false
+        }
+      ],
+      "drink": {
+        "id": "520689",
+        "name": "小杯鲜萃咖啡",
+        "image": "assets/menu/鲜萃咖啡.png",
+        "category": "drink",
+        "customized": true
+      },
+      "replay": {
+        "mainFreshCount": 2,
+        "sideFreshCount": 3,
+        "exhausted": false
+      },
+      "source": {
+        "kind": "mcp",
+        "fetchedAt": "2026-10-17T03:40:06.579Z"
+      }
+    },
+    {
+      "mainOptions": [
+        {
+          "id": "1440",
+          "name": "麦辣鸡腿汉堡",
+          "image": "assets/menu/麦辣鸡腿汉堡.png",
+          "category": "main",
+          "customized": true
+        },
+        {
+          "id": "521731",
+          "name": "枫糖风味厚松饼猪柳堡",
+          "image": "https://menu-img.mcd.cn/pcm/prod/menu/20261008/product/MS_521731_600.png",
+          "category": "main",
+          "customized": true
+        }
+      ],
+      "sideOptions": [
+        {
+          "id": "1401",
+          "name": "麦乐鸡5块",
+          "image": "https://menu-img.mcd.cn/pcm/prod/menu/20260529/product/MS_1401_600.png",
+          "category": "side",
+          "customized": false
+        },
+        {
+          "id": "1700",
+          "name": "麦辣鸡翅2块",
+          "image": "https://menu-img.mcd.cn/pcm/prod/menu/20260219/product/MS_1700_600.png",
+          "category": "side",
+          "customized": false
+        },
+        {
+          "id": "4810",
+          "name": "中薯条",
+          "image": "assets/menu/薯条.png",
+          "category": "side",
+          "customized": false
+        }
+      ],
+      "drink": {
+        "id": "520689",
+        "name": "小杯鲜萃咖啡",
+        "image": "assets/menu/鲜萃咖啡.png",
+        "category": "drink",
+        "customized": true
+      },
+      "replay": {
+        "mainFreshCount": 2,
+        "sideFreshCount": 2,
+        "exhausted": false
+      },
+      "source": {
+        "kind": "mcp",
+        "fetchedAt": "2026-10-17T03:40:09.575Z"
+      }
+    }
+  ],
+  "newMainProducts": [
+    {
+      "id": "1440",
+      "name": "麦辣鸡腿汉堡",
+      "image": "assets/menu/麦辣鸡腿汉堡.png",
+      "category": "main",
+      "customized": true
+    },
+    {
+      "id": "521731",
+      "name": "枫糖风味厚松饼猪柳堡",
+      "image": "https://menu-img.mcd.cn/pcm/prod/menu/20261008/product/MS_521731_600.png",
+      "category": "main",
+      "customized": true
+    }
+  ],
+  "quotes": [
+    {
+      "round": 1,
+      "baseline": {
+        "quoteId": "045946d9-f522-4dfe-9a83-c78e2fc963f0",
+        "items": [
+          {
+            "id": "1100",
+            "name": "巨无霸",
+            "quantity": 1,
+            "subtotalCents": 2550
+          },
+          {
+            "id": "4810",
+            "name": "中薯条",
+            "quantity": 1,
+            "subtotalCents": 1350
+          },
+          {
+            "id": "520689",
+            "name": "小杯鲜萃咖啡",
+            "quantity": 1,
+            "subtotalCents": 950
+          }
+        ],
+        "totalCents": 4850,
+        "store": {
+          "code": "1450713",
+          "name": "麦当劳上海黄浦华旭国际大厦餐厅"
+        },
+        "quotedAt": "2026-10-17T03:40:10.011Z",
+        "source": {
+          "kind": "mcp",
+          "tool": "calculate-price"
+        },
+        "fees": {},
+        "originalCents": 4850,
+        "discountCents": 0
+      },
+      "changed": {
+        "quoteId": "ffa141dd-5263-4ff2-a639-1e315f72f2a7",
+        "items": [
+          {
+            "id": "1100",
+            "name": "巨无霸",
+            "quantity": 1,
+            "subtotalCents": 2550
+          },
+          {
+            "id": "521741",
+            "name": "脆薯饼",
+            "quantity": 1,
+            "subtotalCents": 850
+          },
+          {
+            "id": "520689",
+            "name": "小杯鲜萃咖啡",
+            "quantity": 1,
+            "subtotalCents": 950
+          }
+        ],
+        "totalCents": 4350,
+        "store": {
+          "code": "1450713",
+          "name": "麦当劳上海黄浦华旭国际大厦餐厅"
+        },
+        "quotedAt": "2026-10-17T03:40:10.421Z",
+        "source": {
+          "kind": "mcp",
+          "tool": "calculate-price"
+        },
+        "fees": {},
+        "originalCents": 4350,
+        "discountCents": 0
+      },
+      "deltaCents": -500
+    },
+    {
+      "round": 2,
+      "baseline": {
+        "quoteId": "7dfba39d-b874-44b3-9990-188f35fdf206",
+        "items": [
+          {
+            "id": "1440",
+            "name": "麦辣鸡腿汉堡",
+            "quantity": 1,
+            "subtotalCents": 2250
+          },
+          {
+            "id": "1401",
+            "name": "麦乐鸡5块",
+            "quantity": 1,
+            "subtotalCents": 1400
+          },
+          {
+            "id": "520689",
+            "name": "小杯鲜萃咖啡",
+            "quantity": 1,
+            "subtotalCents": 950
+          }
+        ],
+        "totalCents": 4600,
+        "store": {
+          "code": "1450713",
+          "name": "麦当劳上海黄浦华旭国际大厦餐厅"
+        },
+        "quotedAt": "2026-10-17T03:40:10.973Z",
+        "source": {
+          "kind": "mcp",
+          "tool": "calculate-price"
+        },
+        "fees": {},
+        "originalCents": 4600,
+        "discountCents": 0
+      },
+      "changed": {
+        "quoteId": "e825cf60-a1c9-42b5-8864-5cbf42c8b552",
+        "items": [
+          {
+            "id": "1440",
+            "name": "麦辣鸡腿汉堡",
+            "quantity": 1,
+            "subtotalCents": 2250
+          },
+          {
+            "id": "1700",
+            "name": "麦辣鸡翅2块",
+            "quantity": 1,
+            "subtotalCents": 1500
+          },
+          {
+            "id": "520689",
+            "name": "小杯鲜萃咖啡",
+            "quantity": 1,
+            "subtotalCents": 950
+          }
+        ],
+        "totalCents": 4700,
+        "store": {
+          "code": "1450713",
+          "name": "麦当劳上海黄浦华旭国际大厦餐厅"
+        },
+        "quotedAt": "2026-10-17T03:40:11.387Z",
+        "source": {
+          "kind": "mcp",
+          "tool": "calculate-price"
+        },
+        "fees": {},
+        "originalCents": 4700,
+        "discountCents": 0
+      },
+      "deltaCents": 100
+    }
+  ],
+  "calls": [
+    {
+      "tool": "query-nearby-stores",
+      "startedAt": "2026-10-17T03:40:02.596Z",
+      "succeededAt": "2026-10-17T03:40:03.227Z"
+    },
+    {
+      "tool": "query-meals",
+      "startedAt": "2026-10-17T03:40:03.227Z",
+      "succeededAt": "2026-10-17T03:40:04.036Z"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:04.043Z",
+      "succeededAt": "2026-10-17T03:40:04.448Z",
+      "productId": "1100"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:04.043Z",
+      "succeededAt": "2026-10-17T03:40:05.086Z",
+      "productId": "520689"
+    },
+    {
+      "tool": "query-store-coupons",
+      "startedAt": "2026-10-17T03:40:04.043Z",
+      "succeededAt": "2026-10-17T03:40:05.192Z"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:04.448Z",
+      "succeededAt": "2026-10-17T03:40:05.525Z",
+      "productId": "1406"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:04.043Z",
+      "succeededAt": "2026-10-17T03:40:05.799Z",
+      "productId": "4810"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:05.799Z",
+      "succeededAt": "2026-10-17T03:40:06.178Z",
+      "productId": "521741"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:06.179Z",
+      "succeededAt": "2026-10-17T03:40:06.579Z",
+      "productId": "4437"
+    },
+    {
+      "tool": "query-meals",
+      "startedAt": "2026-10-17T03:40:06.579Z",
+      "succeededAt": "2026-10-17T03:40:07.587Z"
+    },
+    {
+      "tool": "query-store-coupons",
+      "startedAt": "2026-10-17T03:40:07.587Z",
+      "succeededAt": "2026-10-17T03:40:07.952Z"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:07.587Z",
+      "succeededAt": "2026-10-17T03:40:07.984Z",
+      "productId": "520689"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:07.587Z",
+      "succeededAt": "2026-10-17T03:40:07.995Z",
+      "productId": "1440"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:07.587Z",
+      "succeededAt": "2026-10-17T03:40:07.998Z",
+      "productId": "1401"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:07.995Z",
+      "succeededAt": "2026-10-17T03:40:08.365Z",
+      "productId": "521731"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:07.998Z",
+      "succeededAt": "2026-10-17T03:40:08.392Z",
+      "productId": "9900016056"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:08.392Z",
+      "succeededAt": "2026-10-17T03:40:08.819Z",
+      "productId": "1700"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:08.819Z",
+      "succeededAt": "2026-10-17T03:40:09.201Z",
+      "productId": "9900008752"
+    },
+    {
+      "tool": "query-meal-detail",
+      "startedAt": "2026-10-17T03:40:09.201Z",
+      "succeededAt": "2026-10-17T03:40:09.575Z",
+      "productId": "4810"
+    },
+    {
+      "tool": "calculate-price",
+      "startedAt": "2026-10-17T03:40:09.575Z",
+      "succeededAt": "2026-10-17T03:40:10.011Z",
+      "products": [
+        {
+          "productId": "1100",
+          "quantity": 1
+        },
+        {
+          "productId": "4810",
+          "quantity": 1
+        },
+        {
+          "productId": "520689",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "tool": "calculate-price",
+      "startedAt": "2026-10-17T03:40:10.011Z",
+      "succeededAt": "2026-10-17T03:40:10.421Z",
+      "products": [
+        {
+          "productId": "1100",
+          "quantity": 1
+        },
+        {
+          "productId": "521741",
+          "quantity": 1
+        },
+        {
+          "productId": "520689",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "tool": "calculate-price",
+      "startedAt": "2026-10-17T03:40:10.422Z",
+      "succeededAt": "2026-10-17T03:40:10.973Z",
+      "products": [
+        {
+          "productId": "1440",
+          "quantity": 1
+        },
+        {
+          "productId": "1401",
+          "quantity": 1
+        },
+        {
+          "productId": "520689",
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "tool": "calculate-price",
+      "startedAt": "2026-10-17T03:40:10.973Z",
+      "succeededAt": "2026-10-17T03:40:11.387Z",
+      "products": [
+        {
+          "productId": "1440",
+          "quantity": 1
+        },
+        {
+          "productId": "1700",
+          "quantity": 1
+        },
+        {
+          "productId": "520689",
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+}
