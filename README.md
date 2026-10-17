@@ -42,7 +42,7 @@ node server/triad-server.mjs
 - **同源形态**：同一个 Node 服务同时提供静态页面与 `/api/*`，前端零改动、不存在「首页可开但查价失效」的中间态。服务端以 `node deploy-start.mjs` 启动：读取部署目录内的 `deploy-secret.env`（不进 Git）注入 `MCD_MCP_TOKEN`，监听 `PORT` 并绑定 `0.0.0.0`。
 - **公网边界**（`server/triad-server.mjs` 的 `access` 配置，默认本机行为不变）：公网模式信任反代头、按 IP 限流（默认 180 次/分钟）、每 IP 最多 8 个进行中的局、始终拒绝 `Sec-Fetch-Site: cross-site`；如平台透传真实域名，可用 `TRIAD_ALLOWED_HOSTS` / `TRIAD_ALLOWED_ORIGINS` 收紧为白名单。
 - **凭证安全**：Token 只存在于部署副本的 `deploy-secret.env` 与服务端进程内存；`.gitignore` 显式排除，不出现在命令行、日志、网页、API 响应、PNG 与 Git 历史中。服务端错误信息经 `publicMessage` 脱敏。
-- **线上冒烟**：`TRIAD_BASE=https://mcmultiverse-triad.app.workbuddy.host node tools/online-smoke.mjs` 走一遍 health / 门店 / 开局 / 报价 / 图片，并断言响应不含凭证。2026-10-17 实际结果 **14/14 全过**（上海人民广场示例门店，巨无霸＋中薯条＋小杯鲜萃咖啡整盘 ¥48.50，中文文件名餐品图线上可访问）。
+- **线上冒烟**：`TRIAD_BASE=https://mcmultiverse-triad.app.workbuddy.host node tools/online-smoke.mjs` 走一遍 health / 门店 / 开局 / 报价 / 图片，并断言响应不含凭证。2026-10-17 实际结果 **14/14 全过**（上海人民广场示例门店，巨无霸＋中薯条＋小杯鲜萃咖啡整盘 ¥48.50，中文文件名餐品图线上可访问）。真实浏览器全流程验收与凭证扫描记录见 [V3 线上部署归档](docs/历史档案/任务归档/2026-10-17_三殿V3线上部署.md)。
 - GitHub 仓库只保存源码与文档；静态 GitHub Pages 不运行 Node 桥接，公开可玩入口以上述同源部署为准。
 
 ## 真实数据与边界
